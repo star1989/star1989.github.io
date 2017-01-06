@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[星晨入梦]]></title>
+  <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
+  <link href="http://blog.cxstars.com/"/>
+  <updated>2017-01-06T14:01:35+08:00</updated>
+  <id>http://blog.cxstars.com/</id>
+  <author>
+    <name><![CDATA[]]></name>
+    
+  </author>
+  <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[Again,Go!]]></title>
+    <link href="http://blog.cxstars.com/14836808084156.html"/>
+    <updated>2017-01-06T13:33:28+08:00</updated>
+    <id>http://blog.cxstars.com/14836808084156.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">沉默&amp;沉淀</h2>
+
+<p>再次记录自己的心路历程,不论是生活还是工作.总担心自己什么时候连自己都忘了的家伙.</p>
+
+<h2 id="toc_1">Mac&amp;Mweb</h2>
+
+<p>使用MWeb进行写作.记录一下常用的快捷键,顺便熟悉一下MWeb.</p>
+
+<h2 id="toc_2">MWEB MapKey</h2>
+
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>CTL+1</td>
+<td>标题1</td>
+</tr>
+<tr>
+<td>CTL+2</td>
+<td>标题2</td>
+</tr>
+<tr>
+<td>CTL+3</td>
+<td>标题3</td>
+</tr>
+<tr>
+<td>CTL+4</td>
+<td>标题4</td>
+</tr>
+<tr>
+<td>CTL+5</td>
+<td>标题5</td>
+</tr>
+<tr>
+<td>CTL+6</td>
+<td>标题6</td>
+</tr>
+<tr>
+<td>CMD+B</td>
+<td><strong>粗体</strong></td>
+</tr>
+<tr>
+<td>CMD+U</td>
+<td><u>下划线</u></td>
+</tr>
+<tr>
+<td>CMD+I</td>
+<td><em>斜体</em></td>
+</tr>
+<tr>
+<td>CMD+-</td>
+<td><del>删除线</del></td>
+</tr>
+<tr>
+<td>CMD+=</td>
+<td><mark>高亮</mark></td>
+</tr>
+<tr>
+<td>CMD+K</td>
+<td>行内代码</td>
+</tr>
+<tr>
+<td>CMD+/</td>
+<td>注释</td>
+</tr>
+<tr>
+<td>CMD+.</td>
+<td>阅读更多</td>
+</tr>
+<tr>
+<td>CTL+U</td>
+<td>无序列表</td>
+</tr>
+<tr>
+<td>CMD+SFT+O</td>
+<td>有序列表</td>
+</tr>
+<tr>
+<td>CMD+SFT+B</td>
+<td>引用</td>
+</tr>
+<tr>
+<td>CMD+]</td>
+<td>左移</td>
+</tr>
+<tr>
+<td>CMD+[</td>
+<td>右移</td>
+</tr>
+<tr>
+<td>CTL+SFT+L</td>
+<td>链接</td>
+</tr>
+<tr>
+<td>CTL+SFT+T</td>
+<td>表格</td>
+</tr>
+<tr>
+<td>CTL+SFT+I</td>
+<td>图片</td>
+</tr>
+<tr>
+<td>CMD+OPT+I</td>
+<td>插入本地图片</td>
+</tr>
+<tr>
+<td>CMD+ENT</td>
+<td>新段落</td>
+</tr>
+<tr>
+<td>CMD+SFT+E</td>
+<td>焦点至编辑器</td>
+</tr>
+<tr>
+<td>CMD+SFT+F</td>
+<td>焦点至搜索栏</td>
+</tr>
+<tr>
+<td>CMD+7</td>
+<td>大纲(目录)</td>
+</tr>
+<tr>
+<td>CMD+8</td>
+<td>文件信息</td>
+</tr>
+<tr>
+<td>CMD+9</td>
+<td>导出/发布</td>
+</tr>
+<tr>
+<td>CMD+E</td>
+<td>外部模式(打开现有的文件[夹])</td>
+</tr>
+<tr>
+<td>CMD+E</td>
+<td>文档库模式</td>
+</tr>
+<tr>
+<td>CMD+R</td>
+<td>预览</td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[apue-review]]></title>
+    <link href="http://blog.cxstars.com/14836103185566.html"/>
+    <updated>2017-01-05T17:58:38+08:00</updated>
+    <id>http://blog.cxstars.com/14836103185566.html</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p>从今天(2016-05-26)开始，新一轮APUE浏览，期望最近就foucs它了，同人交流后才发现了解归了解，能不能讲明白又是另一个等级的事了。SO,打怪涨经验升级。 </p>
+</blockquote>
+
+<h2 id="toc_0">源码编译</h2>
+
+<p>mac下直接make就ok，ubuntu稍微麻烦一点。<br/>
+我看的是apue第三版英文版，先将PDF分享出来，有需要的可以下。<br/>
+ (apue)[<a href="http://pan.baidu.com/s/1gfsaTk3">http://pan.baidu.com/s/1gfsaTk3</a>] 提取码<em>ivxs</em> </p>
+
+<h2 id="toc_1">CPU的内核态和用户态</h2>
+
+<p>只有执行硬件命令才可以例CPU在这两种状态间来回切换。根本区别就是用户态只能操作虚拟内存中被标记为用户内存的区域，而内核态则可以操作所有内存。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_2">文件IO模型</h2>
+
+<p>就本质而言，内核只提供了一种文件类型：字节流序列。<br/>
+在处理磁盘文件、磁盘或者磁带设备时，可以通过lseek()系统调用来随机访问。</p>
+
+<h2 id="toc_3">进程的内存布局</h2>
+
+<p>逻辑上将一个进程分为以下几段：<br/>
+- 文本：程序的指令<br/>
+- 数据：程序使用的静态变量<br/>
+- 堆：程序可以从该区域动态分配额外内存<br/>
+- 栈：随函数调用、返回而增加减少的一片内存区域，用于为局部变量和函数调用链接信息分配存储空间</p>
+
+<h2 id="toc_4">内存映射</h2>
+
+<ul>
+<li>文件映射 </li>
+<li>匿名映射</li>
+</ul>
+
+<h2 id="toc_5">进程间通讯及同步（七种方式）</h2>
+
+<ul>
+<li>信号(signal)，表示事件的发生</li>
+<li>管理和FIFO，用于在进程间传递数据 </li>
+<li>套接字，可以跨主机进程通讯</li>
+<li>文件锁定，为防止其他进程读取或者更新文件内容，允许某进程对文件的部分区域加以锁定</li>
+<li>消息队列，用于在进程间交换消息(数据包)</li>
+<li>信号量（semaphore），用来同步进程动作</li>
+<li>共享内存，允许两个及两个以上进程共享一块内存。当某进程改变了共享内存的内容时，其他所有进程会立即了解到这一变化</li>
+</ul>
+
+<h2 id="toc_6">进程和线程复制</h2>
+
+<p>进程：fork进程会产生新的进程，会复制父进程的堆、栈、数据段。<br/>
+线程：每个线程都会执行相同的程序代码，共享同一数据区域和堆。但是，每个线程都有属于自己的栈，用来半截本地变量和函数调用链接信息。</p>
+
+<h2 id="toc_7">线程的优点</h2>
+
+<blockquote>
+<p>协同线程之间的数据共享(通过全局变量)更为容易，而且就某些算法而言，以多线程来实现要比之以多进程实现要更加自然，而且能从压榨多核处理器的计算力。</p>
+</blockquote>
+
+<h2 id="toc_8">问题</h2>
+
+<ul>
+<li>文件空洞到底是什么？core dump？</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[soa-architecture-overview]]></title>
+    <link href="http://blog.cxstars.com/14836102763553.html"/>
+    <updated>2017-01-05T17:57:56+08:00</updated>
+    <id>http://blog.cxstars.com/14836102763553.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">什么是SOA</h2>
+
+<blockquote>
+<p>面向服务的体系结构（英语：service-oriented architecture）是构造分布式计算的应用程序的方法。它将应用程序功能作为服务发送给最终用户或者其他服务。</p>
+
+<p>企业系统的架构师认为SOA能够帮助业务迅速和高效地响应变化的市场条件. 服务导向的架构在宏观（服务）上，而不是在微观上（对象）因此提高了重复使用性。同时，服务导向的架构可以简化与传统系统的互连和使用。</p>
+</blockquote>
+
+<h2 id="toc_1">SOA Principle</h2>
+
+<ul>
+<li>可重复使用，粒度，模组性，可组合型，物件化原件，构件化以及具交互操作性</li>
+<li>符合开放标准（通用的或者行业的）</li>
+<li>服务的识别和分类，提供和发布，监控和跟踪</li>
+</ul>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_2">RPC - Remote Process Call</h2>
+
+<blockquote>
+<p>RPC使用C/S方式，采用http协议,发送请求到服务器，等待服务器返回结果。这个请求包括一个参数集和一个文本集，通常形成“classname.methodname”形式。优点是跨语言跨平台，C端、S端有更大的独立性，缺点是<em>不支持对象，无法在编译器检查错误，只能在运行期检查</em>。</p>
+</blockquote>
+
+<h2 id="toc_3">RMI - Remote Method Ivocation</h2>
+
+<blockquote>
+<p>TCP协议。采用stubs 和 skeletons 来进行远程对象(remote object)的通讯。stub 充当远程对象的客户端代理，有着和远程对象相同的远程接口，远程对象的调用实际是通过调用该对象的客户端代理对象stub来完成的，通过该机制RMI就好比它是本地工作，采用tcp/ip协议，客户端直接调用服务端上的一些方法。优点是强类型，编译期可检查错误，缺点是只能基于JAVA语言，客户机与服务器紧耦合。</p>
+</blockquote>
+
+<h2 id="toc_4">Architecture 架构</h2>
+
+<blockquote>
+<p>分析就是做正确的事，设计就是正确的做事。架构跟语言跟平台关系不大，毕竟架构是设计过程中的子过程，我想如果你的设计不合理，你用任何语言任何平台都解决不了问题。</p>
+</blockquote>
+
+<h2 id="toc_5">GRASP - General Responsibility Assignment Software Patterns（通用职责分配软件模式）</h2>
+
+<blockquote>
+<p>GRASP一共包括9种模式，它们描述了对象设计和职责分配的基本原则。如何把现实世界的业务功能抽象成对象，如何决定一个系统有多少对象，每个对象都包括什么职责，GRASP模式给出了最基本的指导原则。</p>
+</blockquote>
+
+<p><em>2016-05-26</em> </p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[serverh-on-redis-source-code]]></title>
+    <link href="http://blog.cxstars.com/14836102159997.html"/>
+    <updated>2017-01-05T17:56:55+08:00</updated>
+    <id>http://blog.cxstars.com/14836102159997.html</id>
+    <content type="html"><![CDATA[
+<h1 id="toc_0">server.h on redis source code</h1>
+
+<h2 id="toc_1">directory</h2>
+
+<ul>
+<li><code>src</code>:包括了所有Redis的c实现源文件</li>
+<li><code>tests</code>:包括了所有的Redis单元测试文件，有Redis、Redis Cluster、Redis Sentinel，使用tcl(<em>Sentinel</em>)实现</li>
+<li><code>deps</code>:包括了Redis所有要用的库，你只需要提供<code>libc</code>和一个c编译器。<code>deps</code>下大多数的功能都是开始于<em>Redis</em>，也有一个例外：<code>geohash-int</code></li>
+</ul>
+
+<h2 id="toc_2">server.h</h2>
+
+<blockquote>
+<p>在Redis3.0的unstable分支中全名为<code>redis.h</code>和<code>redis.c</code>。想要理解Redis是如何工作的，就要先理解它所用的数据结构。<br/>
+<code>struct redisServer</code>里包含了所有redis server的配置。以下是几个重要的字段：</p>
+</blockquote>
+
+<span id="more"></span><!-- more -->
+
+<ul>
+<li><code>server.db</code>Redis Databases数组，存储数据的地主</li>
+<li><code>server.commands</code>是所支持的命令表</li>
+<li><code>server.clients</code>已连接server的Redsi Client链表</li>
+<li><code>server.master</code>是一个特殊客户端,如果实例是从服务,则为主服务器的客户端</li>
+</ul>
+
+<blockquote>
+<p>另一个非常重要的Redis数据结构是client的定义，以前定义为redisClient。</p>
+</blockquote>
+
+<p>这个结构定义了这么多字段，这里只展示只个重要的字符：</p>
+
+<pre><code class="language-c">struct client {
+int fd;
+sds querybuf;
+int argc;
+robj \*\*argv;
+redisDb \*db;
+int flags;
+list \*reply;
+char buf[PROTO\_REPLY\_CHUNK\_BYTES];
+... many other fields ...
+}
+</code></pre>
+
+<p>client结构定义了一个已连接Redis客户端：<br/>
+* <code>fd</code>是客户端的socket描述符<br/>
+* <code>argc</code>和<code>argv</code>是客户端执行命令时的参数，执行方法实现了给定Redis命令读取参数。<br/>
+* <code>querybuf</code>是从客户端积累的请求，它们将被Redis Server通过Redis protocol解析并执行客户端命令的实现。<br/>
+* <code>reply</code>和<code>buf</code>是Redis Server执行命令后返回给客户端的动态、静态缓存。当文件描述符可写，这些缓存就增量的写进socket<br/>
+就像你看到的，在client结构体的上方，就是命令参数的结构体<code>robj</code>。下面是<code>robj</code>的所有结构，它被定义为<em>Redis Object</em>对象:</p>
+
+<pre><code class="language-c">typedef struct redisObject {
+unsigned type:4;
+unsigned encoding:4;
+unsigned lru:LRU\_BITS; /* lru time (relative to server.lruclock) */
+int refcount;
+void \*ptr;
+} robj;
+
+</code></pre>
+
+<p>基本上这个结构就可以代表所有Redis的基本数据结构，比如strings,lists,sets,sorted,sets等等。有趣的是它有一个<code>type</code>字段，所以可以知道是一个什么类型的对象。<code>refcount</code>可以关联好几个地方的同一个对象而不用再重新分配内存。最后<code>ptr</code>指针指向对象的实际地址，即使是同类型，根据<code>encoding</code>字段这个值也可能是不同的。</p>
+
+<p>在Redis的内部，Redis Object使用得非常广泛，然后为了避免过于迂回的访问方式，最近我们在许多地方使用单纯的动态字符串，而不是将它包装进Redis Ojbect。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[golang send a https request and skip the certificate]]></title>
+    <link href="http://blog.cxstars.com/14836098881938.html"/>
+    <updated>2017-01-05T17:51:28+08:00</updated>
+    <id>http://blog.cxstars.com/14836098881938.html</id>
+    <content type="html"><![CDATA[
+<p>使用<code>crypto/tls</code>包</p>
+
+<blockquote>
+<p>官网对包的说明:Package tls partially implements TLS 1.2, as specified in RFC 5246.</p>
+</blockquote>
+
+<pre><code class="language-go">package main
+
+import (
+        &quot;fmt&quot;
+        &quot;net/http&quot;
+        &quot;crypto/tls&quot;
+       )
+
+func main() {
+ tr := &amp;http.Transport{
+            TLSClientConfig: &amp;tls.Config{InsecureSkipVerify: true},
+
+}
+        client := &amp;http.Client{Transport: tr}
+                _, err := client.Get(&quot;https://golang.org/&quot;)
+                    if err != nil {
+                                    fmt.Println(err)
+
+                    }
+
+}
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nginx源码阅读]]></title>
+    <link href="http://blog.cxstars.com/14836098401416.html"/>
+    <updated>2017-01-05T17:50:40+08:00</updated>
+    <id>http://blog.cxstars.com/14836098401416.html</id>
+    <content type="html"><![CDATA[
+<p>@: nginx源码阅读</p>
+
+<h3 id="toc_0">目录结构</h3>
+
+<ol>
+<li><em>auto</em>
+自动化编译目录,最重要的是<strong>configure</strong>文件</li>
+<li><em>conf</em>
+配置模板目录</li>
+<li><em>contrib</em>
+3个随包发行的文件包.<strong> unicode2nginx</strong>,<strong>vim</strong>,<strong>geo2nginx</strong></li>
+<li><em>docs</em>
+文档</li>
+<li><em>misc</em>
+C++兼容测试文件</li>
+<li><em>src</em>
+最最最重要的源码</li>
+</ol>
+
+<h3 id="toc_1">auto目录</h3>
+
+<ol>
+<li><strong>configure</strong>
+ 10 . auto/options
+ 11 . auto/init
+ 12 . auto/sources</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>
