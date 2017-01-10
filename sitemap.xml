@@ -2,7 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>http://blog.cxstars.com/</loc>
-  <lastmod>2017-01-06T14:03:04+08:00</lastmod>
+  <lastmod>2017-01-11T00:30:51+08:00</lastmod>
+</url>
+
+<url>
+  <loc>http://blog.cxstars.com/14840656639167.html</loc>
+  <lastmod>2017-01-11T00:27:43+08:00</lastmod>
+</url>
+
+<url>
+  <loc>http://blog.cxstars.com/14840656459705.html</loc>
+  <lastmod>2017-01-11T00:27:25+08:00</lastmod>
 </url>
 
 <url>
@@ -64,6 +74,10 @@
 
 <url>
   <loc>http://blog.cxstars.com/life.html</loc>
+</url>
+
+<url>
+  <loc>http://blog.cxstars.com/php.html</loc>
 </url>
 
 

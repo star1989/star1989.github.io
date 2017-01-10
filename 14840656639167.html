@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Archives - 星晨入梦
+  swoole安装 - 星晨入梦
   
   </title>
   
@@ -108,140 +108,95 @@
 
  <script type="text/javascript">
   $(function(){
-    $('#menu_item_archives').addClass('is_active');
+    $('#menu_item_index').addClass('is_active');
   });
 </script>
 <div class="row">
   <div class="large-8 medium-8 columns">
-    <div id="archives-page-wrap">
-        <h1>Archives</h1>
-        <div class="markdown-body archives-wrap">
+      <div class="markdown-body article-wrap">
+       <div class="article">
           
-             
-                <h1>2017</h1>
-            
-            <div class="article">
-              <a class="clearlink" href="14840656639167.html">
-                <h1>swoole安装</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/11 0:27 上午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='php.html'>php</a></span>
-                 
-              </div>
-            </div><!-- article -->
+          <h1>swoole安装</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2017/1/11 0:27 上午</span>
 
+          <span>posted in&nbsp;</span> 
           
-            
-            <div class="article">
-              <a class="clearlink" href="14840656459705.html">
-                <h1>swoole学习记录</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/11 0:27 上午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='php.html'>php</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14836808084156.html">
-                <h1>Again,Go!</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/6 13:33 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='life.html'>life</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14836103185566.html">
-                <h1>apue-review</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/5 17:58 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='book.html'>book</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14836102763553.html">
-                <h1>soa-architecture-overview</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/5 17:57 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='arch.html'>arch</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14836102159997.html">
-                <h1>serverh-on-redis-source-code</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/5 17:56 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='redis.html'>redis</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14836098881938.html">
-                <h1>golang send a https request and skip the certificate</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/5 17:51 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='golang.html'>golang</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
-          
-            
-            <div class="article">
-              <a class="clearlink" href="14836098401416.html">
-                <h1>nginx源码阅读</h1>
-              </a>
-              <div class="read-more clearfix">
-                <span class="date">2017/1/5 17:50 下午</span>
-                <span>posted in&nbsp;</span> 
-                
-                    <span class="posted-in"><a href='nginx.html'>nginx</a></span>
-                 
-              </div>
-            </div><!-- article -->
-
+              <span class="posted-in"><a href='php.html'>php</a></span>
            
+         
+          <span class="comments">
+            
+
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14840656639167.html" data-count-type="comments" href="14840656639167.html#ds-thread"></a>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <h2 id="toc_0">下载源码</h2>
+
+<p><a href="https://git.oschina.net/matyhtf/swoole.git">swoole oschina link</a></p>
+
+<h2 id="toc_1">在mac下编译</h2>
+
+<h3 id="toc_2">编译swoole</h3>
+
+<pre><code class="language-bash">cd swoole-src
+phpize
+./configure
+make
+sudo make install
+</code></pre>
+
+<h3 id="toc_3">添加扩展至php.ini</h3>
+
+<p><code>extension=/usr/local/php/lib/php/extensions/debug-zts-20131226/swoole.so</code></p>
+
+<h3 id="toc_4">查看phpinfo</h3>
+
+<p><img src="media/14837825120350/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-01-07%2018.06.51.png" alt="phpinfo show swoole extension"/></p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14840656459705.html" 
+          title="Next Post: swoole学习记录">swoole学习记录 &raquo;</a>
+      
+      </p>
         </div>
       </div>
-  </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+
+          
+              <div class="ds-thread" data-thread-key="14840656639167.html" data-url="http://blog.cxstars.com/14840656639167.html" data-title="swoole安装"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
