@@ -144,7 +144,7 @@ sudo make install
 
 <h3 id="toc_4">查看phpinfo</h3>
 
-<p><img src="media/14837825120350/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-01-07%2018.06.51.png" alt="phpinfo show swoole extension"/></p>
+<p><img src="http://ojaief5u9.bkt.clouddn.com/2017-01-11-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-01-07%2018.06.51.png" alt="phpinfo show swoole extension"/></p>
 
                         
                       </div>
@@ -219,54 +219,9 @@ $serv-&gt;start();
 <h2 id="toc_2">协议</h2>
 
 <blockquote>
-<p>因为TCP通信是流式的，在接收1个大数据包时，可能会被拆分成多个数据包发送。多次Send底层也可能会合并成一次进行发送。这里就需要2个操作来解决：<br/>
-分包：Server收到了多个数据包，需要拆分数据包<br/>
-合包：Server收到的数据只是包的一部分，需要缓存数据，合并成完整的包</p>
+<p>因为TCP通信是流式的，在接收1个大数据包时，可能会被拆分成多个数据包发送。多次Send底层也可能会合并成一次进行发送。这里就需要2个操作来解决：</p>
 </blockquote>
 
-<h3 id="toc_3">EOF协议</h3>
-
-<p>EOF协议处理的原理是每个数据包结尾加一串特殊字符表示包已结束。如memcache、ftp、stmp都使用\r\n作为结束符。发送数据时只需要在包末尾增加\r\n即可。使用EOF协议处理，一定要确保数据包中间不会出现EOF，否则会造成分包错误。</p>
-
-<p>在swoole_server和swoole_client的代码中只需要设置2个参数就可以使用EOF协议处理。</p>
-
-<pre><code class="language-php">$server-&gt;set(array(
-    &#39;open_eof_split&#39; =&gt; true,
-    &#39;package_eof&#39; =&gt; &quot;\r\n&quot;,
-));
-$client-&gt;set(array(
-    &#39;open_eof_split&#39; =&gt; true,
-    &#39;package_eof&#39; =&gt; &quot;\r\n&quot;,
-));
-</code></pre>
-
-<h2 id="toc_4">固定包头+包头协议</h2>
-
-<p>包头由一个字段指定了包体或整个包的长度，长度一般是使用2字节/4字节整数来表示。服务器收到包头后，可以根据长度值来精确控制需要再接收多少数据就是完整的数据包。<br/>
-Swoole的Server和异步Client都是在<em>onReceive</em>回调函数中处理数据包，当设置了协议处理后，只有收到一个完整数据包时才会触发<em>onReceive</em>事件。同步客户端在设置了协议处理后，调用 $client-&gt;recv() 不再需要传入长度，recv函数在收到完整数据包或发生错误后返回。</p>
-
-<pre><code class="language-php">$server-&gt;set(array(
-    &#39;open_length_check&#39; =&gt; true,
-    &#39;package_max_length&#39; =&gt; 81920,
-    &#39;package_length_type&#39; =&gt; &#39;n&#39;, //see php pack()
-    &#39;package_length_offset&#39; =&gt; 0,
-    &#39;package_body_offset&#39; =&gt; 2,
-));
-</code></pre>
-
-<h2 id="toc_5">编程注意事项</h2>
-
-<ol>
-<li>不要在代码中执行sleep以及其他睡眠函数，这样会导致整个进程阻塞exit/die是危险的，会导致worker进程退出</li>
-<li>可通过register_shutdown_function来捕获致命错误，在进程异常退出时做一些请求工作，具体参看/wiki/page/305.html</li>
-<li>PHP代码中如果有异常抛出，必须在回调函数中进行try/catch捕获异常，否则会导致工作进程退出</li>
-<li>swoole不支持set_exception_handler，必须使用try/catch方式处理异常</li>
-<li>Worker进程不得共用同一个Redis或MySQL等网络服务客户端，Redis/MySQL创建连接的相关代码可以放到onWorkerStart回调函数中，具体参考/wiki/page/325.html</li>
-</ol>
-
-<h3 id="toc_6">加载文件问题</h3>
-
-<p>由于swoole是常驻内存的,所以加载类/函数定义的文件后不会释放。因此引入类/函数的php文件时必须要使用<strong>include_once</strong>或<strong>require_once</strong>，否会发生<code>cannot redeclare function/class</code>的致命错误。</p>
 
                         
                       </div>
@@ -274,7 +229,7 @@ Swoole的Server和异步Client都是在<em>onReceive</em>回调函数中处理�
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="14840656459705.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/1/11 0:27 上午</span>
                     <span>posted in&nbsp;</span> 
           				  
