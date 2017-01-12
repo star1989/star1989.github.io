@@ -145,45 +145,6 @@
 created: /Users/star/Downloads/CentOS-7-x86_64-Minimal-1611.img.dmg
 </code></pre>
 
-<h2 id="toc_2">查看U盘并写入系统</h2>
-
-<p>查看U盘设备信息:<br/>
-<code>diskutil list</code><br/>
-输出:</p>
-
-<pre><code class="language-shell">/dev/disk0 (internal, physical):
-   #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:      GUID_partition_scheme                        *500.3 GB   disk0
-   1:                        EFI EFI                     209.7 MB   disk0s1
-   2:          Apple_CoreStorage Macintosh HD            499.4 GB   disk0s2
-   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
-
-/dev/disk1 (internal, virtual):
-   #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:                            Macintosh HD           +499.1 GB   disk1
-                                 Logical Volume on disk0s2
-                                 BD5527E2-7278-4078-90AD-0103839D6A6C
-                                 Unlocked Encrypted
-
-/dev/disk2 (external, physical):
-   #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:     FDisk_partition_scheme                        *4.0 GB     disk2
-   1:                 DOS_FAT_32 LDANE                   4.0 GB     disk2s1
-</code></pre>
-
-<p>卸载U盘挂载:<br/>
-<code>diskutil unmountDisk /dev/disk2</code></p>
-
-<p>输出:<br/>
-<code>Unmount of all volumes on disk2 was successful</code></p>
-
-<p>写入系统:<br/>
-<code>sudo dd if=~/Downloads/CentOS-7-x86_64-Minimal-1611.img.dmg of=/dev/disk2 bs=1m</code><br/>
-做个安静等待的美男子.</p>
-
-<h2 id="toc_3">进入系统</h2>
-
-<p>按<code>option</code>键进入界面后选择<code>EFI</code>进入系统.</p>
 
                         
                       </div>
@@ -191,7 +152,7 @@ created: /Users/star/Downloads/CentOS-7-x86_64-Minimal-1611.img.dmg
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="14842192746625.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/1/12 19:7 下午</span>
                     <span>posted in&nbsp;</span> 
           				  
