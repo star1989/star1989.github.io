@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  serverh-on-redis-source-code - 星晨入梦
+  python语法总结 - 星晨入梦
   
   </title>
   
@@ -118,21 +118,21 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>serverh-on-redis-source-code</h1>
+          <h1>python语法总结</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2017/1/5 17:56 下午</span>
+          <span class="date">2017/1/13 14:51 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='redis.html'>redis</a></span>
+              <span class="posted-in"><a href='python.html'>python</a></span>
            
          
           <span class="comments">
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14836102159997.html" data-count-type="comments" href="14836102159997.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14842902733244.html" data-count-type="comments" href="14842902733244.html#ds-thread"></a>
             
           </span>
 
@@ -140,71 +140,276 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h1 id="toc_0">server.h on redis source code</h1>
+      <h2 id="toc_0">变量</h2>
 
-<h2 id="toc_1">directory</h2>
+<h3 id="toc_1">命令规则</h3>
 
 <ul>
-<li><code>src</code>:包括了所有Redis的c实现源文件</li>
-<li><code>tests</code>:包括了所有的Redis单元测试文件，有Redis、Redis Cluster、Redis Sentinel，使用tcl(<em>Sentinel</em>)实现</li>
-<li><code>deps</code>:包括了Redis所有要用的库，你只需要提供<code>libc</code>和一个c编译器。<code>deps</code>下大多数的功能都是开始于<em>Redis</em>，也有一个例外：<code>geohash-int</code></li>
+<li>必须是大小写英文,数字和_的组合,且不能用数字开头</li>
+<li>不用声明,直接使用(同PHP)</li>
 </ul>
 
-<h2 id="toc_2">server.h</h2>
+<h3 id="toc_2">类型</h3>
 
-<blockquote>
-<p>在Redis3.0的unstable分支中全名为<code>redis.h</code>和<code>redis.c</code>。想要理解Redis是如何工作的，就要先理解它所用的数据结构。<br/>
-<code>struct redisServer</code>里包含了所有redis server的配置。以下是几个重要的字段：</p>
-</blockquote>
+<ul>
+<li>整数</li>
+<li>浮点</li>
+<li>字符串</li>
+<li>布尔</li>
+<li>空: None (与0不同)</li>
+<li>Tuple : 元组,值不可变更</li>
+<li>List : 表,值可以变更[下限:上限:步长]</li>
+<li>Dictionary : 字典</li>
+<li>自定义数据类型</li>
+</ul>
+
+<h2 id="toc_3">语法</h2>
+
+<h3 id="toc_4">缩进</h3>
+
+<p>python强制使用缩进来解析块代码.</p>
+
+<h3 id="toc_5">运算符</h3>
+
+<ul>
+<li>数学 : <code>+,-,*,/,**,%</code></li>
+<li>判断 : <code>==,!=,&gt;,&gt;=,&lt;,&lt;=,in</code></li>
+<li>逻辑 : <code>and,or,not</code></li>
+</ul>
+
+<h3 id="toc_6">条件语句</h3>
+
+<pre><code class="language-python">if condition1:
+    do1
+elif condition2:
+    do2
+elif condition3:
+    do3
+else:
+    do4
+</code></pre>
+
+<h3 id="toc_7">循环</h3>
+
+<p><strong>for</strong></p>
+
+<pre><code class="language-python">for elemnt in list:
+    statment
+</code></pre>
+
+<p><strong>while</strong></p>
+
+<pre><code class="language-python">while condition:
+    statement
+</code></pre>
+
+<p><strong>continue</strong><br/>
+<strong>break</strong></p>
 
 <span id="more"></span><!-- more -->
 
+<h3 id="toc_8">错误处理</h3>
+
 <ul>
-<li><code>server.db</code>Redis Databases数组，存储数据的地主</li>
-<li><code>server.commands</code>是所支持的命令表</li>
-<li><code>server.clients</code>已连接server的Redsi Client链表</li>
-<li><code>server.master</code>是一个特殊客户端,如果实例是从服务,则为主服务器的客户端</li>
+<li>函数返回值</li>
+<li>异常处理</li>
 </ul>
 
+<pre><code class="language-python">try:
+    do1
+except exception1:
+    do e1==只有exception1才会进入这里==
+except exception2:
+    do e2
+except:
+    do default e==默认的exception处理==
+else:
+    do elsedo==如果没有exception则进入这里==
+finally:
+    do finallydo==不论有没有发生exception都要执行==
+</code></pre>
+
+<h2 id="toc_9">函数</h2>
+
+<h3 id="toc_10">定义函数</h3>
+
+<p><strong>实现功能,重复利用</strong></p>
+
+<pre><code class="language-python">def func_name(a,b,...):
+    statement
+    return v1,v2,...
+</code></pre>
+
+<p><strong>若没有return或者return后无返回值时,函数将自动返回None</strong></p>
+
+<h3 id="toc_11">参数传递</h3>
+
+<ul>
+<li>按顺序传递</li>
+<li>关键字传递</li>
+<li>参数默认值</li>
+<li>包裹传递(packing) &amp; 解包裹(unpacking)</li>
+</ul>
+
+<p><strong>可混用,混用原则:</strong><em>先位置,后关键字,包裹位置,包裹关键字</em></p>
+
+<h4 id="toc_12">packing</h4>
+
+<pre><code class="language-python">&gt;&gt;&gt; def pack(*param):
+...     print param
+&gt;&gt;&gt; pack(1,2,3,4,&quot;abc&quot;)
+(1, 2, 3, 4, &#39;abc&#39;)
+</code></pre>
+
+<p>平常应用,可以强制将tuple转换成list:</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; def pack2(*param):
+...     param = list(param)
+...     param[0] = &quot;Hello&quot;
+...     param[1] = &quot;Python&quot;
+...     print param
+&gt;&gt;&gt; pack2(1,2,&quot;end&quot;)
+[&#39;Hello&#39;, &#39;Python&#39;, &#39;end&#39;]
+</code></pre>
+
+<h4 id="toc_13">unpacking</h4>
+
+<p><code>**param</code></p>
+
+<h3 id="toc_14">函数对象(lambda)</h3>
+
 <blockquote>
-<p>另一个非常重要的Redis数据结构是client的定义，以前定义为redisClient。</p>
+<p>这种能够接受一个函数作为参数的函数叫做「高阶函数」（higher-order function），是来自函数式编程（functional programming）的思想。</p>
 </blockquote>
 
-<p>这个结构定义了这么多字段，这里只展示只个重要的字符：</p>
-
-<pre><code class="language-c">struct client {
-int fd;
-sds querybuf;
-int argc;
-robj \*\*argv;
-redisDb \*db;
-int flags;
-list \*reply;
-char buf[PROTO\_REPLY\_CHUNK\_BYTES];
-... many other fields ...
-}
+<pre><code class="language-python">&gt;&gt;&gt; seq=[1,2,3,4,5]
+&gt;&gt;&gt; map(lambda x:x**3, [ x for x in seq ])
+[1, 8, 27, 64, 125]
 </code></pre>
 
-<p>client结构定义了一个已连接Redis客户端：<br/>
-* <code>fd</code>是客户端的socket描述符<br/>
-* <code>argc</code>和<code>argv</code>是客户端执行命令时的参数，执行方法实现了给定Redis命令读取参数。<br/>
-* <code>querybuf</code>是从客户端积累的请求，它们将被Redis Server通过Redis protocol解析并执行客户端命令的实现。<br/>
-* <code>reply</code>和<code>buf</code>是Redis Server执行命令后返回给客户端的动态、静态缓存。当文件描述符可写，这些缓存就增量的写进socket<br/>
-就像你看到的，在client结构体的上方，就是命令参数的结构体<code>robj</code>。下面是<code>robj</code>的所有结构，它被定义为<em>Redis Object</em>对象:</p>
+<p><strong>高阶函数</strong>:<br/>
+* filter(function, sequence)：对sequence中的item依次执行function(item)，将执行结果为True的item组成一个List/String/Tuple（取决于sequence的类型）返回<br/>
+* map(function, sequence) ：对sequence中的item依次执行function(item)，见执行结果组成一个List返回<br/>
+* reduce(function, sequence, starting_value)：对sequence中的item顺序迭代调用function，如果有starting_value，还可以作为初始值调用，例如可以用来对List求和<br/>
+* lambda：这是Python支持一种有趣的语法，它允许你快速定义单行的最小函数，类似与C语言中的宏，这些叫做lambda的函数，是从LISP借用来的，可以用在任何需要函数的地方</p>
 
-<pre><code class="language-c">typedef struct redisObject {
-unsigned type:4;
-unsigned encoding:4;
-unsigned lru:LRU\_BITS; /* lru time (relative to server.lruclock) */
-int refcount;
-void \*ptr;
-} robj;
+<p><strong>lambda与def的差别</strong></p>
 
+<pre><code class="language-python">map( lambda x: x*x, [y for y in range(10)] )
 </code></pre>
 
-<p>基本上这个结构就可以代表所有Redis的基本数据结构，比如strings,lists,sets,sorted,sets等等。有趣的是它有一个<code>type</code>字段，所以可以知道是一个什么类型的对象。<code>refcount</code>可以关联好几个地方的同一个对象而不用再重新分配内存。最后<code>ptr</code>指针指向对象的实际地址，即使是同类型，根据<code>encoding</code>字段这个值也可能是不同的。</p>
+<pre><code class="language-python">def sq(x):
+    return x * x
+map(sq, [y for y in range(10)])
+</code></pre>
 
-<p>在Redis的内部，Redis Object使用得非常广泛，然后为了避免过于迂回的访问方式，最近我们在许多地方使用单纯的动态字符串，而不是将它包装进Redis Ojbect。</p>
+<h2 id="toc_15">面向对象的类</h2>
+
+<h3 id="toc_16">定义</h3>
+
+<p><strong>使用class关键字定义一个类,并且类名首字母大写.</strong></p>
+
+<h3 id="toc_17">语法</h3>
+
+<pre><code class="language-python">class PyClass:
+variables
+functions
+</code></pre>
+
+<h3 id="toc_18">创建对象</h3>
+
+<p><code>myClass = PyClass()</code></p>
+
+<h3 id="toc_19">引用对象属性</h3>
+
+<p><code>myClass.attribute</code></p>
+
+<h3 id="toc_20">作用域</h3>
+
+<ul>
+<li>通过self调用类属性</li>
+<li>对象生成时自动执行的特殊方法: <code>__init__()</code></li>
+<li>类的属性是对数据的封装,方法则是对类的行为封装</li>
+<li>类属性:
+
+<ol>
+<li>公有属性.</li>
+<li>内置属性:由系统在定义类的时候默认添加,由前后两个下划线构成<code>__dict__</code>,<code>__module__</code></li>
+<li>私有属性:不能被类以外的函数调用.定义时在属性名前加<code>__</code> </li>
+</ol></li>
+<li>方法也分为<strong>公有方法</strong>和<strong>私有方法</strong>
+
+<ol>
+<li>私有方法:以<code>__</code>定义</li>
+<li>类方法:被<code>classmethod()</code>函数处理过的函数,添加类装饰器<code>@classmethod</code></li>
+<li>静态方法:等于&quot;全局函数&quot;</li>
+</ol></li>
+</ul>
+
+<pre><code class="language-python">from functools import wraps
+
+class A:
+    # Decorator as an instance method
+    def decorator1(self, func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print(&#39;Decorator 1&#39;)
+            return func(*args, **kwargs)
+        return wrapper
+
+    # Decorator as a class method
+    @classmethod
+    def decorator2(cls, func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print(&#39;Decorator 2&#39;)
+            return func(*args, **kwargs)
+        return wrapper
+</code></pre>
+
+<h2 id="toc_21">模块</h2>
+
+<h3 id="toc_22">模块导入</h3>
+
+<pre><code class="language-python">import mod_name #引入模块
+import m as k #引入后重命名
+from m import func1 #引入m模块的func1方法
+from m import * #从m中引入所有对象
+</code></pre>
+
+<h3 id="toc_23">模块调用</h3>
+
+<p>mod.obj</p>
+
+<h3 id="toc_24">模块搜索路径</h3>
+
+<ol>
+<li>程序所在目录</li>
+<li>标准库的安装路径</li>
+<li>操作系统环境变量PYTHONPATH的路径</li>
+</ol>
+
+<h3 id="toc_25">构建模块</h3>
+
+<h3 id="toc_26">常用标准库</h3>
+
+<ul>
+<li>正则<code>re</code></li>
+<li>时间与日期<code>time</code> <code>datetime</code></li>
+<li>路径与文件<code>os.path</code> <code>glob</code></li>
+<li>文件管理 <code>os</code> <code>shutil</code></li>
+<li>存储对象 <code>pickle</code> <code>cPickle</code></li>
+<li>子进程 <code>subprocess</code></li>
+<li>信号 <code>signal</code></li>
+<li>线程同步 <code>threading</code></li>
+<li>进程信息 <code>os</code></li>
+<li>多进程 <code>multiprocessing</code></li>
+<li>数学 <code>math</code></li>
+<li>随机数 <code>random</code></li>
+<li>循环器 <code>itertools</code></li>
+<li>数据库 <code>sqlite3</code></li>
+<li><a href="https://docs.python.org/2/library">python2 more library</a></li>
+</ul>
 
 
     
@@ -215,16 +420,13 @@ void \*ptr;
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14836102763553.html" 
-          title="Previous Post: soa-architecture-overview">&laquo; soa-architecture-overview</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14836098881938.html" 
-          title="Next Post: golang send a https request and skip the certificate">golang send a https request and skip the certificate &raquo;</a>
+          <a  href="14842192746625.html" 
+          title="Next Post: 在mac mini上安装CentOS7">在mac mini上安装CentOS7 &raquo;</a>
       
       </p>
         </div>
@@ -236,7 +438,7 @@ void \*ptr;
           
 
           
-              <div class="ds-thread" data-thread-key="14836102159997.html" data-url="http://blog.cxstars.com/14836102159997.html" data-title="serverh-on-redis-source-code"></div>
+              <div class="ds-thread" data-thread-key="14842902733244.html" data-url="http://blog.cxstars.com/14842902733244.html" data-title="python语法总结"></div>
           
         </div>
       </div>

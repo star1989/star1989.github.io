@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  serverh-on-redis-source-code - 星晨入梦
+  python - 星晨入梦
   
   </title>
   
@@ -109,142 +109,131 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>serverh-on-redis-source-code</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2017/1/5 17:56 下午</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="14842902733244.html">
+                
+                  <h1>python语法总结</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">变量</h2>
 
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='redis.html'>redis</a></span>
-           
-         
-          <span class="comments">
-            
-
-            
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14836102159997.html" data-count-type="comments" href="14836102159997.html#ds-thread"></a>
-            
-          </span>
-
-        </div>
-      </div><!-- article -->
-
-      <div class="article-content">
-      <h1 id="toc_0">server.h on redis source code</h1>
-
-<h2 id="toc_1">directory</h2>
+<h3 id="toc_1">命令规则</h3>
 
 <ul>
-<li><code>src</code>:包括了所有Redis的c实现源文件</li>
-<li><code>tests</code>:包括了所有的Redis单元测试文件，有Redis、Redis Cluster、Redis Sentinel，使用tcl(<em>Sentinel</em>)实现</li>
-<li><code>deps</code>:包括了Redis所有要用的库，你只需要提供<code>libc</code>和一个c编译器。<code>deps</code>下大多数的功能都是开始于<em>Redis</em>，也有一个例外：<code>geohash-int</code></li>
+<li>必须是大小写英文,数字和_的组合,且不能用数字开头</li>
+<li>不用声明,直接使用(同PHP)</li>
 </ul>
 
-<h2 id="toc_2">server.h</h2>
-
-<blockquote>
-<p>在Redis3.0的unstable分支中全名为<code>redis.h</code>和<code>redis.c</code>。想要理解Redis是如何工作的，就要先理解它所用的数据结构。<br/>
-<code>struct redisServer</code>里包含了所有redis server的配置。以下是几个重要的字段：</p>
-</blockquote>
-
-<span id="more"></span><!-- more -->
+<h3 id="toc_2">类型</h3>
 
 <ul>
-<li><code>server.db</code>Redis Databases数组，存储数据的地主</li>
-<li><code>server.commands</code>是所支持的命令表</li>
-<li><code>server.clients</code>已连接server的Redsi Client链表</li>
-<li><code>server.master</code>是一个特殊客户端,如果实例是从服务,则为主服务器的客户端</li>
+<li>整数</li>
+<li>浮点</li>
+<li>字符串</li>
+<li>布尔</li>
+<li>空: None (与0不同)</li>
+<li>Tuple : 元组,值不可变更</li>
+<li>List : 表,值可以变更[下限:上限:步长]</li>
+<li>Dictionary : 字典</li>
+<li>自定义数据类型</li>
 </ul>
 
-<blockquote>
-<p>另一个非常重要的Redis数据结构是client的定义，以前定义为redisClient。</p>
-</blockquote>
+<h2 id="toc_3">语法</h2>
 
-<p>这个结构定义了这么多字段，这里只展示只个重要的字符：</p>
+<h3 id="toc_4">缩进</h3>
 
-<pre><code class="language-c">struct client {
-int fd;
-sds querybuf;
-int argc;
-robj \*\*argv;
-redisDb \*db;
-int flags;
-list \*reply;
-char buf[PROTO\_REPLY\_CHUNK\_BYTES];
-... many other fields ...
-}
+<p>python强制使用缩进来解析块代码.</p>
+
+<h3 id="toc_5">运算符</h3>
+
+<ul>
+<li>数学 : <code>+,-,*,/,**,%</code></li>
+<li>判断 : <code>==,!=,&gt;,&gt;=,&lt;,&lt;=,in</code></li>
+<li>逻辑 : <code>and,or,not</code></li>
+</ul>
+
+<h3 id="toc_6">条件语句</h3>
+
+<pre><code class="language-python">if condition1:
+    do1
+elif condition2:
+    do2
+elif condition3:
+    do3
+else:
+    do4
 </code></pre>
 
-<p>client结构定义了一个已连接Redis客户端：<br/>
-* <code>fd</code>是客户端的socket描述符<br/>
-* <code>argc</code>和<code>argv</code>是客户端执行命令时的参数，执行方法实现了给定Redis命令读取参数。<br/>
-* <code>querybuf</code>是从客户端积累的请求，它们将被Redis Server通过Redis protocol解析并执行客户端命令的实现。<br/>
-* <code>reply</code>和<code>buf</code>是Redis Server执行命令后返回给客户端的动态、静态缓存。当文件描述符可写，这些缓存就增量的写进socket<br/>
-就像你看到的，在client结构体的上方，就是命令参数的结构体<code>robj</code>。下面是<code>robj</code>的所有结构，它被定义为<em>Redis Object</em>对象:</p>
+<h3 id="toc_7">循环</h3>
 
-<pre><code class="language-c">typedef struct redisObject {
-unsigned type:4;
-unsigned encoding:4;
-unsigned lru:LRU\_BITS; /* lru time (relative to server.lruclock) */
-int refcount;
-void \*ptr;
-} robj;
+<p><strong>for</strong></p>
 
+<pre><code class="language-python">for elemnt in list:
+    statment
 </code></pre>
 
-<p>基本上这个结构就可以代表所有Redis的基本数据结构，比如strings,lists,sets,sorted,sets等等。有趣的是它有一个<code>type</code>字段，所以可以知道是一个什么类型的对象。<code>refcount</code>可以关联好几个地方的同一个对象而不用再重新分配内存。最后<code>ptr</code>指针指向对象的实际地址，即使是同类型，根据<code>encoding</code>字段这个值也可能是不同的。</p>
+<p><strong>while</strong></p>
 
-<p>在Redis的内部，Redis Object使用得非常广泛，然后为了避免过于迂回的访问方式，最近我们在许多地方使用单纯的动态字符串，而不是将它包装进Redis Ojbect。</p>
+<pre><code class="language-python">while condition:
+    statement
+</code></pre>
 
-
-    
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="14836102763553.html" 
-          title="Previous Post: soa-architecture-overview">&laquo; soa-architecture-overview</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="14836098881938.html" 
-          title="Next Post: golang send a https request and skip the certificate">golang send a https request and skip the certificate &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          
-
-          
-
-          
-              <div class="ds-thread" data-thread-key="14836102159997.html" data-url="http://blog.cxstars.com/14836102159997.html" data-title="serverh-on-redis-source-code"></div>
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
+<p><strong>continue</strong><br/>
+<strong>break</strong></p>
 
 
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14842902733244.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2017/1/13 14:51 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='python.html'>python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14842902733244.html" data-count-type="comments" href="14842902733244.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

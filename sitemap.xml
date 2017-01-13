@@ -2,7 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>http://blog.cxstars.com/</loc>
-  <lastmod>2017-01-12T19:10:19+08:00</lastmod>
+  <lastmod>2017-01-13T14:51:47+08:00</lastmod>
+</url>
+
+<url>
+  <loc>http://blog.cxstars.com/14842902733244.html</loc>
+  <lastmod>2017-01-13T14:51:13+08:00</lastmod>
 </url>
 
 <url>
@@ -83,6 +88,10 @@
 
 <url>
   <loc>http://blog.cxstars.com/php.html</loc>
+</url>
+
+<url>
+  <loc>http://blog.cxstars.com/python.html</loc>
 </url>
 
 
