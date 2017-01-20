@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  golang send a https request and skip the certificate - 星晨入梦
+  使用python搭建ss梯子 - 星晨入梦
   
   </title>
   
@@ -118,21 +118,21 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>golang send a https request and skip the certificate</h1>
+          <h1>使用python搭建ss梯子</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2017/1/5 17:51 下午</span>
+          <span class="date">2017/1/20 10:3 上午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='golang.html'>golang</a></span>
+              <span class="posted-in"><a href='python.html'>python</a></span>
            
          
           <span class="comments">
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14836098881938.html" data-count-type="comments" href="14836098881938.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14848778197605.html" data-count-type="comments" href="14848778197605.html#ds-thread"></a>
             
           </span>
 
@@ -140,33 +140,42 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>使用<code>crypto/tls</code>包</p>
+      <h2 id="toc_0">CentOS7</h2>
 
-<blockquote>
-<p>官网对包的说明:Package tls partially implements TLS 1.2, as specified in RFC 5246.</p>
-</blockquote>
+<pre><code class="language-sh">yum install python-setuptools &amp;&amp; easy_install pip
+pip install shadowsocks
+</code></pre>
 
-<pre><code class="language-go">package main
+<h2 id="toc_1">启动命令</h2>
 
-import (
-        &quot;fmt&quot;
-        &quot;net/http&quot;
-        &quot;crypto/tls&quot;
-       )
+<pre><code class="language-sh">ssserver -p 8836 -k `password` -m rc4-md5
+#或者可以通过以下指令在后台启动shadowsocks的服务：
+ssserver -p 8836 -k `password` -m rc4-md5 -d start
+ssserver -p 8836 -k `password` -m rc4-md5 -d stop
+</code></pre>
 
-func main() {
- tr := &amp;http.Transport{
-            TLSClientConfig: &amp;tls.Config{InsecureSkipVerify: true},
+<p><strong>优化版本</strong><br/>
+* 创建/etc/shadownsocks.json配置文件<br/>
+* 写入配置:</p>
 
+<pre><code class="language-sh">{
+    &quot;server&quot;:&quot;你的服务器ip地址&quot;,
+    &quot;server_port&quot;:10088,
+    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
+    &quot;local_port&quot;:1080,
+    &quot;password&quot;:&quot;你设置的密码&quot;,
+    &quot;timeout&quot;:300,
+    &quot;method&quot;:&quot;aes-256-cfb&quot;,
+    &quot;fast_open&quot;: false
 }
-        client := &amp;http.Client{Transport: tr}
-                _, err := client.Get(&quot;https://golang.org/&quot;)
-                    if err != nil {
-                                    fmt.Println(err)
+</code></pre>
 
-                    }
+<p>优化后的启动命令:</p>
 
-}
+<pre><code class="language-sh">ssserver -c /etc/shadowsocks.json
+#或者在后台运行
+ssserver -c /etc/shadowsocks.json -d start
+ssserver -c /etc/shadowsocks.json -d stop
 </code></pre>
 
 
@@ -178,16 +187,13 @@ func main() {
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14836102159997.html" 
-          title="Previous Post: serverh-on-redis-source-code">&laquo; serverh-on-redis-source-code</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14836098401416.html" 
-          title="Next Post: nginx源码阅读">nginx源码阅读 &raquo;</a>
+          <a  href="14848776957351.html" 
+          title="Next Post: workflow">workflow &raquo;</a>
       
       </p>
         </div>
@@ -199,7 +205,7 @@ func main() {
           
 
           
-              <div class="ds-thread" data-thread-key="14836098881938.html" data-url="http://blog.cxstars.com/14836098881938.html" data-title="golang send a https request and skip the certificate"></div>
+              <div class="ds-thread" data-thread-key="14848778197605.html" data-url="http://blog.cxstars.com/14848778197605.html" data-title="使用python搭建ss梯子"></div>
           
         </div>
       </div>

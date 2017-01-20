@@ -118,6 +118,77 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14848778197605.html">
+                
+                  <h1>使用python搭建ss梯子</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">CentOS7</h2>
+
+<pre><code class="language-sh">yum install python-setuptools &amp;&amp; easy_install pip
+pip install shadowsocks
+</code></pre>
+
+<h2 id="toc_1">启动命令</h2>
+
+<pre><code class="language-sh">ssserver -p 8836 -k `password` -m rc4-md5
+#或者可以通过以下指令在后台启动shadowsocks的服务：
+ssserver -p 8836 -k `password` -m rc4-md5 -d start
+ssserver -p 8836 -k `password` -m rc4-md5 -d stop
+</code></pre>
+
+<p><strong>优化版本</strong><br/>
+* 创建/etc/shadownsocks.json配置文件<br/>
+* 写入配置:</p>
+
+<pre><code class="language-sh">{
+    &quot;server&quot;:&quot;你的服务器ip地址&quot;,
+    &quot;server_port&quot;:10088,
+    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
+    &quot;local_port&quot;:1080,
+    &quot;password&quot;:&quot;你设置的密码&quot;,
+    &quot;timeout&quot;:300,
+    &quot;method&quot;:&quot;aes-256-cfb&quot;,
+    &quot;fast_open&quot;: false
+}
+</code></pre>
+
+<p>优化后的启动命令:</p>
+
+<pre><code class="language-sh">ssserver -c /etc/shadowsocks.json
+#或者在后台运行
+ssserver -c /etc/shadowsocks.json -d start
+ssserver -c /etc/shadowsocks.json -d stop
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/1/20 10:3 上午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='python.html'>python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14848778197605.html" data-count-type="comments" href="14848778197605.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14848776957351.html">
                 
                   <h1>workflow</h1>
@@ -376,6 +447,12 @@ else:
 	      
 		      
 			      <li class="post">
+			        <a href="14848778197605.html">使用python搭建ss梯子</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14848776957351.html">workflow</a>
 			      </li>
 		     
@@ -399,10 +476,6 @@ else:
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14840656459705.html">swoole学习记录</a>
-			      </li>
-		     
 		  
 		      
 		  

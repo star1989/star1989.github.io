@@ -4,13 +4,60 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-01-16T17:44:13+08:00</updated>
+  <updated>2017-01-20T10:01:47+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[使用python搭建ss梯子]]></title>
+    <link href="http://blog.cxstars.com/14848778197605.html"/>
+    <updated>2017-01-20T10:03:39+08:00</updated>
+    <id>http://blog.cxstars.com/14848778197605.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">CentOS7</h2>
+
+<pre><code class="language-sh">yum install python-setuptools &amp;&amp; easy_install pip
+pip install shadowsocks
+</code></pre>
+
+<h2 id="toc_1">启动命令</h2>
+
+<pre><code class="language-sh">ssserver -p 8836 -k `password` -m rc4-md5
+#或者可以通过以下指令在后台启动shadowsocks的服务：
+ssserver -p 8836 -k `password` -m rc4-md5 -d start
+ssserver -p 8836 -k `password` -m rc4-md5 -d stop
+</code></pre>
+
+<p><strong>优化版本</strong><br/>
+* 创建/etc/shadownsocks.json配置文件<br/>
+* 写入配置:</p>
+
+<pre><code class="language-sh">{
+    &quot;server&quot;:&quot;你的服务器ip地址&quot;,
+    &quot;server_port&quot;:10088,
+    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
+    &quot;local_port&quot;:1080,
+    &quot;password&quot;:&quot;你设置的密码&quot;,
+    &quot;timeout&quot;:300,
+    &quot;method&quot;:&quot;aes-256-cfb&quot;,
+    &quot;fast_open&quot;: false
+}
+</code></pre>
+
+<p>优化后的启动命令:</p>
+
+<pre><code class="language-sh">ssserver -c /etc/shadowsocks.json
+#或者在后台运行
+ssserver -c /etc/shadowsocks.json -d start
+ssserver -c /etc/shadowsocks.json -d stop
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[workflow]]></title>
