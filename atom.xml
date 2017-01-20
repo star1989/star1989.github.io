@@ -4,13 +4,63 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-01-13T14:51:48+08:00</updated>
+  <updated>2017-01-16T17:44:13+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[workflow]]></title>
+    <link href="http://blog.cxstars.com/14848776957351.html"/>
+    <updated>2017-01-20T10:01:35+08:00</updated>
+    <id>http://blog.cxstars.com/14848776957351.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">项目链接</h2>
+
+<p><a href="https://github.com/star1989/star_workflow">https://github.com/star1989/star_workflow</a></p>
+
+<h2 id="toc_1">金山翻译</h2>
+
+<h3 id="toc_2"><strong>功能:</strong></h3>
+
+<ul>
+<li>翻译</li>
+<li>音标</li>
+<li>发音</li>
+<li>复制(当前选中行文本)</li>
+</ul>
+
+<h3 id="toc_3">按键</h3>
+
+<p><em>dc</em></p>
+
+<blockquote>
+<p>对应中文的单词,而且也离左手近,比较方便(主要是懒)</p>
+</blockquote>
+
+<h3 id="toc_4">效果</h3>
+
+<p><img src="http://bimg.cxstars.com/2017-01-20-14848765913701.jpg" alt="翻译截图"/></p>
+
+<h3 id="toc_5">金山API</h3>
+
+<p>项目里我已经放上我自己的API KEY,方便跟我一样懒的道友们.<br/>
+不过也建议大家自行申请,非常方便.<a href="http://open.iciba.com/?c=api">金山词霸API</a><br/>
+修改文件<code>jsfy.py</code>:<br/>
+<code>app_key = &quot;put your api key&quot;</code></p>
+
+<h2 id="toc_6">参考资料</h2>
+
+<ul>
+<li><a href="http://www.deanishe.net/alfred-workflow/">Alfred-Workflow Python</a></li>
+<li><a href="https://www.alfredapp.com/help/workflows/">Alfred office help</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[python语法总结]]></title>
