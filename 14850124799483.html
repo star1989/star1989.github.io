@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  使用python搭建ss梯子 - 星晨入梦
+  计算机编码与python编码 - 星晨入梦
   
   </title>
   
@@ -118,10 +118,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>使用python搭建ss梯子</h1>
+          <h1>计算机编码与python编码</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2017/1/20 10:3 上午</span>
+          <span class="date">2017/1/21 23:27 下午</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -132,7 +132,7 @@
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14848778197605.html" data-count-type="comments" href="14848778197605.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14850124799483.html" data-count-type="comments" href="14850124799483.html#ds-thread"></a>
             
           </span>
 
@@ -140,43 +140,48 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h2 id="toc_0">CentOS7</h2>
+      <h2 id="toc_0">编码</h2>
 
-<pre><code class="language-sh">yum install python-setuptools &amp;&amp; easy_install pip
-pip install shadowsocks
-</code></pre>
+<h3 id="toc_1">ASCII</h3>
 
-<h2 id="toc_1">启动命令</h2>
+<blockquote>
+<p>计算机发明时,美国人只考虑了英语,所以当时的ASCII编码只有8个比特,即1个字节.大小英文字母/数字/标点符号/特殊符号等127个字母被纳入并规范成了ASCII编码.</p>
+</blockquote>
 
-<pre><code class="language-sh">ssserver -p 8836 -k `password` -m rc4-md5
-#或者可以通过以下指令在后台启动shadowsocks的服务：
-ssserver -p 8836 -k `password` -m rc4-md5 -d start
-ssserver -p 8836 -k `password` -m rc4-md5 -d stop
-</code></pre>
+<h3 id="toc_2">Unicode(Universal Multiple-Octet Coded Character Set)</h3>
 
-<p><strong>优化版本</strong><br/>
-* 创建/etc/shadownsocks.json配置文件<br/>
-* 写入配置:</p>
+<blockquote>
+<p>ASCII编码只适用于英语国家,所以后来百家争鸣,中国有<strong>GB2312</strong>编码,韩国/日本等也都自制编码.就这样,冲突来了.<br/>
+为了解决冲突,Unicode编码被协商制定出来.将世界上所有语言字符都编码成一个数字.<br/>
+Unicode字符码是32位，4个字节。</p>
+</blockquote>
 
-<pre><code class="language-sh">{
-    &quot;server&quot;:&quot;你的服务器ip地址&quot;,
-    &quot;server_port&quot;:10088,
-    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;password&quot;:&quot;你设置的密码&quot;,
-    &quot;timeout&quot;:300,
-    &quot;method&quot;:&quot;aes-256-cfb&quot;,
-    &quot;fast_open&quot;: false
-}
-</code></pre>
+<h3 id="toc_3">UTF-8</h3>
 
-<p>优化后的启动命令:</p>
+<blockquote>
+<p>Unicode编码虽然兼容ASCII,但是会产生极大的浪费,Double了.所以才出现了把Unicode编码转化为<em>可变长编码</em>的UTF-8编码.UTF-8编码氢一个Unicode字符根据不同的数字大小编码成1-6个字节.英文字母1个字节,汉字通常3字节,生僻字4-6字节.<br/>
+一般情况均传输的是英文字母(都是代码).</p>
+</blockquote>
 
-<pre><code class="language-sh">ssserver -c /etc/shadowsocks.json
-#或者在后台运行
-ssserver -c /etc/shadowsocks.json -d start
-ssserver -c /etc/shadowsocks.json -d stop
-</code></pre>
+<h2 id="toc_4">计算机内存编码</h2>
+
+<blockquote>
+<p>早期Unicode编码就是16位2字节定长.但是中国文化5千年,文字太多,居然超过了65536个.So,Unicode就从定长走向了不定长的道路.<br/>
+计算机处理文本的时候，内存中一般都不用UTF-8。因为UTF-8是变长编码，不从头扫描一遍，你不知道第几个字符在哪个位置上，这在处理的时候非常浪费时间。现在很多语言/程序的处理办法，是使用源于原始UTF-16的一个定长编码，只处理字符码在16位以内的字符，不支持超过16位的罕见字。这种16位定长的编码方式被称为UCS-2。那些零星的几个突破16位的字符，除非你专门研究古文或者奇怪的小语种，一般来说是遇不到的。遇到了也是黑人问号脸。<br/>
+解决办法:不怕浪费空间的，就用UTF-32，不怕浪费处理时间的，就用完整的UTF-16，或者索性用UTF-8。</p>
+</blockquote>
+
+<h2 id="toc_5">python编码</h2>
+
+<p>在python2中,<code>&#39;xxx&#39;</code>和<code>u&#39;xxx&#39;</code>是完全不一样的.前者是UTF-8编码的,也同ASCII编码,后者是Unicode编码.<br/>
+Unicode转UTF-8编码:<br/>
+<code>u&#39;aaa&#39;.encode(&#39;utf-8&#39;)</code><br/>
+UTF-8转Unicode编码:<br/>
+<code>&#39;中国&#39;.decode(&#39;utf-8&#39;)</code><br/>
+输入中文编码前提:<br/>
+<code># -*- coding: utf-8 -*-</code></p>
+
+<p>在python3中,<code>&#39;xxx&#39;</code>和<code>u&#39;xxx&#39;</code>都是Unicode编码.</p>
 
 
     
@@ -187,16 +192,13 @@ ssserver -c /etc/shadowsocks.json -d stop
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14850124799483.html" 
-          title="Previous Post: 计算机编码与python编码">&laquo; 计算机编码与python编码</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14848776957351.html" 
-          title="Next Post: workflow">workflow &raquo;</a>
+          <a  href="14848778197605.html" 
+          title="Next Post: 使用python搭建ss梯子">使用python搭建ss梯子 &raquo;</a>
       
       </p>
         </div>
@@ -208,7 +210,7 @@ ssserver -c /etc/shadowsocks.json -d stop
           
 
           
-              <div class="ds-thread" data-thread-key="14848778197605.html" data-url="http://blog.cxstars.com/14848778197605.html" data-title="使用python搭建ss梯子"></div>
+              <div class="ds-thread" data-thread-key="14850124799483.html" data-url="http://blog.cxstars.com/14850124799483.html" data-title="计算机编码与python编码"></div>
           
         </div>
       </div>

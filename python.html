@@ -118,6 +118,82 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14850124799483.html">
+                
+                  <h1>计算机编码与python编码</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">编码</h2>
+
+<h3 id="toc_1">ASCII</h3>
+
+<blockquote>
+<p>计算机发明时,美国人只考虑了英语,所以当时的ASCII编码只有8个比特,即1个字节.大小英文字母/数字/标点符号/特殊符号等127个字母被纳入并规范成了ASCII编码.</p>
+</blockquote>
+
+<h3 id="toc_2">Unicode(Universal Multiple-Octet Coded Character Set)</h3>
+
+<blockquote>
+<p>ASCII编码只适用于英语国家,所以后来百家争鸣,中国有<strong>GB2312</strong>编码,韩国/日本等也都自制编码.就这样,冲突来了.<br/>
+为了解决冲突,Unicode编码被协商制定出来.将世界上所有语言字符都编码成一个数字.<br/>
+Unicode字符码是32位，4个字节。</p>
+</blockquote>
+
+<h3 id="toc_3">UTF-8</h3>
+
+<blockquote>
+<p>Unicode编码虽然兼容ASCII,但是会产生极大的浪费,Double了.所以才出现了把Unicode编码转化为<em>可变长编码</em>的UTF-8编码.UTF-8编码氢一个Unicode字符根据不同的数字大小编码成1-6个字节.英文字母1个字节,汉字通常3字节,生僻字4-6字节.<br/>
+一般情况均传输的是英文字母(都是代码).</p>
+</blockquote>
+
+<h2 id="toc_4">计算机内存编码</h2>
+
+<blockquote>
+<p>早期Unicode编码就是16位2字节定长.但是中国文化5千年,文字太多,居然超过了65536个.So,Unicode就从定长走向了不定长的道路.<br/>
+计算机处理文本的时候，内存中一般都不用UTF-8。因为UTF-8是变长编码，不从头扫描一遍，你不知道第几个字符在哪个位置上，这在处理的时候非常浪费时间。现在很多语言/程序的处理办法，是使用源于原始UTF-16的一个定长编码，只处理字符码在16位以内的字符，不支持超过16位的罕见字。这种16位定长的编码方式被称为UCS-2。那些零星的几个突破16位的字符，除非你专门研究古文或者奇怪的小语种，一般来说是遇不到的。遇到了也是黑人问号脸。<br/>
+解决办法:不怕浪费空间的，就用UTF-32，不怕浪费处理时间的，就用完整的UTF-16，或者索性用UTF-8。</p>
+</blockquote>
+
+<h2 id="toc_5">python编码</h2>
+
+<p>在python2中,<code>&#39;xxx&#39;</code>和<code>u&#39;xxx&#39;</code>是完全不一样的.前者是UTF-8编码的,也同ASCII编码,后者是Unicode编码.<br/>
+Unicode转UTF-8编码:<br/>
+<code>u&#39;aaa&#39;.encode(&#39;utf-8&#39;)</code><br/>
+UTF-8转Unicode编码:<br/>
+<code>&#39;中国&#39;.decode(&#39;utf-8&#39;)</code><br/>
+输入中文编码前提:<br/>
+<code># -*- coding: utf-8 -*-</code></p>
+
+<p>在python3中,<code>&#39;xxx&#39;</code>和<code>u&#39;xxx&#39;</code>都是Unicode编码.</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/1/21 23:27 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='python.html'>python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14850124799483.html" data-count-type="comments" href="14850124799483.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14848778197605.html">
                 
                   <h1>使用python搭建ss梯子</h1>
@@ -462,6 +538,12 @@ else:
 	      
 		      
 			      <li class="post">
+			        <a href="14850124799483.html">计算机编码与python编码</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14848778197605.html">使用python搭建ss梯子</a>
 			      </li>
 		     
@@ -485,10 +567,6 @@ else:
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14840656639167.html">swoole安装</a>
-			      </li>
-		     
 		  
 		      
 		  
