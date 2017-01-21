@@ -4,7 +4,7 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-01-20T10:03:52+08:00</updated>
+  <updated>2017-01-20T10:09:51+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -74,10 +74,15 @@ ssserver -c /etc/shadowsocks.json -d stop
 <h3 id="toc_2"><strong>功能:</strong></h3>
 
 <ul>
-<li>翻译</li>
+<li>中英文翻译</li>
 <li>音标</li>
-<li>发音</li>
-<li>复制(当前选中行文本)</li>
+<li>发音(<strong><em>默认美式</em></strong>)</li>
+<li>复制(当前选中行文本,内容分为:音标,释意几行展示,可以自由复制)
+
+<ul>
+<li>注:复制的同时都会有读音</li>
+<li>复制示例:<code>am:[stɑr] ,en:[stɑ:(r)]</code></li>
+</ul></li>
 </ul>
 
 <h3 id="toc_3">按键</h3>
@@ -90,7 +95,9 @@ ssserver -c /etc/shadowsocks.json -d stop
 
 <h3 id="toc_4">效果</h3>
 
-<p><img src="http://bimg.cxstars.com/2017-01-20-14848765913701.jpg" alt="翻译截图"/></p>
+<p><img src="http://bimg.cxstars.com/2017-01-20-14848765913701.jpg" alt="英文翻译截图"/></p>
+
+<p><img src="http://bimg.cxstars.com/2017-01-21-14850042653066.jpg" alt="中文翻译截图"/></p>
 
 <h3 id="toc_5">金山API</h3>
 
@@ -104,6 +111,14 @@ ssserver -c /etc/shadowsocks.json -d stop
 <ul>
 <li><a href="http://www.deanishe.net/alfred-workflow/">Alfred-Workflow Python</a></li>
 <li><a href="https://www.alfredapp.com/help/workflows/">Alfred office help</a></li>
+</ul>
+
+<h2 id="toc_7">ToDoList</h2>
+
+<ul>
+<li>添加单词到单词本</li>
+<li><del>中翻英(v1.1:2017-01-21)</del></li>
+<li>每日一句</li>
 </ul>
 
 ]]></content>
