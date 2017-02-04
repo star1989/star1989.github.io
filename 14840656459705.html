@@ -1,0 +1,453 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  swoole学习记录 - 星晨入梦
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="星晨入梦" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:blog.cxstars.com ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; 星晨入梦</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="python.html">python</a></li>
+        
+            <li><a href="nginx.html">nginx</a></li>
+        
+            <li><a href="golang.html">golang</a></li>
+        
+            <li><a href="book.html">book</a></li>
+        
+            <li><a href="arch.html">arch</a></li>
+        
+            <li><a href="redis.html">redis</a></li>
+        
+            <li><a href="life.html">life</a></li>
+        
+            <li><a href="php.html">php</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>swoole学习记录</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2017/1/11 0:27 上午</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='php.html'>php</a></span>
+           
+         
+          <span class="comments">
+            
+
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14840656459705.html" data-count-type="comments" href="14840656459705.html#ds-thread"></a>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <h2 id="toc_0">定时器</h2>
+
+<p><strong>swoole_timer_tick</strong>重复执行指定方法,<strong>swoole_timer_after</strong>延迟指定时间后执行<em>callback method</em></p>
+
+<pre><code class="language-php">$tick_timer_id = swoole_timer_tick(1000,function($timer_id){
+       echo &#39;same as setInterval.And this timer id :&#39;.$timer_id.PHP_EOL;
+    });
+var_dump($tick_timer_id);
+swoole_timer_after(2000,function(){
+   echo &#39;same as setTimeout&#39;.PHP_EOL;
+});
+swoole_timer_clear($tick_timer_id);
+</code></pre>
+
+<h2 id="toc_1">异步任务</h2>
+
+<pre><code class="language-php">$serv = new swoole_server(&quot;127.0.0.1&quot;, 9501);
+//设置异步任务的工作进程数量
+$serv-&gt;set(array(&#39;task_worker_num&#39; =&gt; 4));
+$serv-&gt;on(&#39;receive&#39;, function($serv, $fd, $from_id, $data) {
+    //投递异步任务
+    $task_id = $serv-&gt;task($data);
+    echo &quot;Dispath AsyncTask: id=${task_id}\n&quot;;
+});
+//处理异步任务
+$serv-&gt;on(&#39;task&#39;, function ($serv, $task_id, $from_id, $data) {
+    echo &quot;New AsyncTask[id=$task_id]&quot;.PHP_EOL;
+    //返回任务执行的结果
+//    $serv-&gt;finish(&quot;$data -&gt; OK&quot;);
+});
+//处理异步任务的结果
+$serv-&gt;on(&#39;finish&#39;, function ($serv, $task_id, $data) {
+    echo &quot;AsyncTask[$task_id] Finish: $data&quot;.PHP_EOL;
+});
+$serv-&gt;start();
+</code></pre>
+
+<h2 id="toc_2">协议</h2>
+
+<blockquote>
+<p>因为TCP通信是流式的，在接收1个大数据包时，可能会被拆分成多个数据包发送。多次Send底层也可能会合并成一次进行发送。这里就需要2个操作来解决：</p>
+</blockquote>
+
+<span id="more"></span><!-- more -->
+
+<p>分包：Server收到了多个数据包，需要拆分数据包<br/>
+合包：Server收到的数据只是包的一部分，需要缓存数据，合并成完整的包</p>
+
+<h3 id="toc_3">EOF协议</h3>
+
+<p>EOF协议处理的原理是每个数据包结尾加一串特殊字符表示包已结束。如memcache、ftp、stmp都使用\r\n作为结束符。发送数据时只需要在包末尾增加\r\n即可。使用EOF协议处理，一定要确保数据包中间不会出现EOF，否则会造成分包错误。</p>
+
+<p>在swoole_server和swoole_client的代码中只需要设置2个参数就可以使用EOF协议处理。</p>
+
+<pre><code class="language-php">$server-&gt;set(array(
+    &#39;open_eof_split&#39; =&gt; true,
+    &#39;package_eof&#39; =&gt; &quot;\r\n&quot;,
+));
+$client-&gt;set(array(
+    &#39;open_eof_split&#39; =&gt; true,
+    &#39;package_eof&#39; =&gt; &quot;\r\n&quot;,
+));
+</code></pre>
+
+<h2 id="toc_4">固定包头+包头协议</h2>
+
+<p>包头由一个字段指定了包体或整个包的长度，长度一般是使用2字节/4字节整数来表示。服务器收到包头后，可以根据长度值来精确控制需要再接收多少数据就是完整的数据包。<br/>
+Swoole的Server和异步Client都是在<em>onReceive</em>回调函数中处理数据包，当设置了协议处理后，只有收到一个完整数据包时才会触发<em>onReceive</em>事件。同步客户端在设置了协议处理后，调用 $client-&gt;recv() 不再需要传入长度，recv函数在收到完整数据包或发生错误后返回。</p>
+
+<pre><code class="language-php">$server-&gt;set(array(
+    &#39;open_length_check&#39; =&gt; true,
+    &#39;package_max_length&#39; =&gt; 81920,
+    &#39;package_length_type&#39; =&gt; &#39;n&#39;, //see php pack()
+    &#39;package_length_offset&#39; =&gt; 0,
+    &#39;package_body_offset&#39; =&gt; 2,
+));
+</code></pre>
+
+<h2 id="toc_5">编程注意事项</h2>
+
+<ol>
+<li>不要在代码中执行sleep以及其他睡眠函数，这样会导致整个进程阻塞exit/die是危险的，会导致worker进程退出</li>
+<li>可通过register_shutdown_function来捕获致命错误，在进程异常退出时做一些请求工作，具体参看/wiki/page/305.html</li>
+<li>PHP代码中如果有异常抛出，必须在回调函数中进行try/catch捕获异常，否则会导致工作进程退出</li>
+<li>swoole不支持set_exception_handler，必须使用try/catch方式处理异常</li>
+<li>Worker进程不得共用同一个Redis或MySQL等网络服务客户端，Redis/MySQL创建连接的相关代码可以放到onWorkerStart回调函数中，具体参考/wiki/page/325.html</li>
+</ol>
+
+<h3 id="toc_6">加载文件问题</h3>
+
+<p>由于swoole是常驻内存的,所以加载类/函数定义的文件后不会释放。因此引入类/函数的php文件时必须要使用<strong>include_once</strong>或<strong>require_once</strong>，否会发生<code>cannot redeclare function/class</code>的致命错误。</p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="14840656639167.html" 
+          title="Previous Post: swoole安装">&laquo; swoole安装</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14836808084156.html" 
+          title="Next Post: Again,Go!">Again,Go! &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+
+          
+              <div class="ds-thread" data-thread-key="14840656459705.html" data-url="http://blog.cxstars.com/14840656459705.html" data-title="swoole学习记录"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="asset/img/cx_logo.png" /></div>
+            
+                <h1>星晨入梦</h1>
+                <div class="site-des">life&code</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/star1989" title="GitHub">GitHub</a>
+
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="python.html"><strong>python</strong></a>
+        
+            <a href="nginx.html"><strong>nginx</strong></a>
+        
+            <a href="golang.html"><strong>golang</strong></a>
+        
+            <a href="book.html"><strong>book</strong></a>
+        
+            <a href="arch.html"><strong>arch</strong></a>
+        
+            <a href="redis.html"><strong>redis</strong></a>
+        
+            <a href="life.html"><strong>life</strong></a>
+        
+            <a href="php.html"><strong>php</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="14850124799483.html">计算机编码与python编码</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14848778197605.html">使用python搭建ss梯子</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14848776957351.html">金山翻译&时间的workflow</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14842902733244.html">python语法总结</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="14842192746625.html">在mac mini上安装CentOS7</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+  
+
+
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'chenxin1989'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    <script src="asset/chart/all-min.js"></script><script type="text/javascript">$(function(){    var mwebii=0;    var mwebChartEleId = 'mweb-chart-ele-';    $('pre>code').each(function(){        mwebii++;        var eleiid = mwebChartEleId+mwebii;        if($(this).hasClass('language-sequence')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = Diagram.parse($(this).text());            diagram.drawSVG(eleiid,{theme: 'simple'});        }else if($(this).hasClass('language-flow')){            var ele = $(this).addClass('nohighlight').parent();            $('<div id="'+eleiid+'"></div>').insertAfter(ele);            ele.hide();            var diagram = flowchart.parse($(this).text());            diagram.drawSVG(eleiid);        }    });});</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b65a52970ddc989d3f85c97f61de0c39";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </body>
+</html>
