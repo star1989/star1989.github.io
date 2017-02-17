@@ -118,6 +118,230 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14873400340656.html">
+                
+                  <h1>PHP扩展基础知识及生成</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">扩展知识</h2>
+
+<h3 id="toc_1">PHP架构图</h3>
+
+<p><img src="http://bimg.cxstars.com/2017-02-15-14871384652088.jpg" alt="PHP架构图"/></p>
+
+<h3 id="toc_2">PHP框架生成器</h3>
+
+<pre><code class="language-shell">star@starMBP:~/Documents/images/php/php-5.6.22/ext$ ls
+ext_skel
+ext_skel_win32.php
+</code></pre>
+
+<p><strong>生成器使用方法</strong></p>
+
+<pre><code class="language-shell">./ext_skel --extname=module [--proto=file] [--stubs=file] [--xml[=file]]
+           [--skel=dir] [--full-xml] [--no-help]
+
+  --extname=module   module is the name of your extension
+  --proto=file       file contains prototypes of functions to create
+  --stubs=file       generate only function stubs in file
+  --xml              generate xml documentation to be added to phpdoc-svn
+  --skel=dir         path to the skeleton directory
+  --full-xml         generate xml documentation for a self-contained extension
+                     (not yet implemented)
+  --no-help          don&#39;t try to be nice and create comments in the code
+                     and helper functions to test if the module compiled
+</code></pre>
+
+<h3 id="toc_3">框架文件结构</h3>
+
+<pre><code class="language-shell">star@starMBP:~/Documents/images/php/php-5.6.22/ext$ ls star_test/
+CREDITS         config.m4       php_star_test.h star_test.php
+EXPERIMENTAL    config.w32      star_test.c     tests
+</code></pre>
+
+<h4 id="toc_4">config.m4</h4>
+
+<blockquote>
+<p><em>config.m4</em> 文件告诉 UNIX 构建系统哪些扩展 configure 选项是支持的，你需要哪些扩展库，以及哪些源文件要编译成它的一部分。</p>
+
+<p><em>config.m4</em> 文件使用 <strong>GNU autoconf</strong> 语法编写。简而言之，就是用强大的宏语言增强的 shell 脚本。注释用字符串 <strong>dnl</strong> 分隔，字符串则放在左右方括号中间（例如，[ 和 ]）。字符串可按需要多次嵌套引用。</p>
+</blockquote>
+
+<h4 id="toc_5">PHP_ARG_*: 赋予用户可选项</h4>
+
+<blockquote>
+<p><strong>PHP_ARG_WITH()</strong> 用于取得参数的选项，例如扩展所需库或程序的位置<br/>
+<strong>PHP_ARG_ENABLE()</strong> 用于代表简单标志的选项。</p>
+</blockquote>
+
+<pre><code class="language-shell">$ ./configure --with-example=/some/library/path/example-config --disable-example-debug --with-example-extra=/another/library/path
+...
+checking for example support... yes
+checking whether to enable debugging support in example... no
+checking for extra libraries for example... /another/library/path
+...
+
+PHP_ARG_WITH(example, for example support,
+[  --with-example[=FILE]       Include example support. File is the optional path to example-config])
+PHP_ARG_ENABLE(example-debug, whether to enable debugging support in example,
+[  --enable-example-debug        example: Enable debugging support in example], no, no)
+PHP_ARG_WITH(example-extra, for extra libraries for example,
+[  --with-example-extra=DIR      example: Location of extra libraries for example], no, no)
+
+dnl 检测扩展是否已启用
+if test &quot;$PHP_EXAMPLE&quot; != &quot;no&quot;; then
+  
+  dnl 检测 example-config。首先尝试所给出的路径，然后在 $PATH 中寻找
+  AC_MSG_CHECKING([for example-config])
+  EXAMPLE_CONFIG=&quot;example-config&quot;
+  if test &quot;$PHP_EXAMPLE&quot; != &quot;yes&quot;; then
+    EXAMPLE_PATH=$PHP_EXAMPLE
+  else
+    EXAMPLE_PATH=`$php_shtool path $EXAMPLE_CONFIG`
+  fi
+  
+  dnl 如果找到可用的 example-config，就使用它
+  if test -f &quot;$EXAMPLE_PATH&quot; &amp;&amp; test -x &quot;$EXAMPLE_PATH&quot; &amp;&amp; $EXAMPLE_PATH --version &gt; /dev/null 2&gt;&amp;1; then
+    AC_MSG_RESULT([$EXAMPLE_PATH])
+    EXAMPLE_LIB_NAME=`$EXAMPLE_PATH --libname`
+    EXAMPLE_INCDIRS=`$EXAMPLE_PATH --incdirs`
+    EXAMPLE_LIBS=`$EXAMPLE_PATH --libs`
+    
+    dnl 检测扩展库是否工作正常
+    PHP_CHECK_LIBRARY($EXAMPLE_LIB_NAME, example_critical_function,
+    [
+      dnl 添加所需的 include 目录
+      PHP_EVAL_INCLINE($EXAMPLE_INCDIRS)
+      dnl 添加所需的扩展库及扩展库所在目录
+      PHP_EVAL_LIBLINE($EXAMPLE_LIBS, EXAMPLE_SHARED_LIBADD)
+    ],[
+      dnl 跳出
+      AC_MSG_ERROR([example library not found. Check config.log for more information.])
+    ],[$EXAMPLE_LIBS]
+    )
+  else
+    dnl 没有可用的 example-config，跳出
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([Please check your example installation.])
+  fi
+  
+  dnl 检测是否启用调试
+  if test &quot;$PHP_EXAMPLE_DEBUG&quot; != &quot;no&quot;; then
+    dnl 是，则设置 C 语言宏指令
+    AC_DEFINE(USE_EXAMPLE_DEBUG,1,[Include debugging support in example])
+  fi
+  
+  dnl 检测额外的支持
+  if test &quot;$PHP_EXAMPLE_EXTRA&quot; != &quot;no&quot;; then
+    if test &quot;$PHP_EXAMPLE_EXTRA&quot; == &quot;yes&quot;; then
+      AC_MSG_ERROR([You must specify a path when using --with-example-extra])
+    fi
+    
+    PHP_CHECK_LIBRARY(example-extra, example_critical_extra_function,
+    [
+      dnl 添加所需路径
+      PHP_ADD_INCLUDE($PHP_EXAMPLE_EXTRA/include)
+      PHP_ADD_LIBRARY_WITH_PATH(example-extra, $PHP_EXAMPLE_EXTRA/lib, EXAMPLE_SHARED_LIBADD)
+      AC_DEFINE(HAVE_EXAMPLEEXTRALIB,1,[Whether example-extra support is present and requested])
+      EXAMPLE_SOURCES=&quot;$EXAMPLE_SOURCES example_extra.c&quot;
+    ],[
+      AC_MSG_ERROR([example-extra lib not found. See config.log for more information.])
+    ],[-L$PHP_EXAMPLE_EXTRA/lib]
+    )
+  fi
+  
+  dnl 最后，将扩展及其所需文件等信息传给构建系统
+  PHP_NEW_EXTENSION(example, example.c $EXAMPLE_SOURCES, $ext_shared)
+  PHP_SUBST(EXAMPLE_SHARED_LIBADD)
+fi
+</code></pre>
+
+<h2 id="toc_6">生成扩展</h2>
+
+<pre><code class="language-shell">star@starMBP:~/Documents/images/php/php-5.6.22/ext$ ./ext_skel --extname=star_queue
+Creating directory star_queue
+Creating basic files: config.m4 config.w32 .gitignore star_queue.c php_star_queue.h CREDITS EXPERIMENTAL tests/001.phpt star_queue.php [done].
+
+To use your new extension, you will have to execute the following steps:
+
+1.  $ cd ..
+2.  $ vi ext/star_queue/config.m4
+3.  $ ./buildconf
+4.  $ ./configure --[with|enable]-star_queue
+5.  $ make
+6.  $ ./sapi/cli/php -f ext/star_queue/star_queue.php
+7.  $ vi ext/star_queue/star_queue.c
+8.  $ make
+
+Repeat steps 3-6 until you are satisfied with ext/star_queue/config.m4 and
+step 6 confirms that your module is compiled into PHP. Then, start writing
+code and repeat the last two steps as often as necessary.
+</code></pre>
+
+<h2 id="toc_7">修改config.m4</h2>
+
+<pre><code class="language-c"> 16 PHP_ARG_ENABLE(star_queue, whether to enable star_queue support,
+ 17 Make sure that the comment is aligned:
+ 18 [  --enable-star_queue           Enable star_queue support])
+</code></pre>
+
+<h2 id="toc_8">编译</h2>
+
+<pre><code class="language-shell">phpize
+./configure --with-php-config=/your php-config path
+make
+make install
+</code></pre>
+
+<p>查看扩展<br/>
+<code>ls /usr/local/php/lib/php/extensions/debug-zts-20131226/</code></p>
+
+<pre><code class="language-shell">star_queue.so
+</code></pre>
+
+<h2 id="toc_9">测试扩展</h2>
+
+<p><code>php -f star_queue.php</code></p>
+
+<pre><code class="language-shell">star@starMBP:~/Documents/images/php/php-5.6.22/ext/star_queue$ php -f star_queue.php
+Functions available in the test extension:
+queue_new
+queue_push
+queue_pop
+queue_count
+confirm_star_queue_compiled
+
+Congratulations! You have successfully modified ext/star_queue/config.m4. Module star_queue is now compiled into PHP.
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/2/17 22:0 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='php.html'>php</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14873400340656.html" data-count-type="comments" href="14873400340656.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14850124799483.html">
                 
                   <h1>计算机编码与python编码</h1>
@@ -1217,6 +1441,12 @@ C++兼容测试文件</li>
 	      
 		      
 			      <li class="post">
+			        <a href="14873400340656.html">PHP扩展基础知识及生成</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14850124799483.html">计算机编码与python编码</a>
 			      </li>
 		     
@@ -1240,10 +1470,6 @@ C++兼容测试文件</li>
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14842192746625.html">在mac mini上安装CentOS7</a>
-			      </li>
-		     
 		  
 		      
 		  
