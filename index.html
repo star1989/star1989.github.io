@@ -118,6 +118,135 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14878474870577.html">
+                
+                  <h1>intl,geoip,mongodb扩展macos安装踩坑</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">扩展组件</h2>
+
+<ul>
+<li><a href="http://pecl.php.net/package/geoip">geoip</a></li>
+<li>intl</li>
+<li><a href="http://pecl.php.net/package/imagick">imagick</a></li>
+<li><a href="http://php.net/manual/zh/mongodb.installation.manual.php">mongodb</a></li>
+</ul>
+
+<h2 id="toc_1">intl</h2>
+
+<h4 id="toc_2">错误</h4>
+
+<pre><code class="language-shell">configure: error: Unable to detect ICU prefix or no failed. Please verify ICU install prefix and make sure icu-config works.
+</code></pre>
+
+<p><strong>解决</strong></p>
+
+<pre><code class="language-shell">brew install --force icu4c
+pecl install intl
+输入icu4c路径:/usr/local/opt/icu4c
+
+Build process completed successfully
+Installing &#39;/usr/local/php/lib/php/extensions/debug-zts-20131226/intl.so&#39;
+install ok: channel://pecl.php.net/intl-3.0.0
+configuration option &quot;php_ini&quot; is not set to php.ini location
+You should add &quot;extension=intl.so&quot; to php.ini
+</code></pre>
+
+<h2 id="toc_3">geoIP</h2>
+
+<h4 id="toc_4">错误</h4>
+
+<pre><code class="language-shell">checking for geoip files in default path... not found
+configure: error: Please reinstall the geoip distribution
+</code></pre>
+
+<p><strong>解决</strong></p>
+
+<pre><code class="language-shell">curl -O http://www.maxmind.com/download/geoip/api/c/GeoIP-latest.tar.gz
+tar -zxf GeoIP-latest.tar.gz
+cd GeoIP-1.6.0/
+./configure --prefix=/Users/star/Documents/geo
+make &amp;&amp; make install
+
+cd ../geoip-1.0.8
+phpize
+vim configure
+在4102行添加上面的库PATH
+ 4101   # --with-geoip -&gt; check with-path
+ 4102   SEARCH_PATH=&quot;/usr/local /usr /sw /opt/local /Users/star/Documents/geo&quot;
+ 4103   SEARCH_FOR=&quot;/include/GeoIP.h&quot;
+ 4104   if test -r $PHP_GEOIP/$SEARCH_FOR; then
+ 4105     GEOIP_DIR=$PHP_GEOIP
+ 4106   else # search default path list
+ 4107     { $as_echo &quot;$as_me:${as_lineno-$LINENO}: checking for geoip files in default path&quot; &gt;&amp;5
+ 4108 $as_echo_n &quot;checking for geoip files in default path... &quot; &gt;&amp;6; }
+ 4109     for i in $SEARCH_PATH ; do
+ 4110       if test -r $i/$SEARCH_FOR; then
+ 4111         GEOIP_DIR=$i
+ 4112         { $as_echo &quot;$as_me:${as_lineno-$LINENO}: result: found in $i&quot; &gt;&amp;5
+ 4113 $as_echo &quot;found in $i&quot; &gt;&amp;6; }
+ 4114       fi
+ 4115     done
+ 4116   fi
+ ./configure --with-php-config=/usr/local/php/bin/php-config
+ make
+ make install
+</code></pre>
+
+<h4 id="toc_5">错误</h4>
+
+<p><code>GeoIPCity.dat Not Found</code></p>
+
+<p><strong>解决</strong></p>
+
+<pre><code class="language-shell">curl -O http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+gunzip GeoLiteCity.dat.gz
+mv GeoLiteCity.dat /Users/star/Documents/geo/share/GeoIP/
+</code></pre>
+
+<h2 id="toc_6">mongoDB</h2>
+
+<h4 id="toc_7">错误</h4>
+
+<p><code>make时错误 openssl头文件找不到</code></p>
+
+<p><strong>解决</strong></p>
+
+<pre><code class="language-shell">ln -s /usr/local/opt/openssl/include/openssl /usr/local/include/
+</code></pre>
+
+<h2 id="toc_8">imagick</h2>
+
+<p><code>pecl install imagick</code></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/2/23 18:58 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='php.html'>php</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14878474870577.html" data-count-type="comments" href="14878474870577.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14873400340656.html">
                 
                   <h1>PHP扩展基础知识及生成</h1>
@@ -1441,6 +1570,12 @@ C++兼容测试文件</li>
 	      
 		      
 			      <li class="post">
+			        <a href="14878474870577.html">intl,geoip,mongodb扩展macos安装踩坑</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14873400340656.html">PHP扩展基础知识及生成</a>
 			      </li>
 		     
@@ -1464,10 +1599,6 @@ C++兼容测试文件</li>
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14842902733244.html">python语法总结</a>
-			      </li>
-		     
 		  
 		      
 		  
