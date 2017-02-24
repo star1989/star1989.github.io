@@ -292,7 +292,43 @@ Config value &quot;default_standard&quot; added successfully
 <pre><code class="language-shell">phpcs --config-set installed_paths your_standard_path
 </code></pre>
 
-<h2 id="toc_5">后续</h2>
+<p><em>检查PHP文件</em></p>
+
+<pre><code class="language-shell">star@starMBP:~$ phpcs sample.php
+FOUND 43 ERRORS AFFECTING 33 LINES
+----------------------------------------------------------------------
+   3 | ERROR | [ ] Each class must be in a namespace of at least one
+     |       |     level (a top-level vendor name)
+   3 | ERROR | [x] Opening brace of a class must be on the line after
+     |       |     the definition
+   5 | ERROR | [x] Opening brace should be on a new line
+  23 | ERROR | [x] Expected 1 space after IF keyword; 0 found
+  ........
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 42 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+Time: 633ms; Memory: 22.75Mb
+</code></pre>
+
+<p><strong>在这里其实已经提到了下一步要做什么了,使用PHPCBF修复</strong></p>
+
+<p><em>phpcbf修复</em></p>
+
+<pre><code class="language-shell">star@starMBP:~$ phpcbf sample.php
+Changing into directory /Users/star/sample.php
+Processing sample.php [PHP =&gt; 4751 tokens in 449 lines]... DONE in 555ms (42 fixable violations)
+        =&gt; Fixing file: 0/42 violations remaining [made 3 passes]... DONE in 1.98 secs
+Patched 1 file
+Time: 2.65 secs; Memory: 36.5Mb
+</code></pre>
+
+<h4 id="toc_5">参考</h4>
+
+<p><a href="https://github.com/squizlabs/PHP_CodeSniffer/wiki">CodeSniffer_wiki</a><br/>
+<a href="https://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php">Coding Standard Tutorial</a></p>
+
+<h2 id="toc_6">后续</h2>
 
 <p>继续思考,怎样更高效更加符合技术流程.</p>
 
