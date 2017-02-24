@@ -4,13 +4,180 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-02-17T22:01:01+08:00</updated>
+  <updated>2017-02-23T19:00:43+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer]]></title>
+    <link href="http://blog.cxstars.com/14879149134068.html"/>
+    <updated>2017-02-24T13:41:53+08:00</updated>
+    <id>http://blog.cxstars.com/14879149134068.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">对于技术和代码的思考</h2>
+
+<p>最近看到一句话,触动颇深:</p>
+
+<blockquote>
+<p>行动上的勤勉不足以填补思想上的懒惰</p>
+</blockquote>
+
+<p>语言是面向对象的,技术是面向商业的.但这不是一个技术人员只会写代码的理由,遇到过很多面试人员往往3,5年编码经验,不过更多的感受是他们只用了3,5个月的经验过了3,5年.</p>
+
+<p>所以并不是一直在做,就真的做好了.接下来的日子,希望自己能真正做好每一件事.</p>
+
+<p>多人协作编码的前提是统一编码规范并执行.靠人去执行,靠人去检查,始终有限.技术改变生活,当然也包括技术人员的生活.</p>
+
+<h2 id="toc_1">PHP_codeSniffer</h2>
+
+<h4 id="toc_2">要求</h4>
+
+<ul>
+<li>PHP &gt;= 5.1.2</li>
+<li>PHP &gt;= 5.2.4 (仅当使用SVN的pre-commit挂勾)</li>
+</ul>
+
+<h4 id="toc_3">安装</h4>
+
+<p><em>shell install</em></p>
+
+<pre><code class="language-shell">curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+php phpcs.phar -h
+
+curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
+php phpcbf.phar -h
+</code></pre>
+
+<p><em>pear install</em></p>
+
+<pre><code class="language-shell">pear install PHP_CodeSniffer
+</code></pre>
+
+<p><em>composer install</em></p>
+
+<pre><code class="language-shell">command方式
+composer global require &quot;squizlabs/php_codesniffer=*&quot;
+
+compser.json方式
+{
+    &quot;require-dev&quot;: {
+        &quot;squizlabs/php_codesniffer&quot;: &quot;2.*&quot;
+    }
+}
+</code></pre>
+
+<span id="more"></span><!-- more -->
+
+<h4 id="toc_4">phpcs使用</h4>
+
+<p><em>phpcs的所有参数和说明</em></p>
+
+<pre><code class="language-shell">star@starMBP:~$ phpcs -h
+Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors] [--stdin-path=&lt;stdinPath&gt;]
+    [--report=&lt;report&gt;] [--report-file=&lt;reportFile&gt;] [--report-&lt;report&gt;=&lt;reportFile&gt;] ...
+    [--report-width=&lt;reportWidth&gt;] [--generator=&lt;generator&gt;] [--tab-width=&lt;tabWidth&gt;]
+    [--severity=&lt;severity&gt;] [--error-severity=&lt;severity&gt;] [--warning-severity=&lt;severity&gt;]
+    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]
+    [--standard=&lt;standard&gt;] [--sniffs=&lt;sniffs&gt;] [--exclude=&lt;sniffs&gt;] [--encoding=&lt;encoding&gt;]
+    [--extensions=&lt;extensions&gt;] [--ignore=&lt;patterns&gt;] [--bootstrap=&lt;bootstrap&gt;]
+    [--file-list=&lt;fileList&gt;] &lt;file&gt; ...
+                      Set runtime value (see --config-set)
+        -n            Do not print warnings (shortcut for --warning-severity=0)
+        -w            Print both warnings and errors (this is the default)
+        -l            Local directory only, no recursion
+        -s            Show sniff codes in all reports
+        -a            Run interactively
+        -e            Explain a standard by showing the sniffs it includes
+        -p            Show progress of the run
+        -q            Quiet mode; disables progress and verbose output
+        -v[v][v]      Print verbose output
+        -i            Show a list of installed coding standards
+        -d            Set the [key] php.ini value to [value] or [true] if value is omitted
+        --help        Print this help message
+        --version     Print version information
+        --colors      Use colors in output
+        --no-colors   Do not use colors in output (this is the default)
+        &lt;file&gt;        One or more files and/or directories to check
+        &lt;fileList&gt;    A file containing a list of files and/or directories to check (one per line)
+        &lt;stdinPath&gt;   If processing STDIN, the file path that STDIN will be processed as
+        &lt;bootstrap&gt;   A comma separated list of files to run before processing starts
+        &lt;encoding&gt;    The encoding of the files being checked (default is iso-8859-1)
+        &lt;extensions&gt;  A comma separated list of file extensions to check
+                      (extension filtering only valid when checking a directory)
+                      The type of the file can be specified using: ext/type
+                      e.g., module/php,es/js
+        &lt;generator&gt;   Uses either the &quot;HTML&quot;, &quot;Markdown&quot; or &quot;Text&quot; generator
+                      (forces documentation generation instead of checking)
+        &lt;patterns&gt;    A comma separated list of patterns to ignore files and directories
+        &lt;report&gt;      Print either the &quot;full&quot;, &quot;xml&quot;, &quot;checkstyle&quot;, &quot;csv&quot;
+                      &quot;json&quot;, &quot;emacs&quot;, &quot;source&quot;, &quot;summary&quot;, &quot;diff&quot;, &quot;junit&quot;
+                      &quot;svnblame&quot;, &quot;gitblame&quot;, &quot;hgblame&quot; or &quot;notifysend&quot; report
+                      (the &quot;full&quot; report is printed by default)
+        &lt;reportFile&gt;  Write the report to the specified file path
+        &lt;reportWidth&gt; How many columns wide screen reports should be printed
+                      or set to &quot;auto&quot; to use current screen width, where supported
+        &lt;sniffs&gt;      A comma separated list of sniff codes to include or exclude during checking
+                      (all sniffs must be part of the specified standard)
+        &lt;severity&gt;    The minimum severity required to display an error or warning
+        &lt;standard&gt;    The name or path of the coding standard to use
+        &lt;tabWidth&gt;    The number of spaces each tab represents
+</code></pre>
+
+<p><em>查看当前标准</em></p>
+
+<pre><code class="language-shell">star@starMBP:~$ phpcs -i
+The installed coding standards are MySource, PEAR, PHPCS, PSR1, PSR2, Squiz and Zend
+</code></pre>
+
+<p><em>忽略warning(如一行超过85个字符会报warning,不强制,建议关掉)</em></p>
+
+<pre><code class="language-shell">#参数命令
+phpcs -n your_file
+#环境命令
+phpcs --config-set show_warnings 0
+</code></pre>
+
+<p><em>设置默认标准</em></p>
+
+<blockquote>
+<p>By default, PHP_CodeSniffer will use the PEAR coding standard if no standard is supplied on the command line. </p>
+</blockquote>
+
+<pre><code class="language-shell">star@starMBP:~$ phpcs --config-set default_standard PSR2
+Config value &quot;default_standard&quot; added successfully
+</code></pre>
+
+<p><em>设置终端颜色输出</em></p>
+
+<pre><code>phpcs --config-set colors 1
+</code></pre>
+
+<p><em>设置文件编码标准</em></p>
+
+<blockquote>
+<p>By default, PHP_CodeSniffer will treat all source files as if they use ISO-8859-1 encoding. This can cause double-encoding problems when generating UTF-8 encoded XML reports</p>
+</blockquote>
+
+<pre><code class="language-shell">phpcs --config-set encoding utf-8
+</code></pre>
+
+<p><em>加载自定义编码</em></p>
+
+<pre><code class="language-shell">phpcs --config-set installed_paths your_standard_path
+</code></pre>
+
+<h2 id="toc_5">后续</h2>
+
+<p>继续思考,怎样更高效更加符合技术流程.</p>
+
+<p>后续使用git的做提交前的代码格式化,并使用jenkins做持续集成.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[intl,geoip,mongodb扩展macos安装踩坑]]></title>

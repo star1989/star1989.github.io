@@ -118,6 +118,92 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14879149134068.html">
+                
+                  <h1>PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">对于技术和代码的思考</h2>
+
+<p>最近看到一句话,触动颇深:</p>
+
+<blockquote>
+<p>行动上的勤勉不足以填补思想上的懒惰</p>
+</blockquote>
+
+<p>语言是面向对象的,技术是面向商业的.但这不是一个技术人员只会写代码的理由,遇到过很多面试人员往往3,5年编码经验,不过更多的感受是他们只用了3,5个月的经验过了3,5年.</p>
+
+<p>所以并不是一直在做,就真的做好了.接下来的日子,希望自己能真正做好每一件事.</p>
+
+<p>多人协作编码的前提是统一编码规范并执行.靠人去执行,靠人去检查,始终有限.技术改变生活,当然也包括技术人员的生活.</p>
+
+<h2 id="toc_1">PHP_codeSniffer</h2>
+
+<h4 id="toc_2">要求</h4>
+
+<ul>
+<li>PHP &gt;= 5.1.2</li>
+<li>PHP &gt;= 5.2.4 (仅当使用SVN的pre-commit挂勾)</li>
+</ul>
+
+<h4 id="toc_3">安装</h4>
+
+<p><em>shell install</em></p>
+
+<pre><code class="language-shell">curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+php phpcs.phar -h
+
+curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
+php phpcbf.phar -h
+</code></pre>
+
+<p><em>pear install</em></p>
+
+<pre><code class="language-shell">pear install PHP_CodeSniffer
+</code></pre>
+
+<p><em>composer install</em></p>
+
+<pre><code class="language-shell">command方式
+composer global require &quot;squizlabs/php_codesniffer=*&quot;
+
+compser.json方式
+{
+    &quot;require-dev&quot;: {
+        &quot;squizlabs/php_codesniffer&quot;: &quot;2.*&quot;
+    }
+}
+</code></pre>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="14879149134068.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2017/2/24 13:41 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='php.html'>php</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14879149134068.html" data-count-type="comments" href="14879149134068.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14878474870577.html">
                 
                   <h1>intl,geoip,mongodb扩展macos安装踩坑</h1>
@@ -744,6 +830,12 @@ $serv-&gt;start();
 	      
 		      
 			      <li class="post">
+			        <a href="14879149134068.html">PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14878474870577.html">intl,geoip,mongodb扩展macos安装踩坑</a>
 			      </li>
 		     
@@ -767,10 +859,6 @@ $serv-&gt;start();
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14848776957351.html">金山翻译&时间的workflow</a>
-			      </li>
-		     
 		  
 		      
 		  
