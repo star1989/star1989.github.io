@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  golang send a https request and skip the certificate - 星晨入梦
+  phpcs集成git工作流 - 星晨入梦
   
   </title>
   
@@ -118,21 +118,21 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>golang send a https request and skip the certificate</h1>
+          <h1>phpcs集成git工作流</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2017/1/5 17:51 下午</span>
+          <span class="date">2017/2/24 15:21 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='golang.html'>golang</a></span>
+              <span class="posted-in"><a href='php.html'>php</a></span>
            
          
           <span class="comments">
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14836098881938.html" data-count-type="comments" href="14836098881938.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14879208825856.html" data-count-type="comments" href="14879208825856.html#ds-thread"></a>
             
           </span>
 
@@ -140,34 +140,129 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>使用<code>crypto/tls</code>包</p>
+      <h3 id="toc_0">git hook之pre-commit</h3>
+
+<p><em>在提交代码前进行代码规范检查,因此使用git hook中的pre-commit,下面是pre-commit的概念</em></p>
 
 <blockquote>
-<p>官网对包的说明:Package tls partially implements TLS 1.2, as specified in RFC 5246.</p>
+<p>这个钩子被 <strong>git commit</strong> 命令调用, 而且可以通过在命令中添加<strong>--no-verify</strong> 参数来跳过。这个钩子不需要参数，在得到提交消息和开始提交(commit)前被调用。<strong>如果钩子返回值不是0，那么 git commit 命令就会中止执行</strong>。</p>
 </blockquote>
 
-<pre><code class="language-go">package main
+<h3 id="toc_1">pre-commit使用</h3>
 
-import (
-        &quot;fmt&quot;
-        &quot;net/http&quot;
-        &quot;crypto/tls&quot;
-       )
+<p><a href="https://github.com/star1989/phpcs_git"><em>github永久链接,后续改进更新</em></a></p>
 
-func main() {
- tr := &amp;http.Transport{
-            TLSClientConfig: &amp;tls.Config{InsecureSkipVerify: true},
+<p><em>代码实现如下</em><br/>
+```shell</p>
 
-}
-        client := &amp;http.Client{Transport: tr}
-                _, err := client.Get(&quot;https://golang.org/&quot;)
-                    if err != nil {
-                                    fmt.Println(err)
+<h1 id="toc_2">!/bin/bash</h1>
 
-                    }
+<h1 id="toc_3">check PHP code syntax error and standard with phpcs</h1>
 
-}
+<h1 id="toc_4">author : star[github.com/star1989]</h1>
+
+<h1 id="toc_5">date : 2017-02-24</h1>
+
+<p>PROJECT=\((git rev-parse --show-toplevel)<br/>
+cd \)PROJECT<br/>
+SFILES=\((git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\.php)<br/>
+TMP_DIR=\)PROJECT.&quot;/tmp&quot;</p>
+
+<h1 id="toc_6">Determine if a file list is passed</h1>
+
+<p>if [ &quot;\(#&quot; -ne 0 ]<br/>
+then<br/>
+    exit 0<br/>
+fi<br/>
+echo &quot;Checking PHP Lint...&quot;<br/>
+for FILE in \)SFILES<br/>
+do</p>
+
+<h1 id="toc_7">echo &quot;php -l -d display_errors=0 ${FILE}&quot;</h1>
+
+<h1 id="toc_8">echo &quot;git show :\(FILE &gt; \)TMP_DIR/$FILE&quot;</h1>
+
+<pre><code>php -l -d display_errors=0 $FILE
+if [ $? != 0  ]
+then
+    echo &quot;Fix the error before commit.&quot;
+    exit 1
+fi
+FILES=&quot;$FILES $PROJECT/$FILE&quot;
 </code></pre>
+
+<p>done</p>
+
+<p>if [ &quot;$FILES&quot; != &quot;&quot; ]<br/>
+then<br/>
+    echo &quot;Running Code Sniffer...&quot;</p>
+
+<pre><code>TMP_DIR=/tmp/$(uuidgen)
+mkdir -p $TMP_DIR
+for FILE in $SFILES
+do
+    mkdir -p $TMP_DIR/$(dirname $FILE)
+    git show :$FILE &gt; $TMP_DIR/$FILE
+done
+phpcs --standard=PSR2 --encoding=utf-8 -n $TMP_DIR
+PHPCS_ERROR=$?
+rm -rf $TMP_DIR
+if [ $PHPCS_ERROR != 0 ]
+then
+    echo &quot;Fix the error before commit.&quot;
+    exit 1
+fi
+</code></pre>
+
+<p>fi</p>
+
+<p>exit $?<br/>
+```</p>
+
+<h3 id="toc_9">效果</h3>
+
+<pre><code class="language-shell">#正常情况
+star@starMBP:~/Documents/web/query-word$ git commit -m &#39;test&#39;
+Checking PHP Lint...
+No syntax errors detected in public/index.php
+No syntax errors detected in public/test.php
+Running Code Sniffer...
+
+FILE: ...rivate/tmp/A7518E0C-3C1A-4AB1-80BB-6C2B17F133E9/public/index.php
+----------------------------------------------------------------------
+FOUND 12 ERRORS AFFECTING 6 LINES
+----------------------------------------------------------------------
+  6 | ERROR | [ ] Constants must be uppercase; expected
+    |       |     &#39;BASEROOTPATH&#39; but found &#39;BaseRootPath&#39;
+  9 | ERROR | [x] Expected 1 space after IF keyword; 0 found
+ 16 | ERROR | [x] Expected 1 space after IF keyword; 0 found
+ 16 | ERROR | [x] Expected 1 space after closing parenthesis; found 0
+ 19 | ERROR | [x] Expected 1 space after closing brace; 0 found
+ 19 | ERROR | [x] Expected 1 space after ELSEIF keyword; 0 found
+ 19 | ERROR | [x] Expected 1 space after closing parenthesis; found 0
+ 21 | ERROR | [x] Expected 1 space after closing brace; 0 found
+ 21 | ERROR | [x] Expected 1 space after ELSEIF keyword; 0 found
+ 21 | ERROR | [x] Expected 1 space after closing parenthesis; found 0
+ 23 | ERROR | [x] Expected 1 space after closing brace; 0 found
+ 23 | ERROR | [x] Expected 1 space after ELSE keyword; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 11 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+Time: 73ms; Memory: 7.5Mb
+
+Fix the error before commit.
+
+#跳过情况
+star@starMBP:~/Documents/web/query-word$ git commit --no-verify -m &#39;test&#39;
+[master 3e68145] test
+ 2 files changed, 3 insertions(+)
+ create mode 100644 public/test.php
+</code></pre>
+
+<h3 id="toc_10">后续</h3>
+
+<p><em>既然可以跳过,那么就一定要在push时再行检查,所以就得后到git service的pre-receive hook</em></p>
 
 
     
@@ -178,16 +273,13 @@ func main() {
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14836102159997.html" 
-          title="Previous Post: serverh-on-redis-source-code">&laquo; serverh-on-redis-source-code</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14836098401416.html" 
-          title="Next Post: nginx源码阅读">nginx源码阅读 &raquo;</a>
+          <a  href="14879149134068.html" 
+          title="Next Post: PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer">PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer &raquo;</a>
       
       </p>
         </div>
@@ -199,7 +291,7 @@ func main() {
           
 
           
-              <div class="ds-thread" data-thread-key="14836098881938.html" data-url="http://blog.cxstars.com/14836098881938.html" data-title="golang send a https request and skip the certificate"></div>
+              <div class="ds-thread" data-thread-key="14879208825856.html" data-url="http://blog.cxstars.com/14879208825856.html" data-title="phpcs集成git工作流"></div>
           
         </div>
       </div>

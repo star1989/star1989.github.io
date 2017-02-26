@@ -4,13 +4,146 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-02-24T13:42:01+08:00</updated>
+  <updated>2017-02-24T15:21:30+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[phpcs集成git工作流]]></title>
+    <link href="http://blog.cxstars.com/14879208825856.html"/>
+    <updated>2017-02-24T15:21:22+08:00</updated>
+    <id>http://blog.cxstars.com/14879208825856.html</id>
+    <content type="html"><![CDATA[
+<h3 id="toc_0">git hook之pre-commit</h3>
+
+<p><em>在提交代码前进行代码规范检查,因此使用git hook中的pre-commit,下面是pre-commit的概念</em></p>
+
+<blockquote>
+<p>这个钩子被 <strong>git commit</strong> 命令调用, 而且可以通过在命令中添加<strong>--no-verify</strong> 参数来跳过。这个钩子不需要参数，在得到提交消息和开始提交(commit)前被调用。<strong>如果钩子返回值不是0，那么 git commit 命令就会中止执行</strong>。</p>
+</blockquote>
+
+<h3 id="toc_1">pre-commit使用</h3>
+
+<p><a href="https://github.com/star1989/phpcs_git"><em>github永久链接,后续改进更新</em></a></p>
+
+<p><em>代码实现如下</em><br/>
+```shell</p>
+
+<h1 id="toc_2">!/bin/bash</h1>
+
+<h1 id="toc_3">check PHP code syntax error and standard with phpcs</h1>
+
+<h1 id="toc_4">author : star[github.com/star1989]</h1>
+
+<h1 id="toc_5">date : 2017-02-24</h1>
+
+<p>PROJECT=\((git rev-parse --show-toplevel)<br/>
+cd \)PROJECT<br/>
+SFILES=\((git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\.php)<br/>
+TMP_DIR=\)PROJECT.&quot;/tmp&quot;</p>
+
+<h1 id="toc_6">Determine if a file list is passed</h1>
+
+<p>if [ &quot;\(#&quot; -ne 0 ]<br/>
+then<br/>
+    exit 0<br/>
+fi<br/>
+echo &quot;Checking PHP Lint...&quot;<br/>
+for FILE in \)SFILES<br/>
+do</p>
+
+<h1 id="toc_7">echo &quot;php -l -d display_errors=0 ${FILE}&quot;</h1>
+
+<h1 id="toc_8">echo &quot;git show :\(FILE &gt; \)TMP_DIR/$FILE&quot;</h1>
+
+<pre><code>php -l -d display_errors=0 $FILE
+if [ $? != 0  ]
+then
+    echo &quot;Fix the error before commit.&quot;
+    exit 1
+fi
+FILES=&quot;$FILES $PROJECT/$FILE&quot;
+</code></pre>
+
+<p>done</p>
+
+<p>if [ &quot;$FILES&quot; != &quot;&quot; ]<br/>
+then<br/>
+    echo &quot;Running Code Sniffer...&quot;</p>
+
+<pre><code>TMP_DIR=/tmp/$(uuidgen)
+mkdir -p $TMP_DIR
+for FILE in $SFILES
+do
+    mkdir -p $TMP_DIR/$(dirname $FILE)
+    git show :$FILE &gt; $TMP_DIR/$FILE
+done
+phpcs --standard=PSR2 --encoding=utf-8 -n $TMP_DIR
+PHPCS_ERROR=$?
+rm -rf $TMP_DIR
+if [ $PHPCS_ERROR != 0 ]
+then
+    echo &quot;Fix the error before commit.&quot;
+    exit 1
+fi
+</code></pre>
+
+<p>fi</p>
+
+<p>exit $?<br/>
+```</p>
+
+<h3 id="toc_9">效果</h3>
+
+<pre><code class="language-shell">#正常情况
+star@starMBP:~/Documents/web/query-word$ git commit -m &#39;test&#39;
+Checking PHP Lint...
+No syntax errors detected in public/index.php
+No syntax errors detected in public/test.php
+Running Code Sniffer...
+
+FILE: ...rivate/tmp/A7518E0C-3C1A-4AB1-80BB-6C2B17F133E9/public/index.php
+----------------------------------------------------------------------
+FOUND 12 ERRORS AFFECTING 6 LINES
+----------------------------------------------------------------------
+  6 | ERROR | [ ] Constants must be uppercase; expected
+    |       |     &#39;BASEROOTPATH&#39; but found &#39;BaseRootPath&#39;
+  9 | ERROR | [x] Expected 1 space after IF keyword; 0 found
+ 16 | ERROR | [x] Expected 1 space after IF keyword; 0 found
+ 16 | ERROR | [x] Expected 1 space after closing parenthesis; found 0
+ 19 | ERROR | [x] Expected 1 space after closing brace; 0 found
+ 19 | ERROR | [x] Expected 1 space after ELSEIF keyword; 0 found
+ 19 | ERROR | [x] Expected 1 space after closing parenthesis; found 0
+ 21 | ERROR | [x] Expected 1 space after closing brace; 0 found
+ 21 | ERROR | [x] Expected 1 space after ELSEIF keyword; 0 found
+ 21 | ERROR | [x] Expected 1 space after closing parenthesis; found 0
+ 23 | ERROR | [x] Expected 1 space after closing brace; 0 found
+ 23 | ERROR | [x] Expected 1 space after ELSE keyword; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 11 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+Time: 73ms; Memory: 7.5Mb
+
+Fix the error before commit.
+
+#跳过情况
+star@starMBP:~/Documents/web/query-word$ git commit --no-verify -m &#39;test&#39;
+[master 3e68145] test
+ 2 files changed, 3 insertions(+)
+ create mode 100644 public/test.php
+</code></pre>
+
+<h3 id="toc_10">后续</h3>
+
+<p><em>既然可以跳过,那么就一定要在push时再行检查,所以就得后到git service的pre-receive hook</em></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer]]></title>
