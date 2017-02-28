@@ -4,7 +4,7 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-02-26T20:55:49+08:00</updated>
+  <updated>2017-02-28T12:28:24+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -159,74 +159,62 @@ config.vm.network :forwarded_port, guest: 80, host: 4567
 
 <p><a href="https://github.com/star1989/phpcs_git"><em>github永久链接,后续改进更新</em></a></p>
 
-<p><em>代码实现如下</em><br/>
-```shell</p>
+<p><em>代码实现如下</em></p>
 
-<h1 id="toc_2">!/bin/bash</h1>
+<pre><code class="language-shell">#!/bin/bash
+#
+# check PHP code syntax error and standard with phpcs
+# author : star[github.com/star1989]
+# date : 2017-02-24
+PROJECT=$(git rev-parse --show-toplevel)
+cd $PROJECT
+SFILES=$(git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\.php)
+TMP_DIR=$PROJECT.&quot;/tmp&quot;
 
-<h1 id="toc_3">check PHP code syntax error and standard with phpcs</h1>
-
-<h1 id="toc_4">author : star[github.com/star1989]</h1>
-
-<h1 id="toc_5">date : 2017-02-24</h1>
-
-<p>PROJECT=\((git rev-parse --show-toplevel)<br/>
-cd \)PROJECT<br/>
-SFILES=\((git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\.php)<br/>
-TMP_DIR=\)PROJECT.&quot;/tmp&quot;</p>
-
-<h1 id="toc_6">Determine if a file list is passed</h1>
-
-<p>if [ &quot;\(#&quot; -ne 0 ]<br/>
-then<br/>
-    exit 0<br/>
-fi<br/>
-echo &quot;Checking PHP Lint...&quot;<br/>
-for FILE in \)SFILES<br/>
-do</p>
-
-<h1 id="toc_7">echo &quot;php -l -d display_errors=0 ${FILE}&quot;</h1>
-
-<h1 id="toc_8">echo &quot;git show :\(FILE &gt; \)TMP_DIR/$FILE&quot;</h1>
-
-<pre><code>php -l -d display_errors=0 $FILE
-if [ $? != 0  ]
+# Determine if a file list is passed
+if [ &quot;$#&quot; -ne 0 ]
 then
-    echo &quot;Fix the error before commit.&quot;
-    exit 1
+    exit 0
 fi
-FILES=&quot;$FILES $PROJECT/$FILE&quot;
-</code></pre>
-
-<p>done</p>
-
-<p>if [ &quot;$FILES&quot; != &quot;&quot; ]<br/>
-then<br/>
-    echo &quot;Running Code Sniffer...&quot;</p>
-
-<pre><code>TMP_DIR=/tmp/$(uuidgen)
-mkdir -p $TMP_DIR
+echo &quot;Checking PHP Lint...&quot;
 for FILE in $SFILES
 do
-    mkdir -p $TMP_DIR/$(dirname $FILE)
-    git show :$FILE &gt; $TMP_DIR/$FILE
+#    echo &quot;php -l -d display_errors=0 ${FILE}&quot;
+#   echo &quot;git show :$FILE &gt; $TMP_DIR/$FILE&quot;
+    php -l -d display_errors=0 $FILE
+    if [ $? != 0  ]
+    then
+        echo &quot;Fix the error before commit.&quot;
+        exit 1
+    fi
+    FILES=&quot;$FILES $PROJECT/$FILE&quot;
 done
-phpcs --standard=PSR2 --encoding=utf-8 -n $TMP_DIR
-PHPCS_ERROR=$?
-rm -rf $TMP_DIR
-if [ $PHPCS_ERROR != 0 ]
+
+if [ &quot;$FILES&quot; != &quot;&quot; ]
 then
-    echo &quot;Fix the error before commit.&quot;
-    exit 1
+    echo &quot;Running Code Sniffer...&quot;
+
+    TMP_DIR=/tmp/$(uuidgen)
+    mkdir -p $TMP_DIR
+    for FILE in $SFILES
+    do
+        mkdir -p $TMP_DIR/$(dirname $FILE)
+        git show :$FILE &gt; $TMP_DIR/$FILE
+    done
+    phpcs --standard=PSR2 --encoding=utf-8 -n $TMP_DIR
+    PHPCS_ERROR=$?
+    rm -rf $TMP_DIR
+    if [ $PHPCS_ERROR != 0 ]
+    then
+        echo &quot;Fix the error before commit.&quot;
+        exit 1
+    fi
 fi
+
+exit $?
 </code></pre>
 
-<p>fi</p>
-
-<p>exit $?<br/>
-```</p>
-
-<h3 id="toc_9">效果</h3>
+<h3 id="toc_2">效果</h3>
 
 <pre><code class="language-shell">#正常情况
 star@starMBP:~/Documents/web/query-word$ git commit -m &#39;test&#39;
@@ -267,7 +255,7 @@ star@starMBP:~/Documents/web/query-word$ git commit --no-verify -m &#39;test&#39
  create mode 100644 public/test.php
 </code></pre>
 
-<h3 id="toc_10">后续</h3>
+<h3 id="toc_3">后续</h3>
 
 <p><em>既然可以跳过,那么就一定要在push时再行检查,所以就得后到git service的pre-receive hook</em></p>
 
