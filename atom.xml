@@ -4,7 +4,7 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-03-02T22:32:08+08:00</updated>
+  <updated>2017-03-02T23:23:39+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -57,6 +57,8 @@
 </table>
 
 <h2 id="toc_3">事件表</h2>
+
+<span id="more"></span><!-- more -->
 
 <table>
 <thead>
