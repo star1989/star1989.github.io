@@ -4,13 +4,101 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-02-28T12:28:24+08:00</updated>
+  <updated>2017-02-28T21:57:28+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[Install a GitLab CE Omnibus package on Centos7]]></title>
+    <link href="http://blog.cxstars.com/14884651028364.html"/>
+    <updated>2017-03-02T22:31:42+08:00</updated>
+    <id>http://blog.cxstars.com/14884651028364.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">1. Install and configure the necessary dependencies</h2>
+
+<pre><code class="language-shell">sudo yum install -y curl policycoreutils openssh-server openssh-clients
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo yum install postfix
+sudo systemctl enable postfix
+sudo systemctl start postfix
+sudo systemctl start firewalld
+sudo firewall-cmd --permanent --add-service=http
+sudo systemctl reload firewalld
+</code></pre>
+
+<h2 id="toc_1">2. Add the GitLab package server and install the package</h2>
+
+<pre><code class="language-shell">curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+sudo yum install -y gitlab-ce
+</code></pre>
+
+<h2 id="toc_2">3. Configure and start GitLab</h2>
+
+<pre><code class="language-shell">sudo gitlab-ctl reconfigure
+
+
+       *.                  *.
+      ***                 ***
+     *****               *****
+    .******             *******
+    ********            ********
+   ,,,,,,,,,***********,,,,,,,,,
+  ,,,,,,,,,,,*********,,,,,,,,,,,
+  .,,,,,,,,,,,*******,,,,,,,,,,,,
+      ,,,,,,,,,*****,,,,,,,,,.
+         ,,,,,,,****,,,,,,
+            .,,,***,,,,
+                ,*,.
+
+     _______ __  __          __
+    / ____(_) /_/ /   ____ _/ /_
+   / / __/ / __/ /   / __ `/ __ \
+  / /_/ / / /_/ /___/ /_/ / /_/ /
+  \____/_/\__/_____/\__,_/_.___/
+
+
+gitlab: Thank you for installing GitLab!
+gitlab: To configure and start GitLab, RUN THE FOLLOWING COMMAND:
+
+sudo gitlab-ctl reconfigure
+
+gitlab: GitLab should be reachable at http://localhost
+gitlab: Otherwise configure GitLab for your system by editing /etc/gitlab/gitlab.rb file
+gitlab: And running reconfigure again.
+gitlab:
+gitlab: For a comprehensive list of configuration options please see the Omnibus GitLab readme
+gitlab: https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
+gitlab:
+
+gitlab: GitLab now ships with a newer version of PostgreSQL (9.6.1), and will be used
+gitlab: as the default in the next major release. To upgrade, RUN THE FOLLOWING COMMANDS:
+
+sudo gitlab-ctl pg-upgrade
+
+gitlab: For more details, please see:
+gitlab: https://docs.gitlab.com/omnibus/settings/database.html#upgrade-packaged-postgresql-server
+gitlab:
+It looks like GitLab has not been configured yet; skipping the upgrade script.
+</code></pre>
+
+<h2 id="toc_3">4. Browse to the hostname and login</h2>
+
+<pre><code class="language-shell">On your first visit, you&#39;ll be redirected to a password reset screen to provide the password for the initial administrator account. Enter your desired password and you&#39;ll be redirected back to the login screen.
+
+The default account&#39;s username is root. Provide the password you created earlier and login. After login you can change the username if you wish.
+</code></pre>
+
+<h4 id="toc_4">添加安全转发端口</h4>
+
+<p><code>iptables -A IN_public_allow -p tcp --dport 8080 -j ACCEPT</code></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PHP CI前的统一大杀器--vagrant]]></title>

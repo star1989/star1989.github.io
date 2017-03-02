@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  nginx - 星晨入梦
+  Install a GitLab CE Omnibus package on Centos7 - 星晨入梦
   
   </title>
   
@@ -109,92 +109,152 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="14836098401416.html">
-                
-                  <h1>nginx源码阅读</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>@: nginx源码阅读</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Install a GitLab CE Omnibus package on Centos7</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2017/3/2 22:31 下午</span>
 
-<h3 id="toc_0">目录结构</h3>
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='arch.html'>arch</a></span>
+           
+         
+          <span class="comments">
+            
 
-<ol>
-<li><em>auto</em>
-自动化编译目录,最重要的是<strong>configure</strong>文件</li>
-<li><em>conf</em>
-配置模板目录</li>
-<li><em>contrib</em>
-3个随包发行的文件包.<strong> unicode2nginx</strong>,<strong>vim</strong>,<strong>geo2nginx</strong></li>
-<li><em>docs</em>
-文档</li>
-<li><em>misc</em>
-C++兼容测试文件</li>
-<li><em>src</em>
-最最最重要的源码</li>
-</ol>
+            
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14884651028364.html" data-count-type="comments" href="14884651028364.html#ds-thread"></a>
+            
+          </span>
 
-<h3 id="toc_1">auto目录</h3>
+        </div>
+      </div><!-- article -->
 
-<ol>
-<li><strong>configure</strong>
- 10 . auto/options
- 11 . auto/init
- 12 . auto/sources</li>
-</ol>
+      <div class="article-content">
+      <h2 id="toc_0">1. Install and configure the necessary dependencies</h2>
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2017/1/5 17:50 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='nginx.html'>nginx</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
+<pre><code class="language-shell">sudo yum install -y curl policycoreutils openssh-server openssh-clients
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo yum install postfix
+sudo systemctl enable postfix
+sudo systemctl start postfix
+sudo systemctl start firewalld
+sudo firewall-cmd --permanent --add-service=http
+sudo systemctl reload firewalld
+</code></pre>
 
-                      
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14836098401416.html" data-count-type="comments" href="14836098401416.html#ds-thread"></a>
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
+<h2 id="toc_1">2. Add the GitLab package server and install the package</h2>
+
+<pre><code class="language-shell">curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+sudo yum install -y gitlab-ce
+</code></pre>
+
+<h2 id="toc_2">3. Configure and start GitLab</h2>
+
+<pre><code class="language-shell">sudo gitlab-ctl reconfigure
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+       *.                  *.
+      ***                 ***
+     *****               *****
+    .******             *******
+    ********            ********
+   ,,,,,,,,,***********,,,,,,,,,
+  ,,,,,,,,,,,*********,,,,,,,,,,,
+  .,,,,,,,,,,,*******,,,,,,,,,,,,
+      ,,,,,,,,,*****,,,,,,,,,.
+         ,,,,,,,****,,,,,,
+            .,,,***,,,,
+                ,*,.
+
+     _______ __  __          __
+    / ____(_) /_/ /   ____ _/ /_
+   / / __/ / __/ /   / __ `/ __ \
+  / /_/ / / /_/ /___/ /_/ / /_/ /
+  \____/_/\__/_____/\__,_/_.___/
+
+
+gitlab: Thank you for installing GitLab!
+gitlab: To configure and start GitLab, RUN THE FOLLOWING COMMAND:
+
+sudo gitlab-ctl reconfigure
+
+gitlab: GitLab should be reachable at http://localhost
+gitlab: Otherwise configure GitLab for your system by editing /etc/gitlab/gitlab.rb file
+gitlab: And running reconfigure again.
+gitlab:
+gitlab: For a comprehensive list of configuration options please see the Omnibus GitLab readme
+gitlab: https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
+gitlab:
+
+gitlab: GitLab now ships with a newer version of PostgreSQL (9.6.1), and will be used
+gitlab: as the default in the next major release. To upgrade, RUN THE FOLLOWING COMMANDS:
+
+sudo gitlab-ctl pg-upgrade
+
+gitlab: For more details, please see:
+gitlab: https://docs.gitlab.com/omnibus/settings/database.html#upgrade-packaged-postgresql-server
+gitlab:
+It looks like GitLab has not been configured yet; skipping the upgrade script.
+</code></pre>
+
+<h2 id="toc_3">4. Browse to the hostname and login</h2>
+
+<pre><code class="language-shell">On your first visit, you&#39;ll be redirected to a password reset screen to provide the password for the initial administrator account. Enter your desired password and you&#39;ll be redirected back to the login screen.
+
+The default account&#39;s username is root. Provide the password you created earlier and login. After login you can change the username if you wish.
+</code></pre>
+
+<h4 id="toc_4">添加安全转发端口</h4>
+
+<p><code>iptables -A IN_public_allow -p tcp --dport 8080 -j ACCEPT</code></p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="14882560898323.html" 
+          title="Next Post: PHP CI前的统一大杀器--vagrant">PHP CI前的统一大杀器--vagrant &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+
+          
+              <div class="ds-thread" data-thread-key="14884651028364.html" data-url="http://blog.cxstars.com/14884651028364.html" data-title="Install a GitLab CE Omnibus package on Centos7"></div>
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
