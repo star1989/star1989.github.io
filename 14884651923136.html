@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  金山翻译&时间的workflow - 星晨入梦
+  Github高阶使用之webhook - 星晨入梦
   
   </title>
   
@@ -118,21 +118,21 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>金山翻译&时间的workflow</h1>
+          <h1>Github高阶使用之webhook</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2017/1/20 10:1 上午</span>
+          <span class="date">2017/3/2 22:33 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='python.html'>python</a></span>
+              <span class="posted-in"><a href='arch.html'>arch</a></span>
            
          
           <span class="comments">
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14848776957351.html" data-count-type="comments" href="14848776957351.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14884651923136.html" data-count-type="comments" href="14884651923136.html#ds-thread"></a>
             
           </span>
 
@@ -140,96 +140,183 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h2 id="toc_0">项目链接</h2>
+      <h2 id="toc_0">github webhook</h2>
 
-<p><a href="https://github.com/star1989/star_workflow">https://github.com/star1989/star_workflow</a></p>
+<p>官网文档:<a href="https://developer.github.com/webhooks/">https://developer.github.com/webhooks/</a></p>
 
-<h2 id="toc_1">金山翻译</h2>
-
-<h3 id="toc_2"><strong>功能:</strong></h3>
+<h4 id="toc_1">tips</h4>
 
 <ul>
-<li>中英文翻译</li>
-<li>音标</li>
-<li>发音(<strong><em>默认美式</em></strong>)</li>
-<li>复制(当前选中行文本,内容分为:音标,释意几行展示,可以自由复制)
-
-<ul>
-<li>注:复制的同时都会有读音</li>
-<li>复制示例:<code>am:[stɑr] ,en:[stɑ:(r)]</code></li>
-</ul></li>
-<li>添加单词HOOK</li>
+<li>每个repo可以创建最多20个webhook</li>
+<li>默认只订阅<code>push</code>事件</li>
+<li><code>*</code>通配符事件不建议使用</li>
+<li><code>Payloads</code>最大5M,不建议一次性<code>push</code>太多分支或者标签及备注</li>
 </ul>
 
-<h3 id="toc_3">按键</h3>
+<h2 id="toc_2">Webhook Headers</h2>
 
-<p><em>dc</em></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X-GitHub-Event</code></td>
+<td>The <a href="/v3/activity/events/types/">event type</a> that was triggered.</td>
+</tr>
+<tr>
+<td><code>X-GitHub-Delivery</code></td>
+<td>A <a href="http://en.wikipedia.org/wiki/Globally_unique_identifier">guid</a> to identify the payload and event being sent.</td>
+</tr>
+<tr>
+<td><code>X-Hub-Signature</code></td>
+<td>The value of this header is computed as the HMAC hex digest of the body, using the <code>secret</code> config option as the key.</td>
+</tr>
+</tbody>
+</table>
 
-<blockquote>
-<p>对应中文的单词,而且也离左手近,比较方便(主要是懒)</p>
-</blockquote>
+<h2 id="toc_3">事件表</h2>
 
-<h3 id="toc_4">效果</h3>
-
-<ul>
-<li><p>英文翻译<br/>
-<img src="http://bimg.cxstars.com/2017-01-20-14848765913701.jpg" alt="英文翻译截图"/></p></li>
-<li><p>中文翻译<br/>
-<img src="http://bimg.cxstars.com/2017-01-21-14850042653066.jpg" alt="中文翻译截图"/></p></li>
-<li><p>添加单词HOOK<br/>
-<img src="http://bimg.cxstars.com/2017-01-25-14853523310481.jpg" alt="添加单词HOOK图"/></p></li>
-<li><p>添加单词通知<br/>
-<img src="http://bimg.cxstars.com/2017-01-25-14853524781043.jpg" alt="添加单词通知"/></p></li>
-</ul>
-
-<h3 id="toc_5">金山API</h3>
-
-<p>项目里我已经放上我自己的API KEY,方便跟我一样懒的道友们.<br/>
-不过也建议大家自行申请,非常方便.<a href="http://open.iciba.com/?c=api">金山词霸API</a><br/>
-修改文件<code>jsfy.py</code>:<br/>
-<code>app_key = &quot;put your api key&quot;</code></p>
-
-<h2 id="toc_6">time</h2>
-
-<h3 id="toc_7">显示时间相关的信息:日期,时间,周几,今天是一年中的多少天,本周是一年中的多少周</h3>
-
-<h3 id="toc_8">按键</h3>
-
-<p><em>now</em></p>
-
-<blockquote>
-<p>为了节约mac上状态的位置,而且可以通过workflow快速的复制当天的时间信息,方便我懒得输TODO里的日期之类的.同时也提醒自己时间飞快,惜时务事.</p>
-</blockquote>
-
-<h3 id="toc_9">效果</h3>
-
-<p><img src="http://bimg.cxstars.com/2017-02-01-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-01%2020.57.39.png" alt="now截图"/></p>
-
-<h2 id="toc_10">参考资料</h2>
-
-<ul>
-<li><a href="http://www.deanishe.net/alfred-workflow/">Alfred-Workflow Python</a></li>
-<li><a href="https://www.alfredapp.com/help/workflows/">Alfred office help</a></li>
-</ul>
-
-<h2 id="toc_11">ToDoList</h2>
-
-<ul>
-<li>金山翻译
-
-<ul>
-<li><del>添加单词到单词本(v1.3:2017-01-25)</del></li>
-<li><del>中翻英(v1.1:2017-01-21)</del></li>
-<li><del>单词顺序列表/当天应记单词列表API(2017-02-01)</del></li>
-<li>安卓单词APP</li>
-<li>每日一句</li>
-</ul></li>
-<li>time
-
-<ul>
-<li>历史上的今天</li>
-</ul></li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>Any time any event is triggered (<a href="#wildcard-event">Wildcard Event</a>).</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#commitcommentevent"><code>commit_comment</code></a></td>
+<td>Any time a Commit is commented on.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#createevent"><code>create</code></a></td>
+<td>Any time a Branch or Tag is created.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#deleteevent"><code>delete</code></a></td>
+<td>Any time a Branch or Tag is deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#deploymentevent"><code>deployment</code></a></td>
+<td>Any time a Repository has a new deployment created from the API.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#deploymentstatusevent"><code>deployment_status</code></a></td>
+<td>Any time a deployment for a Repository has a status update from the API.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#forkevent"><code>fork</code></a></td>
+<td>Any time a Repository is forked.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#gollumevent"><code>gollum</code></a></td>
+<td>Any time a Wiki page is updated.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#issuecommentevent"><code>issue_comment</code></a></td>
+<td>Any time a <a href="/v3/issues/comments/">comment on an issue</a> is created, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#issuesevent"><code>issues</code></a></td>
+<td>Any time an Issue is assigned, unassigned, labeled, unlabeled, opened, edited, milestoned, demilestoned, closed, or reopened.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#labelevent"><code>label</code></a></td>
+<td>Any time a Label is created, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#memberevent"><code>member</code></a></td>
+<td>Any time a User is added or removed as a collaborator to a Repository, or has their permissions modified.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#membershipevent"><code>membership</code></a></td>
+<td>Any time a User is added or removed from a team. <strong>Organization hooks only</strong>.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#milestoneevent"><code>milestone</code></a></td>
+<td>Any time a Milestone is created, closed, opened, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#organizationevent"><code>organization</code></a></td>
+<td>Any time a user is added, removed, or invited to an Organization. <strong>Organization hooks only.</strong>
+</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#orgblockevent"><code>org_block</code></a></td>
+<td>Any time an organization blocks or unblocks a user. <strong>Organization hooks only</strong>.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pagebuildevent"><code>page_build</code></a></td>
+<td>Any time a Pages site is built or results in a failed build.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#projectcardevent"><code>project_card</code></a></td>
+<td>Any time a Project Card is created, edited, moved, converted to an issue, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#projectcolumnevent"><code>project_column</code></a></td>
+<td>Any time a Project Column is created, edited, moved, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#projectevent"><code>project</code></a></td>
+<td>Any time a Project is created, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#publicevent"><code>public</code></a></td>
+<td>Any time a Repository changes from private to public.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pullrequestreviewcommentevent"><code>pull_request_review_comment</code></a></td>
+<td>Any time a <a href="/v3/pulls/comments">comment on a pull request's unified diff</a>  is created, edited, or deleted (in the Files Changed tab).</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pullrequestreviewevent"><code>pull_request_review</code></a></td>
+<td>Any time a pull request review is submitted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pullrequestevent"><code>pull_request</code></a></td>
+<td>Any time a pull request is assigned, unassigned, labeled, unlabeled, opened, edited, closed, reopened, or synchronized (updated due to a new push in the branch that the pull request is tracking). Also any time a pull request review is requested, or a review request is removed.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pushevent"><code>push</code></a></td>
+<td>Any Git push to a Repository, including editing tags or branches. Commits via API actions that update references are also counted. <strong>This is the default event.</strong>
+</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#repositoryevent"><code>repository</code></a></td>
+<td>Any time a Repository is created, deleted (<a href="/v3/orgs/hooks/">organization hooks</a> only), made public, or made private.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#releaseevent"><code>release</code></a></td>
+<td>Any time a Release is published in a Repository.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#statusevent"><code>status</code></a></td>
+<td>Any time a Repository has a status update from the API</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#teamevent"><code>team</code></a></td>
+<td>Any time a team is created, deleted, modified, or added to or removed from a repository. <strong>Organization hooks only</strong>
+</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#teamaddevent"><code>team_add</code></a></td>
+<td>Any time a team is added or modified on a Repository.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#watchevent"><code>watch</code></a></td>
+<td>Any time a User stars a Repository.</td>
+</tr>
+</tbody>
+</table>
 
 
     
@@ -240,16 +327,13 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14848778197605.html" 
-          title="Previous Post: 使用python搭建ss梯子">&laquo; 使用python搭建ss梯子</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14842902733244.html" 
-          title="Next Post: python语法总结">python语法总结 &raquo;</a>
+          <a  href="14884651028364.html" 
+          title="Next Post: Install a GitLab CE Omnibus package on Centos7">Install a GitLab CE Omnibus package on Centos7 &raquo;</a>
       
       </p>
         </div>
@@ -261,7 +345,7 @@
           
 
           
-              <div class="ds-thread" data-thread-key="14848776957351.html" data-url="http://blog.cxstars.com/14848776957351.html" data-title="金山翻译&时间的workflow"></div>
+              <div class="ds-thread" data-thread-key="14884651923136.html" data-url="http://blog.cxstars.com/14884651923136.html" data-title="Github高阶使用之webhook"></div>
           
         </div>
       </div>

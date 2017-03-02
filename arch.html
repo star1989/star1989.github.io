@@ -118,6 +118,217 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14884651923136.html">
+                
+                  <h1>Github高阶使用之webhook</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">github webhook</h2>
+
+<p>官网文档:<a href="https://developer.github.com/webhooks/">https://developer.github.com/webhooks/</a></p>
+
+<h4 id="toc_1">tips</h4>
+
+<ul>
+<li>每个repo可以创建最多20个webhook</li>
+<li>默认只订阅<code>push</code>事件</li>
+<li><code>*</code>通配符事件不建议使用</li>
+<li><code>Payloads</code>最大5M,不建议一次性<code>push</code>太多分支或者标签及备注</li>
+</ul>
+
+<h2 id="toc_2">Webhook Headers</h2>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X-GitHub-Event</code></td>
+<td>The <a href="/v3/activity/events/types/">event type</a> that was triggered.</td>
+</tr>
+<tr>
+<td><code>X-GitHub-Delivery</code></td>
+<td>A <a href="http://en.wikipedia.org/wiki/Globally_unique_identifier">guid</a> to identify the payload and event being sent.</td>
+</tr>
+<tr>
+<td><code>X-Hub-Signature</code></td>
+<td>The value of this header is computed as the HMAC hex digest of the body, using the <code>secret</code> config option as the key.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="toc_3">事件表</h2>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>Any time any event is triggered (<a href="#wildcard-event">Wildcard Event</a>).</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#commitcommentevent"><code>commit_comment</code></a></td>
+<td>Any time a Commit is commented on.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#createevent"><code>create</code></a></td>
+<td>Any time a Branch or Tag is created.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#deleteevent"><code>delete</code></a></td>
+<td>Any time a Branch or Tag is deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#deploymentevent"><code>deployment</code></a></td>
+<td>Any time a Repository has a new deployment created from the API.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#deploymentstatusevent"><code>deployment_status</code></a></td>
+<td>Any time a deployment for a Repository has a status update from the API.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#forkevent"><code>fork</code></a></td>
+<td>Any time a Repository is forked.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#gollumevent"><code>gollum</code></a></td>
+<td>Any time a Wiki page is updated.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#issuecommentevent"><code>issue_comment</code></a></td>
+<td>Any time a <a href="/v3/issues/comments/">comment on an issue</a> is created, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#issuesevent"><code>issues</code></a></td>
+<td>Any time an Issue is assigned, unassigned, labeled, unlabeled, opened, edited, milestoned, demilestoned, closed, or reopened.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#labelevent"><code>label</code></a></td>
+<td>Any time a Label is created, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#memberevent"><code>member</code></a></td>
+<td>Any time a User is added or removed as a collaborator to a Repository, or has their permissions modified.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#membershipevent"><code>membership</code></a></td>
+<td>Any time a User is added or removed from a team. <strong>Organization hooks only</strong>.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#milestoneevent"><code>milestone</code></a></td>
+<td>Any time a Milestone is created, closed, opened, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#organizationevent"><code>organization</code></a></td>
+<td>Any time a user is added, removed, or invited to an Organization. <strong>Organization hooks only.</strong>
+</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#orgblockevent"><code>org_block</code></a></td>
+<td>Any time an organization blocks or unblocks a user. <strong>Organization hooks only</strong>.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pagebuildevent"><code>page_build</code></a></td>
+<td>Any time a Pages site is built or results in a failed build.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#projectcardevent"><code>project_card</code></a></td>
+<td>Any time a Project Card is created, edited, moved, converted to an issue, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#projectcolumnevent"><code>project_column</code></a></td>
+<td>Any time a Project Column is created, edited, moved, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#projectevent"><code>project</code></a></td>
+<td>Any time a Project is created, edited, or deleted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#publicevent"><code>public</code></a></td>
+<td>Any time a Repository changes from private to public.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pullrequestreviewcommentevent"><code>pull_request_review_comment</code></a></td>
+<td>Any time a <a href="/v3/pulls/comments">comment on a pull request's unified diff</a>  is created, edited, or deleted (in the Files Changed tab).</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pullrequestreviewevent"><code>pull_request_review</code></a></td>
+<td>Any time a pull request review is submitted.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pullrequestevent"><code>pull_request</code></a></td>
+<td>Any time a pull request is assigned, unassigned, labeled, unlabeled, opened, edited, closed, reopened, or synchronized (updated due to a new push in the branch that the pull request is tracking). Also any time a pull request review is requested, or a review request is removed.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#pushevent"><code>push</code></a></td>
+<td>Any Git push to a Repository, including editing tags or branches. Commits via API actions that update references are also counted. <strong>This is the default event.</strong>
+</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#repositoryevent"><code>repository</code></a></td>
+<td>Any time a Repository is created, deleted (<a href="/v3/orgs/hooks/">organization hooks</a> only), made public, or made private.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#releaseevent"><code>release</code></a></td>
+<td>Any time a Release is published in a Repository.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#statusevent"><code>status</code></a></td>
+<td>Any time a Repository has a status update from the API</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#teamevent"><code>team</code></a></td>
+<td>Any time a team is created, deleted, modified, or added to or removed from a repository. <strong>Organization hooks only</strong>
+</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#teamaddevent"><code>team_add</code></a></td>
+<td>Any time a team is added or modified on a Repository.</td>
+</tr>
+<tr>
+<td><a href="/v3/activity/events/types/#watchevent"><code>watch</code></a></td>
+<td>Any time a User stars a Repository.</td>
+</tr>
+</tbody>
+</table>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/3/2 22:33 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='arch.html'>arch</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14884651923136.html" data-count-type="comments" href="14884651923136.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14884651028364.html">
                 
                   <h1>Install a GitLab CE Omnibus package on Centos7</h1>
@@ -364,6 +575,12 @@ The default account&#39;s username is root. Provide the password you created ear
 	      
 		      
 			      <li class="post">
+			        <a href="14884651923136.html">Github高阶使用之webhook</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14884651028364.html">Install a GitLab CE Omnibus package on Centos7</a>
 			      </li>
 		     
@@ -387,10 +604,6 @@ The default account&#39;s username is root. Provide the password you created ear
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="14878474870577.html">intl,geoip,mongodb扩展macos安装踩坑</a>
-			      </li>
-		     
 		  
 		      
 		  
