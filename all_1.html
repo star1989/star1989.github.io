@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  golang - 星晨入梦
+  星晨入梦
   
   </title>
   
@@ -118,41 +118,40 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="14836098881938.html">
+                <a class="clearlink" href="14836098401416.html">
                 
-                  <h1>golang send a https request and skip the certificate</h1>
+                  <h1>nginx源码阅读</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<p>使用<code>crypto/tls</code>包</p>
+                        	<p>@: nginx源码阅读</p>
 
-<blockquote>
-<p>官网对包的说明:Package tls partially implements TLS 1.2, as specified in RFC 5246.</p>
-</blockquote>
+<h3 id="toc_0">目录结构</h3>
 
-<pre><code class="language-go">package main
+<ol>
+<li><em>auto</em>
+自动化编译目录,最重要的是<strong>configure</strong>文件</li>
+<li><em>conf</em>
+配置模板目录</li>
+<li><em>contrib</em>
+3个随包发行的文件包.<strong> unicode2nginx</strong>,<strong>vim</strong>,<strong>geo2nginx</strong></li>
+<li><em>docs</em>
+文档</li>
+<li><em>misc</em>
+C++兼容测试文件</li>
+<li><em>src</em>
+最最最重要的源码</li>
+</ol>
 
-import (
-        &quot;fmt&quot;
-        &quot;net/http&quot;
-        &quot;crypto/tls&quot;
-       )
+<h3 id="toc_1">auto目录</h3>
 
-func main() {
- tr := &amp;http.Transport{
-            TLSClientConfig: &amp;tls.Config{InsecureSkipVerify: true},
-
-}
-        client := &amp;http.Client{Transport: tr}
-                _, err := client.Get(&quot;https://golang.org/&quot;)
-                    if err != nil {
-                                    fmt.Println(err)
-
-                    }
-
-}
-</code></pre>
+<ol>
+<li><strong>configure</strong>
+ 10 . auto/options
+ 11 . auto/init
+ 12 . auto/sources</li>
+</ol>
 
                         
                       </div>
@@ -161,10 +160,10 @@ func main() {
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2017/1/5 17:51 下午</span>
+                    <span class="date">2017/1/5 17:50 下午</span>
                     <span>posted in&nbsp;</span> 
           				  
-          					    <span class="posted-in"><a href='golang.html'>golang</a></span>
+          					    <span class="posted-in"><a href='nginx.html'>nginx</a></span>
           				   
                   </div>
                   <div class="more-right right">
@@ -172,7 +171,7 @@ func main() {
                       
 
                       
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14836098881938.html" data-count-type="comments" href="14836098881938.html#ds-thread"></a>
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14836098401416.html" data-count-type="comments" href="14836098401416.html#ds-thread"></a>
                        
                   </span>
                   </div>
@@ -185,7 +184,7 @@ func main() {
 			<div class="row">
 			  <div class="large-6 columns">
 			  <p class="text-left" style="padding-top:25px;">
-			   
+			   <a href="all.html">&laquo; Prev Page</a>  
 			  </p>
 			  </div>
 			  <div class="large-6 columns">
