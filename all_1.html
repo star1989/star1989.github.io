@@ -81,6 +81,8 @@
     <li><label>Categories</label></li>
 
         
+            <li><a href="MySQL.html">MySQL</a></li>
+        
             <li><a href="python.html">python</a></li>
         
             <li><a href="nginx.html">nginx</a></li>
@@ -117,6 +119,68 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14836098881938.html">
+                
+                  <h1>golang send a https request and skip the certificate</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>使用<code>crypto/tls</code>包</p>
+
+<blockquote>
+<p>官网对包的说明:Package tls partially implements TLS 1.2, as specified in RFC 5246.</p>
+</blockquote>
+
+<pre><code class="language-go">package main
+
+import (
+        &quot;fmt&quot;
+        &quot;net/http&quot;
+        &quot;crypto/tls&quot;
+       )
+
+func main() {
+ tr := &amp;http.Transport{
+            TLSClientConfig: &amp;tls.Config{InsecureSkipVerify: true},
+
+}
+        client := &amp;http.Client{Transport: tr}
+                _, err := client.Get(&quot;https://golang.org/&quot;)
+                    if err != nil {
+                                    fmt.Println(err)
+
+                    }
+
+}
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/1/5 17:51 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='golang.html'>golang</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14836098881938.html" data-count-type="comments" href="14836098881938.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="14836098401416.html">
                 
@@ -232,6 +296,8 @@ C++兼容测试文件</li>
 
       	<p class="cat-list">
         
+            <a href="MySQL.html"><strong>MySQL</strong></a>
+        
             <a href="python.html"><strong>python</strong></a>
         
             <a href="nginx.html"><strong>nginx</strong></a>
@@ -263,6 +329,12 @@ C++兼容测试文件</li>
 	      
 		      
 			      <li class="post">
+			        <a href="14893113007289.html">MySQL PDO深入探索</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14890706857877.html">unsupervised learning</a>
 			      </li>
 		     
@@ -282,12 +354,6 @@ C++兼容测试文件</li>
 		      
 			      <li class="post">
 			        <a href="14882560898323.html">PHP CI前的统一大杀器--vagrant</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14879208825856.html">phpcs集成git工作流</a>
 			      </li>
 		     
 		  

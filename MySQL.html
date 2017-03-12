@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Again,Go! - 星晨入梦
+  MySQL - 星晨入梦
   
   </title>
   
@@ -111,226 +111,187 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>Again,Go!</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2017/1/6 13:33 下午</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="14893113007289.html">
+                
+                  <h1>MySQL PDO深入探索</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">引子</h2>
 
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='life.html'>life</a></span>
-           
-         
-          <span class="comments">
-            
+<blockquote>
+<p>学而时习之.用了这么多年的PDO,就知道预处理和参数绑定,但是对于其具体实现并没有进行深入了解.今天好奇心大发了,习MySQL PDO吧. </p>
+</blockquote>
 
-            
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14836808084156.html" data-count-type="comments" href="14836808084156.html#ds-thread"></a>
-            
-          </span>
+<h2 id="toc_1">官释</h2>
 
-        </div>
-      </div><!-- article -->
+<p>很多更成熟的数据库都支持预处理语句的概念。什么是预处理语句？可以把它看作是想要运行的 SQL 的一种编译过的模板，它可以使用变量参数进行定制。预处理语句可以带来两大好处：</p>
 
-      <div class="article-content">
-      <h2 id="toc_0">沉默&amp;沉淀</h2>
+<ul>
+<li>查询仅需解析（或预处理）一次，但可以用相同或不同的参数执行多次。当查询准备好后，数据库将分析、编译和优化执行该查询的计划。对于复杂的查询，此过程要花费较长的时间，如果需要以不同参数多次重复相同的查询，那么该过程将大大降低应用程序的速度。通过使用预处理语句，可以避免重复分析/编译/优化周期。简言之，预处理语句占用更少的资源，因而运行得更快。</li>
+<li>提供给预处理语句的参数不需要用引号括起来，驱动程序会自动处理。如果应用程序只使用预处理语句，可以确保不会发生SQL 注入。（然而，如果查询的其他部分是由未转义的输入来构建的，则仍存在 SQL 注入的风险）。
+预处理语句如此有用，以至于它们唯一的特性是在驱动程序不支持的时PDO 将模拟处理。这样可以确保不管数据库是否具有这样的功能，都可以确保应用程序可以用相同的数据访问模式。</li>
+</ul>
 
-<p>再次记录自己的心路历程,不论是生活还是工作.总担心自己什么时候连自己都忘了的家伙.</p>
+<p><em>PS:存储过程会稍有特殊,具体请看:<a href="http://php.net/manual/zh/pdo.prepared-statements.php">http://php.net/manual/zh/pdo.prepared-statements.php</a></em></p>
 
-<h2 id="toc_1">Mac&amp;Mweb</h2>
+<h2 id="toc_2">上下而求索</h2>
 
-<p>使用MWeb进行写作.记录一下常用的快捷键,顺便熟悉一下MWeb.</p>
+<p>其实细心的会发现官释有句很特别的话[<strong>以至于它们唯一的特性是在驱动程序不支持的时PDO将模拟处理</strong>].<br/>
+驱动程序,模拟处理?<br/>
+直接上代码吧.</p>
 
-<h2 id="toc_2">MWEB MapKey</h2>
+<p>1.模拟处理</p>
 
-<table>
-<thead>
-<tr>
-<th>快捷键</th>
-<th>作用</th>
-</tr>
-</thead>
+<pre><code class="language-php">&lt;?php
+$pdo = new PDO(&quot;mysql:host=127.0.0.1;dbname=words;charset=utf8&quot;,&quot;root&quot;,&quot;password&quot;);
+$st = $pdo-&gt;prepare(&quot;SELECT `words`.* FROM `words` WHERE word = ? ORDER BY `id` DESC LIMIT 10 OFFSET 0&quot;);
+$word = &#39;charm&#39;;
+$st-&gt;bindParam(1,$word);
+$st-&gt;execute();
+$data = $st-&gt;fetchAll();
+</code></pre>
 
-<tbody>
-<tr>
-<td>CTL+1</td>
-<td>标题1</td>
-</tr>
-<tr>
-<td>CTL+2</td>
-<td>标题2</td>
-</tr>
-<tr>
-<td>CTL+3</td>
-<td>标题3</td>
-</tr>
-<tr>
-<td>CTL+4</td>
-<td>标题4</td>
-</tr>
-<tr>
-<td>CTL+5</td>
-<td>标题5</td>
-</tr>
-<tr>
-<td>CTL+6</td>
-<td>标题6</td>
-</tr>
-<tr>
-<td>CMD+B</td>
-<td><strong>粗体</strong></td>
-</tr>
-<tr>
-<td>CMD+U</td>
-<td><u>下划线</u></td>
-</tr>
-<tr>
-<td>CMD+I</td>
-<td><em>斜体</em></td>
-</tr>
-<tr>
-<td>CMD+-</td>
-<td><del>删除线</del></td>
-</tr>
-<tr>
-<td>CMD+=</td>
-<td><mark>高亮</mark></td>
-</tr>
-<tr>
-<td>CMD+K</td>
-<td>行内代码</td>
-</tr>
-<tr>
-<td>CMD+/</td>
-<td>注释</td>
-</tr>
-<tr>
-<td>CMD+.</td>
-<td>阅读更多</td>
-</tr>
-<tr>
-<td>CTL+U</td>
-<td>无序列表</td>
-</tr>
-<tr>
-<td>CMD+SFT+O</td>
-<td>有序列表</td>
-</tr>
-<tr>
-<td>CMD+SFT+B</td>
-<td>引用</td>
-</tr>
-<tr>
-<td>CMD+]</td>
-<td>左移</td>
-</tr>
-<tr>
-<td>CMD+[</td>
-<td>右移</td>
-</tr>
-<tr>
-<td>CTL+SFT+L</td>
-<td>链接</td>
-</tr>
-<tr>
-<td>CTL+SFT+T</td>
-<td>表格</td>
-</tr>
-<tr>
-<td>CTL+SFT+I</td>
-<td>图片</td>
-</tr>
-<tr>
-<td>CMD+OPT+I</td>
-<td>插入本地图片</td>
-</tr>
-<tr>
-<td>CMD+ENT</td>
-<td>新段落</td>
-</tr>
-<tr>
-<td>CMD+SFT+E</td>
-<td>焦点至编辑器</td>
-</tr>
-<tr>
-<td>CMD+SFT+F</td>
-<td>焦点至搜索栏</td>
-</tr>
-<tr>
-<td>CMD+7</td>
-<td>大纲(目录)</td>
-</tr>
-<tr>
-<td>CMD+8</td>
-<td>文件信息</td>
-</tr>
-<tr>
-<td>CMD+9</td>
-<td>导出/发布</td>
-</tr>
-<tr>
-<td>CMD+E</td>
-<td>外部模式(打开现有的文件[夹])</td>
-</tr>
-<tr>
-<td>CMD+E</td>
-<td>文档库模式</td>
-</tr>
-<tr>
-<td>CMD+R</td>
-<td>预览</td>
-</tr>
-</tbody>
-</table>
+<p>运行后使用<code>wireshark</code>进行抓包查看.一次完成的PHP运行MySQL PDO查询的TCP包就呈现在眼前:<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893045265092.jpg" alt=""/></p>
+
+<p><mark>简单的回顾一下TCP握手协议</mark></p>
+
+<h4 id="toc_3">TCP三路握手</h4>
+
+<p><img src="http://bimg.cxstars.com/2017-03-12-14893050630847.jpg" alt=""/></p>
+
+<h4 id="toc_4">TCP关闭确认</h4>
+
+<p><img src="http://bimg.cxstars.com/2017-03-12-14893059174539.jpg" alt=""/></p>
+
+<p>回归正题,MySQL的查询体现:<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893068792357.jpg" alt=""/></p>
+
+<p>变化就是替换并添加上了单引号(转义,同<code>mysql_real_escape_string</code>).其他没有什么变化.</p>
+
+<p>2.驱动处理<br/>
+代码正如:</p>
+
+<pre><code class="language-php">&lt;?php
+$pdo = new PDO(&quot;mysql:host=127.0.0.1;dbname=words;charset=utf8&quot;,&quot;root&quot;,&quot;password&quot;);
+$pdo-&gt;setAttribute(PDO::ATTR_EMULATE_PREPARES, false);//这行是关键
+$st = $pdo-&gt;prepare(&quot;SELECT `words`.* FROM `words` WHERE word = ? ORDER BY `id` DESC LIMIT 10 OFFSET 0&quot;);
+$word = &#39;charm&#39;;
+$st-&gt;bindParam(1,$word);
+$st-&gt;execute();
+$data = $st-&gt;fetchAll();
+</code></pre>
+
+<p><img src="http://bimg.cxstars.com/2017-03-12-14893082386821.jpg" alt=""/></p>
+
+<p>哇噢,这次跟上次大不一样.来看看具体做了什么.<br/>
+先是进行了SQL预处理.<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893083215979.jpg" alt=""/></p>
+
+<p>根据MySQL协议返回的预处理完成信息.<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893088477923.jpg" alt=""/></p>
+
+<p>进行参数映射查询<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893089225887.jpg" alt=""/></p>
+
+<p>返回数据<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893093001183.jpg" alt=""/></p>
+
+<p>关闭预处理<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893093293735.jpg" alt=""/></p>
+
+<p>跟PHP本地预处理有什么区别呢?<br/>
+<em>一次处理,终身(此次连接)受益,MySQL语句预处理,比如词法分析等,想象一下,在插入中使用,并且用二进制协议进行数据传输,更加安全效率</em></p>
+
+<h2 id="toc_5">左右至MySQL求索</h2>
+
+<p>其实也就是转换到MySQL中进行.</p>
+
+<pre><code class="language-mysql">#prepare statement
+mysql&gt; PREPARE select1 FROM &#39;SELECT `words`.id FROM `words` WHERE word = ? ORDER BY `id` DESC LIMIT 10 OFFSET 0&#39;;
+Query OK, 0 rows affected (0.00 sec)
+Statement prepared
+
+#bind variable
+mysql&gt; set @w1=&quot;charm&quot;;
+Query OK, 0 rows affected (0.00 sec)
+
+#execute
+mysql&gt; EXECUTE select1 USING @w1;
++----+
+| id |
++----+
+|  5 |
++----+
+1 row in set (0.00 sec)
+</code></pre>
+
+<h4 id="toc_6">wiki的定义</h4>
+
+<blockquote>
+<p>As compared to executing SQL statements directly, prepared statements offer two main advantages:[1]</p>
+</blockquote>
+
+<ul>
+<li>The overhead of compiling and optimizing the statement is incurred only once, although the statement is executed multiple times. Not all optimization can be performed at the time the prepared statement is compiled, for two reasons: the best plan may depend on the specific values of the parameters, and the best plan may change as tables and indexes change over time.[2]</li>
+<li>Prepared statements are resilient against SQL injection, because parameter values, which are transmitted later using a different protocol, need not be correctly escaped. If the original statement template is not derived from external input, SQL injection cannot occur.</li>
+</ul>
+
+<p>链接<a href="https://en.wikipedia.org/wiki/Prepared_statement">https://en.wikipedia.org/wiki/Prepared_statement</a></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/3/12 17:35 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='MySQL.html'>MySQL</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14893113007289.html" data-count-type="comments" href="14893113007289.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
 
 
-    
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="14840656459705.html" 
-          title="Previous Post: swoole学习记录">&laquo; swoole学习记录</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="14836103185566.html" 
-          title="Next Post: apue-review">apue-review &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          
-
-          
-
-          
-              <div class="ds-thread" data-thread-key="14836808084156.html" data-url="http://blog.cxstars.com/14836808084156.html" data-title="Again,Go!"></div>
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
-
-
-
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

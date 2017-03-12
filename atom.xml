@@ -4,13 +4,145 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-03-03T13:18:19+08:00</updated>
+  <updated>2017-03-09T23:16:43+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL PDO深入探索]]></title>
+    <link href="http://blog.cxstars.com/14893113007289.html"/>
+    <updated>2017-03-12T17:35:00+08:00</updated>
+    <id>http://blog.cxstars.com/14893113007289.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">引子</h2>
+
+<blockquote>
+<p>学而时习之.用了这么多年的PDO,就知道预处理和参数绑定,但是对于其具体实现并没有进行深入了解.今天好奇心大发了,习MySQL PDO吧. </p>
+</blockquote>
+
+<h2 id="toc_1">官释</h2>
+
+<p>很多更成熟的数据库都支持预处理语句的概念。什么是预处理语句？可以把它看作是想要运行的 SQL 的一种编译过的模板，它可以使用变量参数进行定制。预处理语句可以带来两大好处：</p>
+
+<ul>
+<li>查询仅需解析（或预处理）一次，但可以用相同或不同的参数执行多次。当查询准备好后，数据库将分析、编译和优化执行该查询的计划。对于复杂的查询，此过程要花费较长的时间，如果需要以不同参数多次重复相同的查询，那么该过程将大大降低应用程序的速度。通过使用预处理语句，可以避免重复分析/编译/优化周期。简言之，预处理语句占用更少的资源，因而运行得更快。</li>
+<li>提供给预处理语句的参数不需要用引号括起来，驱动程序会自动处理。如果应用程序只使用预处理语句，可以确保不会发生SQL 注入。（然而，如果查询的其他部分是由未转义的输入来构建的，则仍存在 SQL 注入的风险）。
+预处理语句如此有用，以至于它们唯一的特性是在驱动程序不支持的时PDO 将模拟处理。这样可以确保不管数据库是否具有这样的功能，都可以确保应用程序可以用相同的数据访问模式。</li>
+</ul>
+
+<p><em>PS:存储过程会稍有特殊,具体请看:<a href="http://php.net/manual/zh/pdo.prepared-statements.php">http://php.net/manual/zh/pdo.prepared-statements.php</a></em></p>
+
+<h2 id="toc_2">上下而求索</h2>
+
+<p>其实细心的会发现官释有句很特别的话[<strong>以至于它们唯一的特性是在驱动程序不支持的时PDO将模拟处理</strong>].<br/>
+驱动程序,模拟处理?<br/>
+直接上代码吧.</p>
+
+<p>1.模拟处理</p>
+
+<pre><code class="language-php">&lt;?php
+$pdo = new PDO(&quot;mysql:host=127.0.0.1;dbname=words;charset=utf8&quot;,&quot;root&quot;,&quot;password&quot;);
+$st = $pdo-&gt;prepare(&quot;SELECT `words`.* FROM `words` WHERE word = ? ORDER BY `id` DESC LIMIT 10 OFFSET 0&quot;);
+$word = &#39;charm&#39;;
+$st-&gt;bindParam(1,$word);
+$st-&gt;execute();
+$data = $st-&gt;fetchAll();
+</code></pre>
+
+<p>运行后使用<code>wireshark</code>进行抓包查看.一次完成的PHP运行MySQL PDO查询的TCP包就呈现在眼前:<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893045265092.jpg" alt=""/></p>
+
+<p><mark>简单的回顾一下TCP握手协议</mark></p>
+
+<h4 id="toc_3">TCP三路握手</h4>
+
+<p><img src="http://bimg.cxstars.com/2017-03-12-14893050630847.jpg" alt=""/></p>
+
+<h4 id="toc_4">TCP关闭确认</h4>
+
+<p><img src="http://bimg.cxstars.com/2017-03-12-14893059174539.jpg" alt=""/></p>
+
+<p>回归正题,MySQL的查询体现:<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893068792357.jpg" alt=""/></p>
+
+<p>变化就是替换并添加上了单引号(转义,同<code>mysql_real_escape_string</code>).其他没有什么变化.</p>
+
+<p>2.驱动处理<br/>
+代码正如:</p>
+
+<pre><code class="language-php">&lt;?php
+$pdo = new PDO(&quot;mysql:host=127.0.0.1;dbname=words;charset=utf8&quot;,&quot;root&quot;,&quot;password&quot;);
+$pdo-&gt;setAttribute(PDO::ATTR_EMULATE_PREPARES, false);//这行是关键
+$st = $pdo-&gt;prepare(&quot;SELECT `words`.* FROM `words` WHERE word = ? ORDER BY `id` DESC LIMIT 10 OFFSET 0&quot;);
+$word = &#39;charm&#39;;
+$st-&gt;bindParam(1,$word);
+$st-&gt;execute();
+$data = $st-&gt;fetchAll();
+</code></pre>
+
+<p><img src="http://bimg.cxstars.com/2017-03-12-14893082386821.jpg" alt=""/></p>
+
+<p>哇噢,这次跟上次大不一样.来看看具体做了什么.<br/>
+先是进行了SQL预处理.<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893083215979.jpg" alt=""/></p>
+
+<p>根据MySQL协议返回的预处理完成信息.<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893088477923.jpg" alt=""/></p>
+
+<p>进行参数映射查询<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893089225887.jpg" alt=""/></p>
+
+<p>返回数据<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893093001183.jpg" alt=""/></p>
+
+<p>关闭预处理<br/>
+<img src="http://bimg.cxstars.com/2017-03-12-14893093293735.jpg" alt=""/></p>
+
+<p>跟PHP本地预处理有什么区别呢?<br/>
+<em>一次处理,终身(此次连接)受益,MySQL语句预处理,比如词法分析等,想象一下,在插入中使用,并且用二进制协议进行数据传输,更加安全效率</em></p>
+
+<h2 id="toc_5">左右至MySQL求索</h2>
+
+<p>其实也就是转换到MySQL中进行.</p>
+
+<pre><code class="language-mysql">#prepare statement
+mysql&gt; PREPARE select1 FROM &#39;SELECT `words`.id FROM `words` WHERE word = ? ORDER BY `id` DESC LIMIT 10 OFFSET 0&#39;;
+Query OK, 0 rows affected (0.00 sec)
+Statement prepared
+
+#bind variable
+mysql&gt; set @w1=&quot;charm&quot;;
+Query OK, 0 rows affected (0.00 sec)
+
+#execute
+mysql&gt; EXECUTE select1 USING @w1;
++----+
+| id |
++----+
+|  5 |
++----+
+1 row in set (0.00 sec)
+</code></pre>
+
+<h4 id="toc_6">wiki的定义</h4>
+
+<blockquote>
+<p>As compared to executing SQL statements directly, prepared statements offer two main advantages:[1]</p>
+</blockquote>
+
+<ul>
+<li>The overhead of compiling and optimizing the statement is incurred only once, although the statement is executed multiple times. Not all optimization can be performed at the time the prepared statement is compiled, for two reasons: the best plan may depend on the specific values of the parameters, and the best plan may change as tables and indexes change over time.[2]</li>
+<li>Prepared statements are resilient against SQL injection, because parameter values, which are transmitted later using a different protocol, need not be correctly escaped. If the original statement template is not derived from external input, SQL injection cannot occur.</li>
+</ul>
+
+<p>链接<a href="https://en.wikipedia.org/wiki/Prepared_statement">https://en.wikipedia.org/wiki/Prepared_statement</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[unsupervised learning]]></title>
@@ -2301,44 +2433,6 @@ void \*ptr;
 <p>基本上这个结构就可以代表所有Redis的基本数据结构，比如strings,lists,sets,sorted,sets等等。有趣的是它有一个<code>type</code>字段，所以可以知道是一个什么类型的对象。<code>refcount</code>可以关联好几个地方的同一个对象而不用再重新分配内存。最后<code>ptr</code>指针指向对象的实际地址，即使是同类型，根据<code>encoding</code>字段这个值也可能是不同的。</p>
 
 <p>在Redis的内部，Redis Object使用得非常广泛，然后为了避免过于迂回的访问方式，最近我们在许多地方使用单纯的动态字符串，而不是将它包装进Redis Ojbect。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[golang send a https request and skip the certificate]]></title>
-    <link href="http://blog.cxstars.com/14836098881938.html"/>
-    <updated>2017-01-05T17:51:28+08:00</updated>
-    <id>http://blog.cxstars.com/14836098881938.html</id>
-    <content type="html"><![CDATA[
-<p>使用<code>crypto/tls</code>包</p>
-
-<blockquote>
-<p>官网对包的说明:Package tls partially implements TLS 1.2, as specified in RFC 5246.</p>
-</blockquote>
-
-<pre><code class="language-go">package main
-
-import (
-        &quot;fmt&quot;
-        &quot;net/http&quot;
-        &quot;crypto/tls&quot;
-       )
-
-func main() {
- tr := &amp;http.Transport{
-            TLSClientConfig: &amp;tls.Config{InsecureSkipVerify: true},
-
-}
-        client := &amp;http.Client{Transport: tr}
-                _, err := client.Get(&quot;https://golang.org/&quot;)
-                    if err != nil {
-                                    fmt.Println(err)
-
-                    }
-
-}
-</code></pre>
 
 ]]></content>
   </entry>
