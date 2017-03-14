@@ -120,6 +120,100 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14894790545658.html">
+                
+                  <h1>设计模式原则</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h4 id="toc_0">什么是设计模式</h4>
+
+<p>设计模式是个很值得思考且需要思考很深的事.<br/>
+Just Do it.</p>
+
+<h4 id="toc_1">六大原则</h4>
+
+<ul>
+<li>单一职责原则=&gt;Single Responsibility Principle=&gt;SRP</li>
+</ul>
+
+<blockquote>
+<p>一个类只干这件事且只有这个类也只干这件事,俗语:一夫一妻制</p>
+</blockquote>
+
+<ul>
+<li>里氏替换原则=&gt;Liskov Substitution Principle=&gt;LSP</li>
+</ul>
+
+<blockquote>
+<p>基类出现的地方都可以完美使用其子类替换,俗语:养子防老or上阵父子兵</p>
+</blockquote>
+
+<ul>
+<li>依赖倒置原则=&gt;Dependence Inversion Principle=&gt;DIP</li>
+</ul>
+
+<blockquote>
+<p>所有的实现都应该依赖于约束,无约束的实现是不可控的,其中的约束就是interface,多约束就是多接口实现,俗语:依法治国,一国两治(多约束,手动点赞)每个地方都会有地方性治安条例,在各地具体的标准/实施不一样,但是各地所解决的问题是同一个.</p>
+</blockquote>
+
+<ul>
+<li>接口隔离原则=&gt;Interface Segregation Principle=&gt;ISP</li>
+</ul>
+
+<blockquote>
+<p>所有的接口都是有针对性,所要解决的问题是单一的,因为可以多实现,提高内聚性.举个栗子:国家是无数个小家组成的,家庭有收入,支出,那么收入和支出就是不同的接口,而每个家庭都必须要实现.俗语:条条大路通罗马.</p>
+</blockquote>
+
+<ul>
+<li>迪米特法则=&gt;Law of Demeter=&gt;LoD</li>
+</ul>
+
+<blockquote>
+<p>低耦合，高内聚是程序设计的最终目标,低耦合就是此法则的目标,通过减少依赖或者无感知依赖达到.俗语:知其然,不知其所以然.你只要知要这个类有了它所需要的依赖,而不需要知道它怎么有的.</p>
+</blockquote>
+
+<ul>
+<li>开闭原则=&gt;Open Close Principle=&gt;OCP</li>
+</ul>
+
+<blockquote>
+<p>关闭修改,开放扩展.业务的变化是一定的,但是类的修改却不是一定的,需要类在设计的时候就有横向扩展性.俗语:宪法补充案.</p>
+</blockquote>
+
+<h4 id="toc_2">原则总结</h4>
+
+<p>具体的实现类是单一目标的,实现类能完美替换基类,类是实现的接口约束,接口约束同样也是单一目标的,约束的实现中需要借助其他约束时,在其初始化的同时注入约束的实现(其实就是依赖注入),每个约束的划分清晰,无强交集.</p>
+
+<p>(以上总结以六大原则顺序而来,实质我觉得是反向的.先定义好合适约束,也就是interface需要实现的方法,以满足开闭原则.在interface或者class中使用依赖注入,以满足迪米特原则.在第一步设计约束的时候,同时也要满足接口隔离原则.class会实现所有需要实现的interface中的方法,这就是依赖倒置原则.class可以继承另一个class,继承者可以完美替换父类.每个类的实现都应该是单一需求或者功能)</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/3/14 16:10 下午</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='arch.html'>arch</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                      
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14894790545658.html" data-count-type="comments" href="14894790545658.html#ds-thread"></a>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14893113007289.html">
                 
                   <h1>PHP PDO深入探索</h1>
@@ -2185,57 +2279,6 @@ $serv-&gt;start();
                 </div>
               </div><!-- article -->
         
-			<div class="article">
-                <a class="clearlink" href="14836102159997.html">
-                
-                  <h1>serverh-on-redis-source-code</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h1 id="toc_0">server.h on redis source code</h1>
-
-<h2 id="toc_1">directory</h2>
-
-<ul>
-<li><code>src</code>:包括了所有Redis的c实现源文件</li>
-<li><code>tests</code>:包括了所有的Redis单元测试文件，有Redis、Redis Cluster、Redis Sentinel，使用tcl(<em>Sentinel</em>)实现</li>
-<li><code>deps</code>:包括了Redis所有要用的库，你只需要提供<code>libc</code>和一个c编译器。<code>deps</code>下大多数的功能都是开始于<em>Redis</em>，也有一个例外：<code>geohash-int</code></li>
-</ul>
-
-<h2 id="toc_2">server.h</h2>
-
-<blockquote>
-<p>在Redis3.0的unstable分支中全名为<code>redis.h</code>和<code>redis.c</code>。想要理解Redis是如何工作的，就要先理解它所用的数据结构。<br/>
-<code>struct redisServer</code>里包含了所有redis server的配置。以下是几个重要的字段：</p>
-</blockquote>
-
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="14836102159997.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2017/1/5 17:56 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='redis.html'>redis</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                      
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14836102159997.html" data-count-type="comments" href="14836102159997.html#ds-thread"></a>
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
               
 
 
@@ -2323,6 +2366,12 @@ $serv-&gt;start();
 	      
 		      
 			      <li class="post">
+			        <a href="14894790545658.html">设计模式原则</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="14893113007289.html">PHP PDO深入探索</a>
 			      </li>
 		     
@@ -2342,12 +2391,6 @@ $serv-&gt;start();
 		      
 			      <li class="post">
 			        <a href="14884651028364.html">Install a GitLab CE Omnibus package on Centos7</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="14882560898323.html">PHP CI前的统一大杀器--vagrant</a>
 			      </li>
 		     
 		  
