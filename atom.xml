@@ -4,13 +4,48 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-03-12T17:38:47+08:00</updated>
+  <updated>2017-03-14T23:19:13+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Chose A Restful Api Http Status Code]]></title>
+    <link href="http://blog.cxstars.com/14897253436771.html"/>
+    <updated>2017-03-17T12:35:43+08:00</updated>
+    <id>http://blog.cxstars.com/14897253436771.html</id>
+    <content type="html"><![CDATA[
+<h3 id="toc_0">Pre Knowledge</h3>
+
+<p><a href="httpstatuses.com">httpstatuses.com</a><br/>
+<a href="https://tools.ietf.org/html/rfc7231">RFC 7231</a><br/>
+<strong>这个好玩且形象</strong><a href="https://http.cat/">https://http.cat/</a></p>
+
+<h3 id="toc_1">Start</h3>
+
+<p><img src="http://bimg.cxstars.com/2017-03-17-start.png" alt="start"/></p>
+
+<h3 id="toc_2">Description</h3>
+
+<p><img src="http://bimg.cxstars.com/2017-03-17-HTTP-Status-Codes-Key.png" alt="HTTP-Status-Codes-Key"/></p>
+
+<h3 id="toc_3">2XX &amp; 3XX</h3>
+
+<p><img src="http://bimg.cxstars.com/2017-03-17-2_3.png" alt="2_3"/></p>
+
+<h3 id="toc_4">4XX</h3>
+
+<p><img src="http://bimg.cxstars.com/2017-03-17-HTTP-4XX-Status-Codes.png" alt="HTTP-4XX-Status-Codes"/></p>
+
+<h3 id="toc_5">5XX</h3>
+
+<p><img src="http://bimg.cxstars.com/2017-03-17-HTTP-5XX-Status-Codes.png" alt="HTTP-5XX-Status-Codes"/></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[设计模式原则]]></title>
@@ -2375,59 +2410,6 @@ Swoole的Server和异步Client都是在<em>onReceive</em>回调函数中处理�
 <ul>
 <li>文件空洞到底是什么？core dump？</li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[soa-architecture-overview]]></title>
-    <link href="http://blog.cxstars.com/14836102763553.html"/>
-    <updated>2017-01-05T17:57:56+08:00</updated>
-    <id>http://blog.cxstars.com/14836102763553.html</id>
-    <content type="html"><![CDATA[
-<h2 id="toc_0">什么是SOA</h2>
-
-<blockquote>
-<p>面向服务的体系结构（英语：service-oriented architecture）是构造分布式计算的应用程序的方法。它将应用程序功能作为服务发送给最终用户或者其他服务。</p>
-
-<p>企业系统的架构师认为SOA能够帮助业务迅速和高效地响应变化的市场条件. 服务导向的架构在宏观（服务）上，而不是在微观上（对象）因此提高了重复使用性。同时，服务导向的架构可以简化与传统系统的互连和使用。</p>
-</blockquote>
-
-<h2 id="toc_1">SOA Principle</h2>
-
-<ul>
-<li>可重复使用，粒度，模组性，可组合型，物件化原件，构件化以及具交互操作性</li>
-<li>符合开放标准（通用的或者行业的）</li>
-<li>服务的识别和分类，提供和发布，监控和跟踪</li>
-</ul>
-
-<span id="more"></span><!-- more -->
-
-<h2 id="toc_2">RPC - Remote Process Call</h2>
-
-<blockquote>
-<p>RPC使用C/S方式，采用http协议,发送请求到服务器，等待服务器返回结果。这个请求包括一个参数集和一个文本集，通常形成“classname.methodname”形式。优点是跨语言跨平台，C端、S端有更大的独立性，缺点是<em>不支持对象，无法在编译器检查错误，只能在运行期检查</em>。</p>
-</blockquote>
-
-<h2 id="toc_3">RMI - Remote Method Ivocation</h2>
-
-<blockquote>
-<p>TCP协议。采用stubs 和 skeletons 来进行远程对象(remote object)的通讯。stub 充当远程对象的客户端代理，有着和远程对象相同的远程接口，远程对象的调用实际是通过调用该对象的客户端代理对象stub来完成的，通过该机制RMI就好比它是本地工作，采用tcp/ip协议，客户端直接调用服务端上的一些方法。优点是强类型，编译期可检查错误，缺点是只能基于JAVA语言，客户机与服务器紧耦合。</p>
-</blockquote>
-
-<h2 id="toc_4">Architecture 架构</h2>
-
-<blockquote>
-<p>分析就是做正确的事，设计就是正确的做事。架构跟语言跟平台关系不大，毕竟架构是设计过程中的子过程，我想如果你的设计不合理，你用任何语言任何平台都解决不了问题。</p>
-</blockquote>
-
-<h2 id="toc_5">GRASP - General Responsibility Assignment Software Patterns（通用职责分配软件模式）</h2>
-
-<blockquote>
-<p>GRASP一共包括9种模式，它们描述了对象设计和职责分配的基本原则。如何把现实世界的业务功能抽象成对象，如何决定一个系统有多少对象，每个对象都包括什么职责，GRASP模式给出了最基本的指导原则。</p>
-</blockquote>
-
-<p><em>2016-05-26</em> </p>
 
 ]]></content>
   </entry>
