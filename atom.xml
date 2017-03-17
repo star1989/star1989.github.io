@@ -4,7 +4,7 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-03-14T23:19:13+08:00</updated>
+  <updated>2017-03-17T13:29:29+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -43,6 +43,15 @@
 <h3 id="toc_5">5XX</h3>
 
 <p><img src="http://bimg.cxstars.com/2017-03-17-HTTP-5XX-Status-Codes.png" alt="HTTP-5XX-Status-Codes"/></p>
+
+<h3 id="toc_6">扩展</h3>
+
+<p><a href="https://dev.twitter.com/overview/api/response-codes">twitter的错误码</a><br/>
+<a href="https://developers.facebook.com/docs/graph-api/using-graph-api">facebook的错误码</a></p>
+
+<h3 id="toc_7">End</h3>
+
+<p><em><a href="http://racksburg.com/choosing-an-http-status-code/">原文链接</a></em></p>
 
 ]]></content>
   </entry>
