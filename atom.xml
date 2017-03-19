@@ -4,13 +4,60 @@
   <title><![CDATA[星晨入梦]]></title>
   <link href="http://blog.cxstars.com/atom.xml" rel="self"/>
   <link href="http://blog.cxstars.com/"/>
-  <updated>2017-03-17T13:29:29+08:00</updated>
+  <updated>2017-03-17T15:07:41+08:00</updated>
   <id>http://blog.cxstars.com/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[一篇上了头条的文章感想]]></title>
+    <link href="http://blog.cxstars.com/14899316488389.html"/>
+    <updated>2017-03-19T21:54:08+08:00</updated>
+    <id>http://blog.cxstars.com/14899316488389.html</id>
+    <content type="html"><![CDATA[
+<h3 id="toc_0">起因</h3>
+
+<p><a href="http://blog.cxstars.com/14893113007289.html">PHP PDO深入探索</a>这篇文章很意外的上了开发头条,只是因为我很意外的在头条上建了一个独家号,然后又很意外的写那篇文章(只是因为我想试试新买的机械键盘手感Orz...),然后又很意外的觉得还行便分享到了上面提到的那个意外的独家号,最后竟然意外的上了开发者头条精选.</p>
+
+<h3 id="toc_1">带来的一点点改变</h3>
+
+<ul>
+<li><p><em>带来了一条评论</em><br/>
+<img src="media/14899316488389/14899323375273.jpg" alt="带来了一条评论"/></p></li>
+<li><p><em>带来了三个关注者</em><br/>
+<img src="media/14899316488389/14899323936505.jpg" alt="带来了三个关注者"/></p></li>
+<li><p><em>在头条上有20个点赞(唔,算上自己的)和74个收藏</em><br/>
+<img src="media/14899316488389/14899327323387.jpg" alt="在头条上有20个点赞(唔,算上自己的)和74个收藏"/></p></li>
+<li><p><em>在头条上的阅读量高达3780</em><br/>
+<img src="media/14899316488389/14899328025473.jpg" alt="我大PHPer还是很多的"/></p></li>
+<li><p><em>给我那个一天几乎没人访问的小站带来了许多顾客</em><br/>
+<img src="media/14899316488389/14899322023669.jpg" alt="给我那个一天几乎没人访问的小站带来了许多顾客"/></p></li>
+<li><p><em>继而被各网站收录</em><br/>
+<img src="media/14899316488389/14899330640882.jpg" alt="PHP PDO深入探索 - 推酷"/></p></li>
+</ul>
+
+<p><img src="media/14899316488389/14899331792181.jpg" alt=""/></p>
+
+<ul>
+<li><p><em>搜了下反链,意外的看到了以前的WP博客截图</em><br/>
+<img src="media/14899316488389/14899333673163.jpg" alt="2013-5-24"/></p></li>
+<li><p><em>还有一个意外的发现,写的workflow被library io收录了</em><br/>
+<img src="media/14899316488389/14899335791384.jpg" alt="library"/></p></li>
+</ul>
+
+<h3 id="toc_2">感想</h3>
+
+<p>今天虽然很WTF的一天,车子被撞得拖去了4S店,老爸的泡脚盆漏电闪火花,但是所幸人都没有事情.虽然不是很开心,但是还好翻了翻这篇文章的所带来的一小点成就感也就平复了.(唔,我就是这么容易满足).</p>
+
+<p>希望以后能写得更有用的东西,<strong>不求能够被记住,但是只要能够被记录,我就已经感到满足了</strong>.有3个朋友订阅了独立号,得对这三个朋友负责,尽量抽空写点有用的东西.(虽然他们不一定看,我知道的.0 0.)但还是希望自己能够做点有用的事,即能帮到别人.<strong>这就是我所理解的开源精神.</strong></p>
+
+<p><strong>如果你看了这篇文章,谢谢你,如果没有人看到,那就谢谢努力的自己.噢,对了,谢谢头条君.</strong></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to Chose A Restful Api Http Status Code]]></title>
@@ -2345,80 +2392,6 @@ Swoole的Server和异步Client都是在<em>onReceive</em>回调函数中处理�
 </tr>
 </tbody>
 </table>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[apue-review]]></title>
-    <link href="http://blog.cxstars.com/14836103185566.html"/>
-    <updated>2017-01-05T17:58:38+08:00</updated>
-    <id>http://blog.cxstars.com/14836103185566.html</id>
-    <content type="html"><![CDATA[
-<blockquote>
-<p>从今天(2016-05-26)开始，新一轮APUE浏览，期望最近就foucs它了，同人交流后才发现了解归了解，能不能讲明白又是另一个等级的事了。SO,打怪涨经验升级。 </p>
-</blockquote>
-
-<h2 id="toc_0">源码编译</h2>
-
-<p>mac下直接make就ok，ubuntu稍微麻烦一点。<br/>
-我看的是apue第三版英文版，先将PDF分享出来，有需要的可以下。<br/>
- (apue)[<a href="http://pan.baidu.com/s/1gfsaTk3">http://pan.baidu.com/s/1gfsaTk3</a>] 提取码<em>ivxs</em> </p>
-
-<h2 id="toc_1">CPU的内核态和用户态</h2>
-
-<p>只有执行硬件命令才可以例CPU在这两种状态间来回切换。根本区别就是用户态只能操作虚拟内存中被标记为用户内存的区域，而内核态则可以操作所有内存。</p>
-
-<span id="more"></span><!-- more -->
-
-<h2 id="toc_2">文件IO模型</h2>
-
-<p>就本质而言，内核只提供了一种文件类型：字节流序列。<br/>
-在处理磁盘文件、磁盘或者磁带设备时，可以通过lseek()系统调用来随机访问。</p>
-
-<h2 id="toc_3">进程的内存布局</h2>
-
-<p>逻辑上将一个进程分为以下几段：<br/>
-- 文本：程序的指令<br/>
-- 数据：程序使用的静态变量<br/>
-- 堆：程序可以从该区域动态分配额外内存<br/>
-- 栈：随函数调用、返回而增加减少的一片内存区域，用于为局部变量和函数调用链接信息分配存储空间</p>
-
-<h2 id="toc_4">内存映射</h2>
-
-<ul>
-<li>文件映射 </li>
-<li>匿名映射</li>
-</ul>
-
-<h2 id="toc_5">进程间通讯及同步（七种方式）</h2>
-
-<ul>
-<li>信号(signal)，表示事件的发生</li>
-<li>管理和FIFO，用于在进程间传递数据 </li>
-<li>套接字，可以跨主机进程通讯</li>
-<li>文件锁定，为防止其他进程读取或者更新文件内容，允许某进程对文件的部分区域加以锁定</li>
-<li>消息队列，用于在进程间交换消息(数据包)</li>
-<li>信号量（semaphore），用来同步进程动作</li>
-<li>共享内存，允许两个及两个以上进程共享一块内存。当某进程改变了共享内存的内容时，其他所有进程会立即了解到这一变化</li>
-</ul>
-
-<h2 id="toc_6">进程和线程复制</h2>
-
-<p>进程：fork进程会产生新的进程，会复制父进程的堆、栈、数据段。<br/>
-线程：每个线程都会执行相同的程序代码，共享同一数据区域和堆。但是，每个线程都有属于自己的栈，用来半截本地变量和函数调用链接信息。</p>
-
-<h2 id="toc_7">线程的优点</h2>
-
-<blockquote>
-<p>协同线程之间的数据共享(通过全局变量)更为容易，而且就某些算法而言，以多线程来实现要比之以多进程实现要更加自然，而且能从压榨多核处理器的计算力。</p>
-</blockquote>
-
-<h2 id="toc_8">问题</h2>
-
-<ul>
-<li>文件空洞到底是什么？core dump？</li>
-</ul>
 
 ]]></content>
   </entry>
