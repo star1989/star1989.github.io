@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  life - 星晨入梦
+  ml - 星晨入梦
   
   </title>
   
@@ -122,50 +122,184 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="14899316488389.html">
+                <a class="clearlink" href="14900171104128.html">
                 
-                  <h1>一篇上了头条的文章感想</h1>
+                  <h1>TensorFlow安装</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h3 id="toc_0">起因</h3>
+                        	<h3 id="toc_0">决定你的tensorflow类型</h3>
 
-<p><a href="http://blog.cxstars.com/14893113007289.html">PHP PDO深入探索</a>这篇文章很意外的上了开发头条,只是因为我很意外的在头条上建了一个独家号,然后又很意外的写那篇文章(只是因为我想试试新买的机械键盘手感Orz...),然后又很意外的觉得还行便分享到了上面提到的那个意外的独家号,最后竟然意外的上了开发者头条精选.</p>
+<p>选择一种最适合你的tensorflow进行安装:<br/>
+* 只支持CPU.<br/>
+* 不仅支持CPU,还支持GPU.需要硬件支持<strong>NVIDIA CUDA GPU</strong></p>
 
-<h3 id="toc_1">带来的一点点改变</h3>
+<p><em>只有集显的我默默流泪,需要的朋友请自取<a href="http://docs.nvidia.com/cuda/cuda-installation-guide-mac-os-x">NVIDIA&#39;s documentation</a></em></p>
 
-<ul>
-<li><p><em>带来了一条评论</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899323375273.jpg" alt="带来了一条评论"/></p></li>
-<li><p><em>带来了三个关注者</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899323936505.jpg" alt="带来了三个关注者"/></p></li>
-<li><p><em>在头条上有20个点赞(唔,算上自己的)和74个收藏</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899327323387.jpg" alt="在头条上有20个点赞(唔,算上自己的)和74个收藏"/></p></li>
-<li><p><em>在头条上的阅读量高达3780</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899328025473.jpg" alt="我大PHPer还是很多的"/></p></li>
-<li><p><em>给我那个一天几乎没人访问的小站带来了许多顾客</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899322023669.jpg" alt="给我那个一天几乎没人访问的小站带来了许多顾客"/></p></li>
-<li><p><em>继而被各网站收录</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899330640882.jpg" alt="PHP PDO深入探索 - 推酷"/></p></li>
-</ul>
-
-<p><img src="http://bimg.cxstars.com/2017-03-19-14899331792181.jpg" alt=""/></p>
+<h3 id="toc_1">tensorflow的安装方式</h3>
 
 <ul>
-<li><p><em>搜了下反链,意外的看到了以前的WP博客截图</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899333673163.jpg" alt="2013-5-24"/></p></li>
-<li><p><em>还有一个意外的发现,写的workflow被library io收录了</em><br/>
-<img src="http://bimg.cxstars.com/2017-03-19-14899335791384.jpg" alt="library"/></p></li>
+<li>virtualenv</li>
+<li>&quot;native&quot; pip</li>
+<li>Docker</li>
+<li>from source</li>
 </ul>
 
-<h3 id="toc_2">感想</h3>
+<h5 id="toc_2">virtualenv(官方推荐)</h5>
 
-<p>今天虽然很WTF的一天,车子被撞得拖去了4S店,老爸的泡脚盆漏电闪火花,但是所幸人都没有事情.虽然不是很开心,但是还好翻了翻这篇文章的所带来的一小点成就感也就平复了.(唔,我就是这么容易满足).</p>
+<ul>
+<li>开启shell</li>
+<li>安装<em>pip</em>和<em>virtualenv</em> </li>
+</ul>
 
-<p>希望以后能写得更有用的东西,<strong>不求能够被记住,但是只要能够被记录,我就已经感到满足了</strong>.有3个朋友订阅了独立号,得对这三个朋友负责,尽量抽空写点有用的东西.(虽然他们不一定看,我知道的.0 0.)但还是希望自己能够做点有用的事,即能帮到别人.<strong>这就是我所理解的开源精神.</strong></p>
+<pre><code class="language-shell"> $ sudo easy_install pip
+ $ sudo pip install --upgrade virtualenv
+</code></pre>
 
-<p><strong>如果你看了这篇文章,谢谢你,如果没有人看到,那就谢谢努力的自己.噢,对了,谢谢头条君.</strong></p>
+<ul>
+<li>创建虚拟环境</li>
+</ul>
+
+<p><code>$ virtualenv --system-site-packages targetDirectory</code></p>
+
+<p>注:当前目录为<code>~/tensorflow</code></p>
+
+<ul>
+<li>激活环境</li>
+</ul>
+
+<pre><code class="language-shell"> $ source ~/tensorflow/bin/activate      # If using bash, sh, ksh, or zsh
+ $ source ~/tensorflow/bin/activate.csh  # If using csh or tcsh
+</code></pre>
+
+<p>正确显示如下:</p>
+
+<pre><code> (tensorflow)$
+</code></pre>
+
+<ul>
+<li>安装tensorflow(pip &gt;= 8.1)</li>
+</ul>
+
+<pre><code class="language-shell"> $ pip install --upgrade tensorflow      # for Python 2.7
+ $ pip3 install --upgrade tensorflow     # for Python 3.n
+ $ pip install --upgrade tensorflow-gpu  # for Python 2.7 and GPU
+ $ pip3 install --upgrade tensorflow-gpu # for Python 3.n and GPU
+</code></pre>
+
+<ul>
+<li>修复激活失败(安装正确请跳过)</li>
+</ul>
+
+<pre><code class="language-shell"> $ pip install --upgrade TF_BINARY_URL   # Python 2.7
+ $ pip3 install --upgrade TF_BINARY_URL  # Python 3.N
+</code></pre>
+
+<ul>
+<li>mac,python 3.4</li>
+</ul>
+
+<pre><code class="language-shell"> $ pip3 install --upgrade \
+ https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.1-py3-none-any.whl
+</code></pre>
+
+<p>上面的url需要export到环境</p>
+
+<h6 id="toc_3">使用</h6>
+
+<ul>
+<li>选择使用的shell类型</li>
+</ul>
+
+<pre><code class="language-shell">$ source ~/tensorflow/bin/activate      # bash, sh, ksh, or zsh
+$ source ~/tensorflow/bin/activate.csh  # csh or tcsh
+</code></pre>
+
+<ul>
+<li>暂停tensorflow virtualenv</li>
+</ul>
+
+<p><code>(tensorflow)$ deactivate</code></p>
+
+<ul>
+<li>删除tensorflow virtualenv</li>
+</ul>
+
+<p><code>(tensorflow)$ deactivate</code></p>
+
+<h5 id="toc_4">pip安装</h5>
+
+<p>tip:需要pip version &gt;= 8.1</p>
+
+<ul>
+<li>升级pip命令</li>
+</ul>
+
+<pre><code class="language-shell">$ sudo easy_install --upgrade pip
+$ sudo easy_install --upgrade six 
+</code></pre>
+
+<ul>
+<li>安装tensorflow</li>
+</ul>
+
+<pre><code class="language-shell"> $ pip install tensorflow      # Python 2.7; CPU support (no GPU support)
+ $ pip3 install tensorflow     # Python 3.n; CPU support (no GPU support)
+ $ pip install tensorflow-gpu  # Python 2.7;  GPU support
+ $ pip3 install tensorflow-gpu # Python 3.n; GPU support 
+</code></pre>
+
+<ul>
+<li>卸载tensorflow</li>
+</ul>
+
+<pre><code class="language-shell">$ pip uninstall tensorflow
+$ pip3 uninstall tensorflow 
+</code></pre>
+
+<h5 id="toc_5">docker安装</h5>
+
+<ul>
+<li>拉取镜像</li>
+</ul>
+
+<pre><code class="language-shell">docker pull gcr.io/tensorflow/tensorflow
+docker pull gcr.io/tensorflow/tensorflow:latest-devel
+</code></pre>
+
+<h3 id="toc_6">测试</h3>
+
+<h5 id="toc_7">pip安装测试</h5>
+
+<pre><code class="language-shell">star@starMBP:~/Documents/web$ python
+Python 3.6.0 (default, Mar  4 2017, 12:32:34)
+[GCC 4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.42.1)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import tensorflow as tf
+&gt;&gt;&gt; a = tf.constant([1.0,2.0],name=&quot;a&quot;)
+&gt;&gt;&gt; b = tf.constant([2.0,3.0],name=&quot;b&quot;)
+&gt;&gt;&gt; result = a+b
+&gt;&gt;&gt; sess = tf.Session()
+&gt;&gt;&gt; sess.run(result)
+array([ 3.,  5.], dtype=float32)
+</code></pre>
+
+<p>如上ok.</p>
+
+<h5 id="toc_8">virtualenv安装测试</h5>
+
+<pre><code class="language-shell">[root@VM_10_16_centos tensorflow]# virtualenv --system-site-packages test1
+New python executable in /data/tensorflow/test1/bin/python
+Installing setuptools, pip, wheel...^@^@cdone.
+[root@VM_10_16_centos tensorflow]# source ./test1/bin/activate
+(test1) [root@VM_10_16_centos tensorflow]# pip install --upgrade tensorflow
+Collecting tensorflow
+  Downloading tensorflow-1.0.1-cp27-cp27mu-manylinux1_x86_64.whl (44.1MB)
+    0% |▎                               | 307kB 8.6kB/s eta 1:25:1
+</code></pre>
+
+<p>慢慢等吧,也ok的.</p>
 
                         
                       </div>
@@ -174,10 +308,10 @@
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2017/3/19 21:54 下午</span>
+                    <span class="date">2017/3/20 21:38 下午</span>
                     <span>posted in&nbsp;</span> 
           				  
-          					    <span class="posted-in"><a href='life.html'>life</a></span>
+          					    <span class="posted-in"><a href='ml.html'>ml</a></span>
           				   
                   </div>
                   <div class="more-right right">
@@ -185,85 +319,7 @@
                       
 
                       
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14899316488389.html" data-count-type="comments" href="14899316488389.html#ds-thread"></a>
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="14836808084156.html">
-                
-                  <h1>Again,Go!</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">沉默&amp;沉淀</h2>
-
-<p>再次记录自己的心路历程,不论是生活还是工作.总担心自己什么时候连自己都忘了的家伙.</p>
-
-<h2 id="toc_1">Mac&amp;Mweb</h2>
-
-<p>使用MWeb进行写作.记录一下常用的快捷键,顺便熟悉一下MWeb.</p>
-
-<h2 id="toc_2">MWEB MapKey</h2>
-
-<p>| 快捷键 | 作用 |c<br/>
-| --- | --- |<br/>
-| CTL+1 | 标题1 |<br/>
-| CTL+2 | 标题2 |<br/>
-| CTL+3 | 标题3 |<br/>
-| CTL+4 | 标题4 |<br/>
-| CTL+5 | 标题5 |<br/>
-| CTL+6 | 标题6 |<br/>
-| CMD+B | <strong>粗体</strong> |<br/>
-| CMD+U | <u>下划线</u> |<br/>
-| CMD+I | <em>斜体</em> |<br/>
-| CMD+- | <del>删除线</del> |<br/>
-| CMD+= | <mark>高亮</mark> |<br/>
-| CMD+K | 行内代码 |<br/>
-| CMD+/ | 注释 |<br/>
-| CMD+. | 阅读更多 |<br/>
-| CTL+U | 无序列表 |<br/>
-| CMD+SFT+O | 有序列表 |<br/>
-| CMD+SFT+B | 引用 |<br/>
-| CMD+] | 左移 |<br/>
-| CMD+[ | 右移 |<br/>
-| CTL+SFT+L | 链接 |<br/>
-| CTL+SFT+T | 表格 |<br/>
-| CTL+SFT+I | 图片|<br/>
-| CMD+OPT+I | 插入本地图片 |<br/>
-| CMD+ENT | 新段落 |<br/>
-| CMD+SFT+E | 焦点至编辑器 |<br/>
-| CMD+SFT+F | 焦点至搜索栏 |<br/>
-| CMD+7 | 大纲(目录) |<br/>
-| CMD+8 | 文件信息 |<br/>
-| CMD+9 | 导出/发布 |<br/>
-| CMD+E | 外部模式(打开现有的文件[夹]) |<br/>
-| CMD+E | 文档库模式 |<br/>
-| CMD+R | 预览 |</p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2017/1/6 13:33 下午</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='life.html'>life</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                      
-                        &nbsp;<a  class="ds-thread-count" data-thread-key="14836808084156.html" data-count-type="comments" href="14836808084156.html#ds-thread"></a>
+                        &nbsp;<a  class="ds-thread-count" data-thread-key="14900171104128.html" data-count-type="comments" href="14900171104128.html#ds-thread"></a>
                        
                   </span>
                   </div>

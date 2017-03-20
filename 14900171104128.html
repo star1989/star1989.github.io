@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer - 星晨入梦
+  TensorFlow安装 - 星晨入梦
   
   </title>
   
@@ -122,21 +122,21 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer</h1>
+          <h1>TensorFlow安装</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2017/2/24 13:41 下午</span>
+          <span class="date">2017/3/20 21:38 下午</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='php.html'>php</a></span>
+              <span class="posted-in"><a href='ml.html'>ml</a></span>
            
          
           <span class="comments">
             
 
             
-              &nbsp;<a  class="ds-thread-count" data-thread-key="14879149134068.html" data-count-type="comments" href="14879149134068.html#ds-thread"></a>
+              &nbsp;<a  class="ds-thread-count" data-thread-key="14900171104128.html" data-count-type="comments" href="14900171104128.html#ds-thread"></a>
             
           </span>
 
@@ -144,199 +144,177 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h2 id="toc_0">对于技术和代码的思考</h2>
+      <h3 id="toc_0">决定你的tensorflow类型</h3>
 
-<p>最近看到一句话,触动颇深:</p>
+<p>选择一种最适合你的tensorflow进行安装:<br/>
+* 只支持CPU.<br/>
+* 不仅支持CPU,还支持GPU.需要硬件支持<strong>NVIDIA CUDA GPU</strong></p>
 
-<blockquote>
-<p>行动上的勤勉不足以填补思想上的懒惰</p>
-</blockquote>
+<p><em>只有集显的我默默流泪,需要的朋友请自取<a href="http://docs.nvidia.com/cuda/cuda-installation-guide-mac-os-x">NVIDIA&#39;s documentation</a></em></p>
 
-<p>语言是面向对象的,技术是面向商业的.但这不是一个技术人员只会写代码的理由,遇到过很多面试人员往往3,5年编码经验,不过更多的感受是他们只用了3,5个月的经验过了3,5年.</p>
-
-<p>所以并不是一直在做,就真的做好了.接下来的日子,希望自己能真正做好每一件事.</p>
-
-<p>多人协作编码的前提是统一编码规范并执行.靠人去执行,靠人去检查,始终有限.技术改变生活,当然也包括技术人员的生活.</p>
-
-<h2 id="toc_1">PHP_codeSniffer</h2>
-
-<h4 id="toc_2">要求</h4>
+<h3 id="toc_1">tensorflow的安装方式</h3>
 
 <ul>
-<li>PHP &gt;= 5.1.2</li>
-<li>PHP &gt;= 5.2.4 (仅当使用SVN的pre-commit挂勾)</li>
+<li>virtualenv</li>
+<li>&quot;native&quot; pip</li>
+<li>Docker</li>
+<li>from source</li>
 </ul>
 
-<h4 id="toc_3">安装</h4>
+<h5 id="toc_2">virtualenv(官方推荐)</h5>
 
-<p><em>shell install</em></p>
+<ul>
+<li>开启shell</li>
+<li>安装<em>pip</em>和<em>virtualenv</em> </li>
+</ul>
 
-<pre><code class="language-shell">curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-php phpcs.phar -h
-
-curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
-php phpcbf.phar -h
+<pre><code class="language-shell"> $ sudo easy_install pip
+ $ sudo pip install --upgrade virtualenv
 </code></pre>
 
-<p><em>pear install</em></p>
+<ul>
+<li>创建虚拟环境</li>
+</ul>
 
-<pre><code class="language-shell">pear install PHP_CodeSniffer
+<p><code>$ virtualenv --system-site-packages targetDirectory</code></p>
+
+<p>注:当前目录为<code>~/tensorflow</code></p>
+
+<ul>
+<li>激活环境</li>
+</ul>
+
+<pre><code class="language-shell"> $ source ~/tensorflow/bin/activate      # If using bash, sh, ksh, or zsh
+ $ source ~/tensorflow/bin/activate.csh  # If using csh or tcsh
 </code></pre>
 
-<p><em>composer install</em></p>
+<p>正确显示如下:</p>
 
-<pre><code class="language-shell">command方式
-composer global require &quot;squizlabs/php_codesniffer=*&quot;
-
-compser.json方式
-{
-    &quot;require-dev&quot;: {
-        &quot;squizlabs/php_codesniffer&quot;: &quot;2.*&quot;
-    }
-}
+<pre><code> (tensorflow)$
 </code></pre>
 
-<span id="more"></span><!-- more -->
+<ul>
+<li>安装tensorflow(pip &gt;= 8.1)</li>
+</ul>
 
-<h4 id="toc_4">phpcs使用</h4>
-
-<p><em>phpcs的所有参数和说明</em></p>
-
-<pre><code class="language-shell">star@starMBP:~$ phpcs -h
-Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors] [--stdin-path=&lt;stdinPath&gt;]
-    [--report=&lt;report&gt;] [--report-file=&lt;reportFile&gt;] [--report-&lt;report&gt;=&lt;reportFile&gt;] ...
-    [--report-width=&lt;reportWidth&gt;] [--generator=&lt;generator&gt;] [--tab-width=&lt;tabWidth&gt;]
-    [--severity=&lt;severity&gt;] [--error-severity=&lt;severity&gt;] [--warning-severity=&lt;severity&gt;]
-    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]
-    [--standard=&lt;standard&gt;] [--sniffs=&lt;sniffs&gt;] [--exclude=&lt;sniffs&gt;] [--encoding=&lt;encoding&gt;]
-    [--extensions=&lt;extensions&gt;] [--ignore=&lt;patterns&gt;] [--bootstrap=&lt;bootstrap&gt;]
-    [--file-list=&lt;fileList&gt;] &lt;file&gt; ...
-                      Set runtime value (see --config-set)
-        -n            Do not print warnings (shortcut for --warning-severity=0)
-        -w            Print both warnings and errors (this is the default)
-        -l            Local directory only, no recursion
-        -s            Show sniff codes in all reports
-        -a            Run interactively
-        -e            Explain a standard by showing the sniffs it includes
-        -p            Show progress of the run
-        -q            Quiet mode; disables progress and verbose output
-        -v[v][v]      Print verbose output
-        -i            Show a list of installed coding standards
-        -d            Set the [key] php.ini value to [value] or [true] if value is omitted
-        --help        Print this help message
-        --version     Print version information
-        --colors      Use colors in output
-        --no-colors   Do not use colors in output (this is the default)
-        &lt;file&gt;        One or more files and/or directories to check
-        &lt;fileList&gt;    A file containing a list of files and/or directories to check (one per line)
-        &lt;stdinPath&gt;   If processing STDIN, the file path that STDIN will be processed as
-        &lt;bootstrap&gt;   A comma separated list of files to run before processing starts
-        &lt;encoding&gt;    The encoding of the files being checked (default is iso-8859-1)
-        &lt;extensions&gt;  A comma separated list of file extensions to check
-                      (extension filtering only valid when checking a directory)
-                      The type of the file can be specified using: ext/type
-                      e.g., module/php,es/js
-        &lt;generator&gt;   Uses either the &quot;HTML&quot;, &quot;Markdown&quot; or &quot;Text&quot; generator
-                      (forces documentation generation instead of checking)
-        &lt;patterns&gt;    A comma separated list of patterns to ignore files and directories
-        &lt;report&gt;      Print either the &quot;full&quot;, &quot;xml&quot;, &quot;checkstyle&quot;, &quot;csv&quot;
-                      &quot;json&quot;, &quot;emacs&quot;, &quot;source&quot;, &quot;summary&quot;, &quot;diff&quot;, &quot;junit&quot;
-                      &quot;svnblame&quot;, &quot;gitblame&quot;, &quot;hgblame&quot; or &quot;notifysend&quot; report
-                      (the &quot;full&quot; report is printed by default)
-        &lt;reportFile&gt;  Write the report to the specified file path
-        &lt;reportWidth&gt; How many columns wide screen reports should be printed
-                      or set to &quot;auto&quot; to use current screen width, where supported
-        &lt;sniffs&gt;      A comma separated list of sniff codes to include or exclude during checking
-                      (all sniffs must be part of the specified standard)
-        &lt;severity&gt;    The minimum severity required to display an error or warning
-        &lt;standard&gt;    The name or path of the coding standard to use
-        &lt;tabWidth&gt;    The number of spaces each tab represents
+<pre><code class="language-shell"> $ pip install --upgrade tensorflow      # for Python 2.7
+ $ pip3 install --upgrade tensorflow     # for Python 3.n
+ $ pip install --upgrade tensorflow-gpu  # for Python 2.7 and GPU
+ $ pip3 install --upgrade tensorflow-gpu # for Python 3.n and GPU
 </code></pre>
 
-<p><em>查看当前标准</em></p>
+<ul>
+<li>修复激活失败(安装正确请跳过)</li>
+</ul>
 
-<pre><code class="language-shell">star@starMBP:~$ phpcs -i
-The installed coding standards are MySource, PEAR, PHPCS, PSR1, PSR2, Squiz and Zend
+<pre><code class="language-shell"> $ pip install --upgrade TF_BINARY_URL   # Python 2.7
+ $ pip3 install --upgrade TF_BINARY_URL  # Python 3.N
 </code></pre>
 
-<p><em>忽略warning(如一行超过85个字符会报warning,不强制,建议关掉)</em></p>
+<ul>
+<li>mac,python 3.4</li>
+</ul>
 
-<pre><code class="language-shell">#参数命令
-phpcs -n your_file
-#环境命令
-phpcs --config-set show_warnings 0
+<pre><code class="language-shell"> $ pip3 install --upgrade \
+ https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.1-py3-none-any.whl
 </code></pre>
 
-<p><em>设置默认标准</em></p>
+<p>上面的url需要export到环境</p>
 
-<blockquote>
-<p>By default, PHP_CodeSniffer will use the PEAR coding standard if no standard is supplied on the command line. </p>
-</blockquote>
+<h6 id="toc_3">使用</h6>
 
-<pre><code class="language-shell">star@starMBP:~$ phpcs --config-set default_standard PSR2
-Config value &quot;default_standard&quot; added successfully
+<ul>
+<li>选择使用的shell类型</li>
+</ul>
+
+<pre><code class="language-shell">$ source ~/tensorflow/bin/activate      # bash, sh, ksh, or zsh
+$ source ~/tensorflow/bin/activate.csh  # csh or tcsh
 </code></pre>
 
-<p><em>设置终端颜色输出</em></p>
+<ul>
+<li>暂停tensorflow virtualenv</li>
+</ul>
 
-<pre><code>phpcs --config-set colors 1
+<p><code>(tensorflow)$ deactivate</code></p>
+
+<ul>
+<li>删除tensorflow virtualenv</li>
+</ul>
+
+<p><code>(tensorflow)$ deactivate</code></p>
+
+<h5 id="toc_4">pip安装</h5>
+
+<p>tip:需要pip version &gt;= 8.1</p>
+
+<ul>
+<li>升级pip命令</li>
+</ul>
+
+<pre><code class="language-shell">$ sudo easy_install --upgrade pip
+$ sudo easy_install --upgrade six 
 </code></pre>
 
-<p><em>设置文件编码标准</em></p>
+<ul>
+<li>安装tensorflow</li>
+</ul>
 
-<blockquote>
-<p>By default, PHP_CodeSniffer will treat all source files as if they use ISO-8859-1 encoding. This can cause double-encoding problems when generating UTF-8 encoded XML reports</p>
-</blockquote>
-
-<pre><code class="language-shell">phpcs --config-set encoding utf-8
+<pre><code class="language-shell"> $ pip install tensorflow      # Python 2.7; CPU support (no GPU support)
+ $ pip3 install tensorflow     # Python 3.n; CPU support (no GPU support)
+ $ pip install tensorflow-gpu  # Python 2.7;  GPU support
+ $ pip3 install tensorflow-gpu # Python 3.n; GPU support 
 </code></pre>
 
-<p><em>加载自定义编码</em></p>
+<ul>
+<li>卸载tensorflow</li>
+</ul>
 
-<pre><code class="language-shell">phpcs --config-set installed_paths your_standard_path
+<pre><code class="language-shell">$ pip uninstall tensorflow
+$ pip3 uninstall tensorflow 
 </code></pre>
 
-<p><em>检查PHP文件</em></p>
+<h5 id="toc_5">docker安装</h5>
 
-<pre><code class="language-shell">star@starMBP:~$ phpcs sample.php
-FOUND 43 ERRORS AFFECTING 33 LINES
-----------------------------------------------------------------------
-   3 | ERROR | [ ] Each class must be in a namespace of at least one
-     |       |     level (a top-level vendor name)
-   3 | ERROR | [x] Opening brace of a class must be on the line after
-     |       |     the definition
-   5 | ERROR | [x] Opening brace should be on a new line
-  23 | ERROR | [x] Expected 1 space after IF keyword; 0 found
-  ........
-----------------------------------------------------------------------
-PHPCBF CAN FIX THE 42 MARKED SNIFF VIOLATIONS AUTOMATICALLY
-----------------------------------------------------------------------
+<ul>
+<li>拉取镜像</li>
+</ul>
 
-Time: 633ms; Memory: 22.75Mb
+<pre><code class="language-shell">docker pull gcr.io/tensorflow/tensorflow
+docker pull gcr.io/tensorflow/tensorflow:latest-devel
 </code></pre>
 
-<p><strong>在这里其实已经提到了下一步要做什么了,使用PHPCBF修复</strong></p>
+<h3 id="toc_6">测试</h3>
 
-<p><em>phpcbf修复</em></p>
+<h5 id="toc_7">pip安装测试</h5>
 
-<pre><code class="language-shell">star@starMBP:~$ phpcbf --standard=PSR2 sample.php
-Changing into directory /Users/star/sample.php
-Processing sample.php [PHP =&gt; 4751 tokens in 449 lines]... DONE in 555ms (42 fixable violations)
-        =&gt; Fixing file: 0/42 violations remaining [made 3 passes]... DONE in 1.98 secs
-Patched 1 file
-Time: 2.65 secs; Memory: 36.5Mb
+<pre><code class="language-shell">star@starMBP:~/Documents/web$ python
+Python 3.6.0 (default, Mar  4 2017, 12:32:34)
+[GCC 4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.42.1)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import tensorflow as tf
+&gt;&gt;&gt; a = tf.constant([1.0,2.0],name=&quot;a&quot;)
+&gt;&gt;&gt; b = tf.constant([2.0,3.0],name=&quot;b&quot;)
+&gt;&gt;&gt; result = a+b
+&gt;&gt;&gt; sess = tf.Session()
+&gt;&gt;&gt; sess.run(result)
+array([ 3.,  5.], dtype=float32)
 </code></pre>
 
-<h4 id="toc_5">参考</h4>
+<p>如上ok.</p>
 
-<p><a href="https://github.com/squizlabs/PHP_CodeSniffer/wiki">CodeSniffer_wiki</a><br/>
-<a href="https://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php">Coding Standard Tutorial</a></p>
+<h5 id="toc_8">virtualenv安装测试</h5>
 
-<h2 id="toc_6">后续</h2>
+<pre><code class="language-shell">[root@VM_10_16_centos tensorflow]# virtualenv --system-site-packages test1
+New python executable in /data/tensorflow/test1/bin/python
+Installing setuptools, pip, wheel...^@^@cdone.
+[root@VM_10_16_centos tensorflow]# source ./test1/bin/activate
+(test1) [root@VM_10_16_centos tensorflow]# pip install --upgrade tensorflow
+Collecting tensorflow
+  Downloading tensorflow-1.0.1-cp27-cp27mu-manylinux1_x86_64.whl (44.1MB)
+    0% |▎                               | 307kB 8.6kB/s eta 1:25:1
+</code></pre>
 
-<p>继续思考,怎样更高效更加符合技术流程.</p>
-
-<p>后续使用git的做提交前的代码格式化,并使用jenkins做持续集成.</p>
+<p>慢慢等吧,也ok的.</p>
 
 
     
@@ -347,16 +325,13 @@ Time: 2.65 secs; Memory: 36.5Mb
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14879208825856.html" 
-          title="Previous Post: phpcs集成git工作流">&laquo; phpcs集成git工作流</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14878474870577.html" 
-          title="Next Post: intl,geoip,mongodb扩展macos安装踩坑">intl,geoip,mongodb扩展macos安装踩坑 &raquo;</a>
+          <a  href="14899316488389.html" 
+          title="Next Post: 一篇上了头条的文章感想">一篇上了头条的文章感想 &raquo;</a>
       
       </p>
         </div>
@@ -368,7 +343,7 @@ Time: 2.65 secs; Memory: 36.5Mb
           
 
           
-              <div class="ds-thread" data-thread-key="14879149134068.html" data-url="http://blog.cxstars.com/14879149134068.html" data-title="PHPer的高质量编码,代码规范自动检查工作具PHP_CodeSniffer"></div>
+              <div class="ds-thread" data-thread-key="14900171104128.html" data-url="http://blog.cxstars.com/14900171104128.html" data-title="TensorFlow安装"></div>
           
         </div>
       </div>
